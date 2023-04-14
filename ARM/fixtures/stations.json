@@ -1,0 +1,72 @@
+[
+  {
+    "model": "ARM.Station",
+    "pk": 1,
+    "fields": {
+      "name": "Ботаническая"
+    }
+  },
+  {
+    "model": "ARM.Station",
+    "pk": 2,
+    "fields": {
+      "name": "Чкаловская"
+    }
+  },
+  {
+    "model": "ARM.Station",
+    "pk": 3,
+    "fields": {
+      "name": "Геологическая"
+    }
+  },
+  {
+    "model": "ARM.Station",
+    "pk": 4,
+    "fields": {
+      "name": "Площадь 1905г."
+    }
+  },
+  {
+    "model": "ARM.Station",
+    "pk": 5,
+    "fields": {
+      "name": "Динамо"
+    }
+  },
+  {
+    "model": "ARM.Station",
+    "pk": 6,
+    "fields": {
+      "name": "Уральская"
+    }
+  },
+  {
+    "model": "ARM.Station",
+    "pk": 7,
+    "fields": {
+      "name": "Машиностроителей"
+    }
+  },
+  {
+    "model": "ARM.Station",
+    "pk": 8,
+    "fields": {
+      "name": "Уралмаш"
+    }
+  },
+  {
+    "model": "ARM.Station",
+    "pk": 9,
+    "fields": {
+      "name": "Пр. Космонавтов"
+    }
+  },
+  {
+    "model": "ARM.Station",
+    "pk": 10,
+    "fields": {
+      "name": "Депо Калиновское"
+    }
+  }
+]

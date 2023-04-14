@@ -1,0 +1,9 @@
+[
+  {
+    "model": "ARM.Stock",
+    "pk": 1,
+    "fields": {
+      "name": "Склад"
+    }
+  }
+]
