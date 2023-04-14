@@ -2,15 +2,20 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
+
+
 from .models import Shelf, Station, Device, Rack, Place, Stock, AVZ
+
 
 admin.site.register((Shelf, Rack))
 
 
 @admin.register(Device)
-class DeviceAdmin(admin.ModelAdmin):
-    list_filter = ("station", "stock", "contact_type", "next_check_date")
-    list_display = ("name", "device_type", "inventory_number", "mounting_address", "avz", "status")
+class DeviceAdmin(ImportExportModelAdmin):
+    list_filter = ["station", "stock", "contact_type", "next_check_date"]
+    list_display = ["name", "device_type", "inventory_number", "mounting_address", "avz", "status"]
     list_display_links = list_display
     search_fields = ("name", "inventory_number")
     search_help_text = "Введите название прибора или его инвентарный номер для поиска"
@@ -101,6 +106,5 @@ class StockAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return False
-
 
 
