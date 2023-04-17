@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 
 class Stock(models.Model):
@@ -95,13 +95,20 @@ class Place(models.Model): # место прибора
 
 
 class Device(models.Model):
+    READY = "ready"
+    SEND = "send"
+    OVERDUE = "overdue"
+    NORMAL = "normal"
+    IN_PROGRESS = "in_progress"
+
     CHOICES = [
-        ("ready", "нужна замена"),
-        ("send", "отправлен"),
-        ("overdue", "просрочен"),
-        ("normal", "сроки в норме"),
-        ("in_progress", "готовится"),
+        (READY, "нужна замена"),
+        (SEND, "отправлен"),
+        (OVERDUE, "просрочен"),
+        (NORMAL, "сроки в норме"),
+        (IN_PROGRESS, "готовится"),
     ]
+
     CONTACT_TYPE_CHOICES = [
         ("contact", "контактная"),
         ("contactless", "бесконтактная"),
@@ -127,24 +134,36 @@ class Device(models.Model):
         verbose_name_plural = "Приборы"
 
     def clean(self):
-        devices_on_address = self.mounting_address.device_set.all()
-
         if self.name:
             if not self.mounting_address:
-                raise ValidationError("Укажите монтажный адрес")
+                raise ValidationError("Укажите монтажный адрес или удалите название прибора")
             if self.avz:
                 raise ValidationError("Обратите внимание, у приборов в АВЗ не должно быть названия")
+
         if self.mounting_address:
+            devices_on_address = self.mounting_address.device_set.all()
+
             if (devices_on_place := self.mounting_address.device_set.count()) > 0 and self.status != "in_progress"\
                     and self not in devices_on_address:
                 raise ValidationError("На данном адресе уже установлен прибор, "
                                       "выберите другой адрес или измените статус на 'готовится'")
+
             if devices_on_place > 1 and self not in devices_on_address:
                 raise ValidationError("На данном адресе уже установлен прибор и один прибор уже готовится")
+
+            if devices_on_place > 1 and self in devices_on_address:
+                other_device_status = [device.status for device in devices_on_address if device != self][0]
+                if self.status == other_device_status:
+                    raise ValidationError("На этом адресе уже есть прибор с таким же статусом")
+                if not self.status and other_device_status == "in_progress":
+                    raise ValidationError("Вы убираете на склад прибор, но оставляете место на стативе\
+                                          пустым, зайдите на страницу места и исправьте ситуацию")
+
         if self.station:
             if self.avz:
                 if self.mounting_address:
                     raise ValidationError("Обратите внимание, если прибор в АВЗ, то у него не может быть адреса")
+
         if self.stock:
             if any(
                     (self.station, self.avz, self.mounting_address)
@@ -152,9 +171,21 @@ class Device(models.Model):
                 raise ValidationError("Если прибор на складе, то он не имеет отношения к какой-либо станции")
             if self.status:
                 raise ValidationError("Сделайте статус пустым, если хотите изменить статус - укажите станцию")
+
         if self.device_type == "contact":
             if not self.inventory_number:
                 raise ValidationError("Укажите инвентарный номер для реле")
 
+        if self.status is None:
+            if self.stock == "Склад":
+                if self.mounting_address is not None:
+                    raise ValidationError("Уберите монтажный адрес")
+
     def __str__(self):
         return f'{self.name}({self.device_type})'
+
+
+class MechanicReport(models.Model):
+    station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name="Станция")
+    devices = models.ManyToManyField(Device, related_name="marked_devices", verbose_name="Помеченные приборы")
+    explanation = models.TextField(max_length=300, verbose_name="Пояснение", blank=True)

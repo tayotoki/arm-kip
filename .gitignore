@@ -1,3 +1,6 @@
 env/
 __pychache__/
 *.pyc
+.idea/
+.vscode/
+
