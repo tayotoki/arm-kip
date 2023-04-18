@@ -9,6 +9,7 @@ from django.utils.html import format_html
 # from import_export.admin import ImportExportModelAdmin
 
 from .models import Shelf, Station, Device, Rack, Place, Stock, AVZ, MechanicReport
+from ARM.actions import export_as_xls
 
 
 admin.site.register((Shelf, Rack))
@@ -16,6 +17,7 @@ admin.site.register((Shelf, Rack))
 
 @admin.register(Device)
 class DeviceAdmin(admin.ModelAdmin):
+    actions = [export_as_xls]
     list_filter = ["station", "stock", "contact_type", "next_check_date"]
     list_display = [
         "name",
