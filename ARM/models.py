@@ -71,20 +71,8 @@ class AVZ(models.Model):
         return f"АВЗ {self.station.name}"
 
 
-class Shelf(models.Model): # полка
-    rack = models.ForeignKey(Rack, on_delete=models.CASCADE)
-    number = models.IntegerField(verbose_name='Номер полки')
-
-    class Meta:
-        verbose_name = "Полка"
-        verbose_name_plural = "Полки"
-
-    def __str__(self):
-        return f"{self.rack}-{self.number}"
-
-
 class Place(models.Model): # место прибора
-    shelf = models.ForeignKey(Shelf, on_delete=models.CASCADE, verbose_name="Полка")
+    rack = models.ForeignKey(Rack, on_delete=models.CASCADE, verbose_name="Статив")
     number = models.IntegerField(verbose_name="Номер места")
 
     class Meta:
@@ -92,7 +80,7 @@ class Place(models.Model): # место прибора
         verbose_name_plural = "Места"
 
     def __str__(self):
-        return f"{self.shelf.rack}-{self.shelf.number}{self.number}"
+        return f"{self.rack.number}-{self.number}"
 
 
 class Device(models.Model):
@@ -143,8 +131,9 @@ class Device(models.Model):
 
         if self.mounting_address:
             devices_on_address = self.mounting_address.device_set.all()
+            devices_on_place = self.mounting_address.device_set.count()
 
-            if (devices_on_place := self.mounting_address.device_set.count()) > 0 and self.status != "in_progress"\
+            if devices_on_place > 0 and self.status != "in_progress"\
                     and self not in devices_on_address:
                 raise ValidationError("На данном адресе уже установлен прибор, "
                                       "выберите другой адрес или измените статус на 'готовится'")
@@ -159,6 +148,8 @@ class Device(models.Model):
                 if not self.status and other_device_status == "in_progress":
                     raise ValidationError("Вы убираете на склад прибор, но оставляете место на стативе\
                                           пустым, зайдите на страницу места и исправьте ситуацию")
+                if self.status in ("normal", "overdue", "ready") and other_device_status not in ("send", "in_progress"):
+                    raise ValidationError("Указан неверный статус, оба прибора на складе или на стативе одновременно")
 
         if self.station:
             if self.avz:

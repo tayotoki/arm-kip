@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.core.exceptions import ValidationError
+from django import forms
 from django.forms import TextInput, Textarea, models
 from django.urls import reverse
 from django.utils import timezone
@@ -8,11 +9,11 @@ from django.utils.html import format_html
 # from import_export import resources
 # from import_export.admin import ImportExportModelAdmin
 
-from .models import Shelf, Station, Device, Rack, Place, Stock, AVZ, MechanicReport
+from .models import Station, Device, Rack, Place, Stock, AVZ, MechanicReport
 from ARM.actions import export_as_xls
 
 
-admin.site.register((Shelf, Rack))
+admin.site.register(Rack)
 
 
 @admin.register(Device)
@@ -20,6 +21,7 @@ class DeviceAdmin(admin.ModelAdmin):
     actions = [export_as_xls]
     list_filter = ["station", "stock", "contact_type", "next_check_date"]
     list_display = [
+        "station",
         "name",
         "device_type",
         "inventory_number",
@@ -119,24 +121,26 @@ class StockAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False
 
-
+class MechanicReportForm(forms.ModelForm):
+    def clean(self):
+        devices = self.cleaned_data.get("devices")
+        for device in devices:
+            if device.station != self.cleaned_data.get("station"):
+                raise ValidationError(f"Прибор {device.name} (тип: {device.device_type}) "
+                                      f"(инв. номер: {device.inventory_number}) "
+                                      f"не находится на станции {self.cleaned_data.get('station')}. "
+                                      f"Возможно вы имели ввиду станцию {device.station.name}?")
+        return super().clean()
 
 @admin.register(MechanicReport)
 class MechanicReportAdmin(admin.ModelAdmin):
+    form = MechanicReportForm
     readonly_fields = ("created", "user", "modified")
     autocomplete_fields = ("devices",)
-    list_display = ("user", *readonly_fields, "title", "station")
+    list_display = (*readonly_fields, "title", "station")
     list_display_links = list_display
-    fields = ()
     search_fields = ("user__username", "station__name")
     search_help_text = ("Введите имя пользователя или станцию для поиска")
-
-    def clean(self):
-        for device in self.devices.all():
-            if device.station != self.station:
-                raise ValidationError(f"Прибор {device.name}"
-                                      f"(инв.номер {device.inventory_number})"
-                                      f"({device.device_type}) не относится к станции {self.station}")
 
     def save_model(self, request, obj, form, change):
         obj.user = request.user
