@@ -1,5 +1,8 @@
 from django.contrib import admin
+from django.core.exceptions import ValidationError
+from django.forms import TextInput, Textarea, models
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.html import format_html
 #
 # from import_export import resources
@@ -8,7 +11,7 @@ from django.utils.html import format_html
 from .models import Shelf, Station, Device, Rack, Place, Stock, AVZ, MechanicReport
 
 
-admin.site.register((Shelf, Rack, MechanicReport))
+admin.site.register((Shelf, Rack))
 
 
 @admin.register(Device)
@@ -113,3 +116,26 @@ class StockAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return False
+
+
+
+@admin.register(MechanicReport)
+class MechanicReportAdmin(admin.ModelAdmin):
+    readonly_fields = ("created", "user", "modified")
+    autocomplete_fields = ("devices",)
+    list_display = ("user", *readonly_fields, "title", "station")
+    list_display_links = list_display
+    fields = ()
+    search_fields = ("user__username", "station__name")
+    search_help_text = ("Введите имя пользователя или станцию для поиска")
+
+    def clean(self):
+        for device in self.devices.all():
+            if device.station != self.station:
+                raise ValidationError(f"Прибор {device.name}"
+                                      f"(инв.номер {device.inventory_number})"
+                                      f"({device.device_type}) не относится к станции {self.station}")
+
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        return super().save_model(request, obj, form, change)

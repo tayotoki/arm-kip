@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User, Group
+from django.utils import timezone
 
 
 class Stock(models.Model):
@@ -186,6 +187,35 @@ class Device(models.Model):
 
 
 class MechanicReport(models.Model):
+    MONTHES = {
+        1: "Январь",
+        2: "Февраль",
+        3: "Март",
+        4: "Апрель",
+        5: "Май",
+        6: "Июнь",
+        7: "Август",
+        8: "Сентябрь",
+        9: "Октябрь",
+        10: "Ноябрь",
+        11: "Декабрь",
+    }
+
+    title = models.CharField(max_length=30, verbose_name="Заголовок", blank=True, help_text="Краткое пояснение, "
+                                                            "например 'просрок', 'заменить в этом месяце' и т.д. "
+                                                            "Не более 30 символов")
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, verbose_name="Работник")
     station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name="Станция")
-    devices = models.ManyToManyField(Device, related_name="marked_devices", verbose_name="Помеченные приборы")
+    devices = models.ManyToManyField(Device, related_name="marked_devices", verbose_name="Помеченные приборы", help_text=(
+        "Поиск по названию, но лучше по инвентарному номеру для точности"
+    ))
     explanation = models.TextField(max_length=300, verbose_name="Пояснение", blank=True)
+    created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создан")
+    modified = models.DateTimeField(auto_now=True, editable=False, verbose_name="Изменен")
+
+    class Meta:
+        verbose_name = "Отчет механика"
+        verbose_name_plural = "Отчеты механиков"
+
+    def __str__(self):
+        return f"ст. {self.station.name} - отчет N {self.pk}"
