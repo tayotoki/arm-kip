@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import format_html
 from django.utils.http import urlencode
+from datetime import date
 #
 # from import_export import resources
 # from import_export.admin import ImportExportModelAdmin
@@ -19,6 +20,7 @@ admin.site.register(Rack)
 
 @admin.register(Device)
 class DeviceAdmin(admin.ModelAdmin):
+    readonly_fields = ("next_check_date",)
     actions = [export_as_xls]
     list_filter = ["station", "stock", "contact_type", "next_check_date"]
     list_display = [
@@ -35,6 +37,12 @@ class DeviceAdmin(admin.ModelAdmin):
     search_fields = ("name", "inventory_number")
     search_help_text = "Введите название прибора \
         или его инвентарный номер для поиска"
+
+    def save_model(self, request, obj, form, change):
+        check_date = form.cleaned_data["current_check_date"]
+        year = check_date.year + obj.frequency_of_check
+        obj.next_check_date = date(year=year, month=check_date.month, day=check_date.day)
+        return super().save_model(request, obj, form, change)
 
 
 class AVZInlineAdmin(admin.StackedInline):
@@ -96,7 +104,6 @@ class PlaceAdmin(admin.ModelAdmin):
     search_fields = ("rack__number",)
 
 
-
 @admin.register(Station)
 class StationAdmin(admin.ModelAdmin):
     inlines = [AVZInlineAdmin, DevicesAdmin]
@@ -134,7 +141,7 @@ class MechanicReportForm(forms.ModelForm):
                 raise ValidationError(f"Прибор {device.name} (тип: {device.device_type}) "
                                       f"(инв. номер: {device.inventory_number}) "
                                       f"не находится на станции {self.cleaned_data.get('station')}. "
-                                      f"Возможно вы имели ввиду станцию {device.station.name}?")
+                                      f"Возможно вы имели ввиду станцию {device.station}?")
         return super().clean()
 
 
