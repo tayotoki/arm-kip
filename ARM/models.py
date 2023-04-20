@@ -20,6 +20,17 @@ class Stock(models.Model):
         return self.name
 
 
+class Tipe(models.Model):
+    name = models.CharField(max_length=25, verbose_name="Тип прибора")
+
+    class Meta:
+        verbose_name = "Тип прибора"
+        verbose_name_plural = "Типы приборов"
+
+    def __str__(self):
+        return self.name
+
+
 class Station(models.Model):
     CHOICES = [
         ("БТ", "Ботаническая"),
@@ -49,7 +60,7 @@ class Station(models.Model):
 
 
 class Rack(models.Model): # статив
-    number = models.IntegerField(verbose_name='Статив')
+    number = models.CharField(max_length=20, verbose_name='Статив')
     station = models.ForeignKey(Station, on_delete=models.SET_NULL, null=True, verbose_name="Станция")
 
     class Meta:
@@ -106,8 +117,15 @@ class Device(models.Model):
     avz = models.ForeignKey(AVZ, null=True, blank=True, verbose_name="АВЗ", on_delete=models.SET_NULL)
     stock = models.ForeignKey(Stock, null=True, blank=True, on_delete=models.SET_NULL, verbose_name="Склад")
     status = models.CharField(verbose_name="Статус", max_length=20, choices=CHOICES, blank=True)
-    device_type = models.CharField(verbose_name="Тип прибора", max_length=20)
-    contact_type = models.CharField(verbose_name="Наличие контактов", max_length=20, choices=CONTACT_TYPE_CHOICES)
+    device_type = models.ForeignKey(Tipe,
+                                    null=True,
+                                    on_delete=models.SET_NULL,
+                                    verbose_name="Тип прибора",
+                                    max_length=20,
+                                    help_text="Начните вводить тип прибора "
+                                              "и выберите нужное значение "
+                                              "из списка")
+    contact_type = models.CharField(null=True, verbose_name="Наличие контактов", max_length=20, choices=CONTACT_TYPE_CHOICES)
     name = models.CharField(verbose_name="Название", max_length=20, blank=True)
     inventory_number = models.IntegerField(verbose_name="Инв. номер", default=0)
     mounting_address = models.ForeignKey(Place,

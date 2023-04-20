@@ -11,7 +11,7 @@ from datetime import date
 # from import_export import resources
 # from import_export.admin import ImportExportModelAdmin
 
-from .models import Station, Device, Rack, Place, Stock, AVZ, MechanicReport
+from .models import Station, Device, Rack, Place, Stock, AVZ, MechanicReport, Tipe
 from ARM.actions import export_as_xls
 
 
@@ -32,7 +32,7 @@ class DeviceAdmin(admin.ModelAdmin):
         "avz",
         "status",
     ]
-    autocomplete_fields = ("mounting_address",)
+    autocomplete_fields = ("mounting_address", "device_type")
     list_display_links = list_display
     search_fields = ("name", "inventory_number")
     search_help_text = "Введите название прибора \
@@ -169,3 +169,8 @@ class MechanicReportAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.user = request.user
         return super().save_model(request, obj, form, change)
+
+
+@admin.register(Tipe)
+class TipeAdmin(admin.ModelAdmin):
+    search_fields = ("name",)
