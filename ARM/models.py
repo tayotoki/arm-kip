@@ -80,7 +80,7 @@ class Place(models.Model): # место прибора
         verbose_name_plural = "Места"
 
     def __str__(self):
-        return f"{self.rack.number}-{self.number}"
+        return f"({self.rack.station.name[:5]}){self.rack.number}-{self.number}"
 
 
 class Device(models.Model):
@@ -110,11 +110,24 @@ class Device(models.Model):
     contact_type = models.CharField(verbose_name="Наличие контактов", max_length=20, choices=CONTACT_TYPE_CHOICES)
     name = models.CharField(verbose_name="Название", max_length=20, blank=True)
     inventory_number = models.IntegerField(verbose_name="Инв. номер", default=0)
-    mounting_address = models.ForeignKey(Place, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Монтажный адрес")
+    mounting_address = models.ForeignKey(Place,
+                                         on_delete=models.SET_NULL,
+                                         null=True,
+                                         blank=True,
+                                         verbose_name="Монтажный адрес",
+                                         help_text="Введите статив и выберите нужный адрес из списка")
     manufacture_date = models.DateField(verbose_name='дата производства')
     frequency_of_check = models.IntegerField(verbose_name='периодичность проверки', null=True, default=0)
-    who_prepared = models.ForeignKey(User, verbose_name='кто готовил', on_delete=models.SET_NULL, null=True, related_name='preparer')
-    who_checked = models.ForeignKey(User, verbose_name='кто проверил', on_delete=models.SET_NULL, null=True, related_name='checker')
+    who_prepared = models.ForeignKey(User,
+                                     verbose_name='кто готовил',
+                                     on_delete=models.SET_NULL,
+                                     null=True,
+                                     related_name='preparer')
+    who_checked = models.ForeignKey(User,
+                                    verbose_name='кто проверил',
+                                    on_delete=models.SET_NULL,
+                                    null=True,
+                                    related_name='checker')
     current_check_date = models.DateField(verbose_name='дата проверки')
     next_check_date = models.DateField(verbose_name='дата следующей проверки')
 

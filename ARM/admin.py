@@ -5,6 +5,7 @@ from django.forms import TextInput, Textarea, models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import format_html
+from django.utils.http import urlencode
 #
 # from import_export import resources
 # from import_export.admin import ImportExportModelAdmin
@@ -29,6 +30,7 @@ class DeviceAdmin(admin.ModelAdmin):
         "avz",
         "status",
     ]
+    autocomplete_fields = ("mounting_address",)
     list_display_links = list_display
     search_fields = ("name", "inventory_number")
     search_help_text = "Введите название прибора \
@@ -91,6 +93,8 @@ class AVZAdmin(admin.ModelAdmin):
 @admin.register(Place)
 class PlaceAdmin(admin.ModelAdmin):
     inlines = [DevicesAdmin]
+    search_fields = ("rack__number",)
+
 
 
 @admin.register(Station)
@@ -121,6 +125,7 @@ class StockAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False
 
+
 class MechanicReportForm(forms.ModelForm):
     def clean(self):
         devices = self.cleaned_data.get("devices")
@@ -132,15 +137,27 @@ class MechanicReportForm(forms.ModelForm):
                                       f"Возможно вы имели ввиду станцию {device.station.name}?")
         return super().clean()
 
+
 @admin.register(MechanicReport)
 class MechanicReportAdmin(admin.ModelAdmin):
     form = MechanicReportForm
-    readonly_fields = ("created", "user", "modified")
+    readonly_fields = ("devices_links", "user", "created", "modified")
     autocomplete_fields = ("devices",)
-    list_display = (*readonly_fields, "title", "station")
+    list_display = ("__str__", "title", "station", *readonly_fields)
     list_display_links = list_display
     search_fields = ("user__username", "station__name")
     search_help_text = ("Введите имя пользователя или станцию для поиска")
+
+    def devices_links(self, obj):
+        count = obj.devices.count()
+        url = (
+            reverse("admin:ARM_device_changelist")
+            + "?"
+            + urlencode({"devices": f"{obj.devices}"})
+        )
+        return format_html('<a href="{}">Приборы ({} шт.)</a>', url, count)
+
+    devices_links.short_description = "Ссылка на приборы"
 
     def save_model(self, request, obj, form, change):
         obj.user = request.user
