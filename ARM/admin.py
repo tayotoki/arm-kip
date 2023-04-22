@@ -15,7 +15,9 @@ from .models import Station, Device, Rack, Place, Stock, AVZ, MechanicReport, Ti
 from ARM.actions import export_as_xls
 
 
-admin.site.register(Rack)
+@admin.register(Rack)
+class RackAdmin(admin.ModelAdmin):
+    list_filter = ["station"]
 
 
 @admin.register(Device)

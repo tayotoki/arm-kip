@@ -60,7 +60,7 @@ class Station(models.Model):
 
 
 class Rack(models.Model): # статив
-    number = models.CharField(max_length=20, verbose_name='Статив')
+    number = models.CharField(max_length=20, verbose_name='Статив', null=True)
     station = models.ForeignKey(Station, on_delete=models.SET_NULL, null=True, verbose_name="Станция")
 
     class Meta:
@@ -79,7 +79,7 @@ class AVZ(models.Model):
         verbose_name_plural = "АВЗ"
 
     def __str__(self):
-        return f"АВЗ {self.station.name}"
+        return f"АВЗ {self.station.__str__()}"
 
 
 class Place(models.Model): # место прибора
@@ -91,7 +91,7 @@ class Place(models.Model): # место прибора
         verbose_name_plural = "Места"
 
     def __str__(self):
-        return f"({self.rack.station.name[:5]}){self.rack.number}-{self.number}"
+        return f"({self.rack.station.__str__()[:5]}){self.rack.number}-{self.number}"
 
 
 class Device(models.Model):
@@ -100,6 +100,8 @@ class Device(models.Model):
     OVERDUE = "overdue"
     NORMAL = "normal"
     IN_PROGRESS = "in_progress"
+    DECOMMISIONED = "decommissioned"
+    REPLACED = "replaced"
 
     CHOICES = [
         (READY, "нужна замена"),
@@ -107,6 +109,8 @@ class Device(models.Model):
         (OVERDUE, "просрочен"),
         (NORMAL, "сроки в норме"),
         (IN_PROGRESS, "готовится"),
+        (DECOMMISIONED, "списан"),
+        (REPLACED, "заменен"),
     ]
 
     CONTACT_TYPE_CHOICES = [

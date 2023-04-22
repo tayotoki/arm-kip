@@ -1,0 +1,79 @@
+[
+  {
+    "model": "ARM.AVZ",
+    "pk": 1,
+    "fields": {
+      "station": 1
+    }
+  },
+  {
+    "model": "ARM.AVZ",
+    "pk": 2,
+    "fields": {
+      "station": 2
+    }
+  },
+  {
+    "model": "ARM.AVZ",
+    "pk": 3,
+    "fields": {
+      "station": 3
+    }
+  },
+  {
+    "model": "ARM.AVZ",
+    "pk": 4,
+    "fields": {
+      "station": 4
+    }
+  },
+  {
+    "model": "ARM.AVZ",
+    "pk": 5,
+    "fields": {
+      "station": 5
+    }
+  },
+  {
+    "model": "ARM.AVZ",
+    "pk": 6,
+    "fields": {
+      "station": 6
+    }
+  },
+  {
+    "model": "ARM.AVZ",
+    "pk": 7,
+    "fields": {
+      "station": 7
+    }
+  },
+  {
+    "model": "ARM.AVZ",
+    "pk": 8,
+    "fields": {
+      "station": 8
+    }
+  },
+  {
+    "model": "ARM.AVZ",
+    "pk": 9,
+    "fields": {
+      "station": 9
+    }
+  },
+  {
+    "model": "ARM.AVZ",
+    "pk": 10,
+    "fields": {
+      "station": 10
+    }
+  },
+  {
+    "model": "ARM.AVZ",
+    "pk": 11,
+    "fields": {
+      "station": 11
+    }
+  }
+]
