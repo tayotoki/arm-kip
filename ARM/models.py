@@ -62,7 +62,10 @@ class Station(models.Model):
 
 class Rack(models.Model): # статив
     number = models.CharField(max_length=20, verbose_name='Статив', null=True)
-    station = models.ForeignKey(Station, on_delete=models.SET_NULL, null=True, verbose_name="Станция")
+    station = models.ForeignKey(Station,
+                                on_delete=models.SET_NULL,
+                                null=True,
+                                verbose_name="Станция")
 
     class Meta:
         verbose_name = "Статив"
@@ -84,15 +87,21 @@ class AVZ(models.Model):
 
 
 class Place(models.Model): # место прибора
-    rack = models.ForeignKey(Rack, on_delete=models.CASCADE, verbose_name="Статив")
-    number = models.IntegerField(verbose_name="Номер места")
+    rack = models.ForeignKey(Rack,
+                             on_delete=models.CASCADE, 
+                             verbose_name="Статив",
+                             help_text="Введите номер "
+                                "статива и выберите значение "
+                                "из списка результатов")
+    number = models.CharField(max_length=20, verbose_name="Номер места")
 
     class Meta:
         verbose_name = "Место"
         verbose_name_plural = "Места"
 
     def __str__(self):
-        return f"({self.rack.station.__str__()[:5]}){self.rack.number}-{self.number}"
+        return (f"({self.rack.station.__str__()[:5]})"
+               f"{self.rack.number}-{self.number}")
 
 
 class Device(models.Model):
@@ -140,17 +149,19 @@ class Device(models.Model):
                                          blank=True,
                                          verbose_name="Монтажный адрес",
                                          help_text="Введите статив и выберите нужный адрес из списка")
-    manufacture_date = models.DateField(verbose_name='дата производства')
+    manufacture_date = models.DateField(verbose_name='дата производства', null=True)
     frequency_of_check = models.IntegerField(verbose_name='периодичность проверки', null=True, default=0)
     who_prepared = models.ForeignKey(User,
                                      verbose_name='кто готовил',
                                      on_delete=models.SET_NULL,
                                      null=True,
+                                     blank=True,
                                      related_name='preparer')
     who_checked = models.ForeignKey(User,
                                     verbose_name='кто проверил',
                                     on_delete=models.SET_NULL,
                                     null=True,
+                                    blank=True,
                                     related_name='checker')
     current_check_date = models.DateField(verbose_name='дата проверки')
     next_check_date = models.DateField(verbose_name='дата следующей проверки')
@@ -211,7 +222,7 @@ class Device(models.Model):
                     raise ValidationError("Уберите монтажный адрес")
 
     def __str__(self):
-        return f'{self.name}({self.device_type})'
+        return f'{self.name}({self.device_type}){self.mounting_address}'
 
 
 class MechanicReport(models.Model):

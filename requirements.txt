@@ -2,11 +2,16 @@ asgiref==3.6.0
 defusedxml==0.7.1
 diff-match-patch==20200713
 Django==4.1
+django-contrib-comments==2.2.0
 django-import-export==3.2.0
 et-xmlfile==1.1.0
+flake8==6.0.0
 MarkupPy==1.14
+mccabe==0.7.0
 odfpy==1.4.1
 openpyxl==3.1.2
+pycodestyle==2.10.0
+pyflakes==3.0.1
 PyMySQL==1.0.3
 PyYAML==6.0
 sqlparse==0.4.3

@@ -18,6 +18,7 @@ from ARM.actions import export_as_xls
 @admin.register(Rack)
 class RackAdmin(admin.ModelAdmin):
     list_filter = ["station"]
+    search_fields = ("number", )
 
 
 class DeviceForm(forms.ModelForm):
@@ -27,8 +28,8 @@ class DeviceForm(forms.ModelForm):
         inventory_number = self.cleaned_data.get("inventory_number")
         if inventory_number:
             if not inventory_number.isnumeric():
-                raise ValidationError("Инвентарный номер должен состоять из цифр"
-                                      " . Если у прибора нет инв. номера, оставьте поле пустым")
+                raise ValidationError("Инвентарный номер должен состоять из цифр."
+                                      " Если у прибора нет инв. номера, оставьте поле пустым")
         return inventory_number
 
 
@@ -117,6 +118,7 @@ class AVZAdmin(admin.ModelAdmin):
 class PlaceAdmin(admin.ModelAdmin):
     inlines = [DevicesAdmin]
     search_fields = ("rack__number",)
+    autocomplete_fields = ("rack",)
 
 
 @admin.register(Station)
@@ -155,7 +157,8 @@ class MechanicReportForm(forms.ModelForm):
             if device.station != self.cleaned_data.get("station"):
                 raise ValidationError(f"Прибор {device.name} (тип: {device.device_type}) "
                                       f"(инв. номер: {device.inventory_number}) "
-                                      f"не находится на станции {self.cleaned_data.get('station')}. "
+                                      f"не находится на станции " 
+                                      f"{(self.cleaned_data.get('station') if self.cleaned_data.get('station') else '')}. "
                                       f"Возможно вы имели ввиду станцию {device.station}?")
         return super().clean()
 
