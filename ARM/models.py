@@ -43,6 +43,7 @@ class Station(models.Model):
         ("УРЛМ", "Уралмаш"),
         ("ПР", "Проспект Космонавтов"),
         ("ДЕПО", "Депо Калиновское"),
+        ("ИНЖ. КОРПУС", "Инж. Корпус"),
     ]
     name = models.CharField(max_length=50, choices=CHOICES, default="Склад", verbose_name="Станция")
 
@@ -117,6 +118,7 @@ class Device(models.Model):
         ("contact", "контактная"),
         ("contactless", "бесконтактная"),
     ]
+
     station = models.ForeignKey(Station, null=True, blank=True, verbose_name="Станция", on_delete=models.SET_NULL)
     avz = models.ForeignKey(AVZ, null=True, blank=True, verbose_name="АВЗ", on_delete=models.SET_NULL)
     stock = models.ForeignKey(Stock, null=True, blank=True, on_delete=models.SET_NULL, verbose_name="Склад")
@@ -131,7 +133,7 @@ class Device(models.Model):
                                               "из списка")
     contact_type = models.CharField(null=True, verbose_name="Наличие контактов", max_length=20, choices=CONTACT_TYPE_CHOICES)
     name = models.CharField(verbose_name="Название", max_length=20, blank=True)
-    inventory_number = models.IntegerField(verbose_name="Инв. номер", default=0)
+    inventory_number = models.CharField(max_length=30, verbose_name="Инв. номер", null=True, blank=True)
     mounting_address = models.ForeignKey(Place,
                                          on_delete=models.SET_NULL,
                                          null=True,

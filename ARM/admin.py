@@ -20,8 +20,21 @@ class RackAdmin(admin.ModelAdmin):
     list_filter = ["station"]
 
 
+class DeviceForm(forms.ModelForm):
+    model = Device
+
+    def clean_inventory_number(self):
+        inventory_number = self.cleaned_data.get("inventory_number")
+        if inventory_number:
+            if not inventory_number.isnumeric():
+                raise ValidationError("Инвентарный номер должен состоять из цифр"
+                                      " . Если у прибора нет инв. номера, оставьте поле пустым")
+        return inventory_number
+
+
 @admin.register(Device)
 class DeviceAdmin(admin.ModelAdmin):
+    form = DeviceForm
     readonly_fields = ("next_check_date",)
     actions = [export_as_xls]
     list_filter = ["station", "stock", "contact_type", "next_check_date"]
