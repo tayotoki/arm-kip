@@ -258,3 +258,22 @@ class MechanicReport(models.Model):
 
     def __str__(self):
         return f"ст. {self.station.name} - отчет N {self.pk}"
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(User,
+                               null=True,
+                               on_delete=models.SET_NULL,
+                               related_name="author",
+                               verbose_name="Автор")
+                               
+    mech_report = models.ForeignKey(MechanicReport, on_delete=models.CASCADE, verbose_name="Отчет")
+    text = models.TextField(max_length=150, verbose_name="Комментарий")
+    published = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
+
+    class Meta:
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Комментарии"
+
+    def __str__(self):
+        return f"Комментарий к {self.mech_report}"

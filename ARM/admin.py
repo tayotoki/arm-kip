@@ -1,17 +1,18 @@
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django import forms
-from django.forms import TextInput, Textarea, models
+from django.forms import TextInput, Textarea, models, widgets, HiddenInput
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import format_html
 from django.utils.http import urlencode
+from django.utils.safestring import mark_safe
 from datetime import date
 #
 # from import_export import resources
 # from import_export.admin import ImportExportModelAdmin
 
-from .models import Station, Device, Rack, Place, Stock, AVZ, MechanicReport, Tipe
+from .models import Station, Device, Rack, Place, Stock, AVZ, MechanicReport, Tipe, Comment
 from ARM.actions import export_as_xls
 
 
@@ -163,8 +164,50 @@ class MechanicReportForm(forms.ModelForm):
         return super().clean()
 
 
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "author", "mech_report", "published")
+    readonly_fields = ("author", "published")
+    fields = ("text", *readonly_fields)
+
+    def has_change_permission(self, request, obj=None):
+        if obj is not None:
+            return request.user == obj.author
+        return False
+
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        return super().save_model(request, obj, form, change)
+
+
+class ReportCommentInline(admin.TabularInline):
+    model = Comment
+    extra = 0
+    fields = ("text", "author", "published")
+    readonly_fields = ("published",)
+    can_delete = False
+    show_change_link = True
+
+    def has_change_permission(self, request, obj=None):
+        return False
+    
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super().get_formset(request, obj=obj, **kwargs)
+        form = formset.form
+
+        class CommentForm(form):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.fields["author"].initial = request.user
+                self.fields["author"].widget = widgets.HiddenInput()
+                
+        formset.form = CommentForm
+        return formset
+
+
 @admin.register(MechanicReport)
 class MechanicReportAdmin(admin.ModelAdmin):
+    inlines = [ReportCommentInline]
     form = MechanicReportForm
     readonly_fields = ("devices_links", "user", "created", "modified")
     autocomplete_fields = ("devices",)

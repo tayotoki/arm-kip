@@ -24,5 +24,5 @@ admin.site.site_title = "АРМ-КИП"
 admin.site.index_title = "АРМ-КИП"
 
 urlpatterns = [
-    path('kip/', admin.site.urls),
+    path('', admin.site.urls),
 ]
