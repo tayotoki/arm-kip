@@ -166,9 +166,14 @@ class MechanicReportForm(forms.ModelForm):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "author", "mech_report", "published")
-    readonly_fields = ("author", "published")
-    fields = ("text", *readonly_fields)
+    list_display = ("author", "get_short_text", "mech_report", "published")
+    readonly_fields = ("author", "get_short_text", "published")
+    fields = ("text", readonly_fields[0], readonly_fields[2])
+
+    def get_short_text(self, obj):
+        return obj.text[:10]
+
+    get_short_text.short_description = "Комментарий"
 
     def has_change_permission(self, request, obj=None):
         if obj is not None:
