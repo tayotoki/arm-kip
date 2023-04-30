@@ -140,7 +140,10 @@ class Device(models.Model):
                                     help_text="Начните вводить тип прибора "
                                               "и выберите нужное значение "
                                               "из списка")
-    contact_type = models.CharField(null=True, verbose_name="Наличие контактов", max_length=20, choices=CONTACT_TYPE_CHOICES)
+    contact_type = models.CharField(null=True,
+                                    verbose_name="Наличие контактов",
+                                    max_length=20,
+                                    choices=CONTACT_TYPE_CHOICES)
     name = models.CharField(verbose_name="Название", max_length=20, blank=True)
     inventory_number = models.CharField(max_length=30, verbose_name="Инв. номер", null=True, blank=True)
     mounting_address = models.ForeignKey(Place,

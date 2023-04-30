@@ -84,6 +84,7 @@ class DevicesAdmin(admin.StackedInline):
     readonly_fields = fields
     can_delete = False
     extra = 0
+    empty_value_display = "--"
 
     def device_link(self, obj):
         attr = f"{obj.name if obj.name else '--'} /"\
@@ -154,26 +155,35 @@ class StockAdmin(admin.ModelAdmin):
 class MechanicReportForm(forms.ModelForm):
     def clean(self):
         devices = self.cleaned_data.get("devices")
-        for device in devices:
-            if device.station != self.cleaned_data.get("station"):
-                raise ValidationError(f"Прибор {device.name} (тип: {device.device_type}) "
-                                      f"(инв. номер: {device.inventory_number}) "
-                                      f"не находится на станции " 
-                                      f"{(self.cleaned_data.get('station') if self.cleaned_data.get('station') else '')}. "
-                                      f"Возможно вы имели ввиду станцию {device.station}?")
+        if devices:
+            for device in devices:
+                if device.station != self.cleaned_data.get("station"):
+                    raise ValidationError(f"Прибор {device.name} (тип: {device.device_type}) "
+                                          f"(инв. номер: {device.inventory_number}) "
+                                          f"не находится на станции " 
+                                          f"{(self.cleaned_data.get('station') if self.cleaned_data.get('station') else '')}. "
+                                          f"Возможно вы имели ввиду станцию {device.station}?")
         return super().clean()
 
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("author", "get_short_text", "mech_report", "published")
+    list_display = ("author", "get_short_text", "report_link", "published")
     readonly_fields = ("author", "get_short_text", "published")
     fields = ("text", readonly_fields[0], readonly_fields[2])
 
     def get_short_text(self, obj):
         return obj.text[:10]
 
+    def report_link(self, obj):
+        obj = obj.mech_report
+        return format_html('<a href="{0}">{1}</a>'.format(
+            reverse('admin:ARM_mechanicreport_change', args=(obj.pk,)),
+            obj
+        ))
+
     get_short_text.short_description = "Комментарий"
+    report_link.short_description = "Ссылка на отчет"
 
     def has_change_permission(self, request, obj=None):
         if obj is not None:
@@ -185,7 +195,7 @@ class CommentAdmin(admin.ModelAdmin):
         return super().save_model(request, obj, form, change)
 
 
-class ReportCommentInline(admin.TabularInline):
+class ReportCommentInline(admin.StackedInline):
     model = Comment
     extra = 0
     fields = ("text", "author", "published")
