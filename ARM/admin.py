@@ -1,3 +1,7 @@
+from functools import reduce
+from operator import or_, and_
+
+from django.db.models import Q
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django import forms
@@ -119,8 +123,32 @@ class AVZAdmin(admin.ModelAdmin):
 @admin.register(Place)
 class PlaceAdmin(admin.ModelAdmin):
     inlines = [DevicesAdmin]
-    search_fields = ("rack__number",)
+    search_fields = ("rack__number", "number")
     autocomplete_fields = ("rack",)
+
+    def get_search_results(self, request, queryset, search_term):
+        orig_queryset = queryset
+        queryset, use_distinct = super().get_search_results(request, queryset, search_term)
+        search_words = search_term.split("-")
+        if search_words:
+            if len(search_words) == 2:
+                q_objects = [
+                    Q(**{field + "__exact": word})
+                    for field, word in {self.search_fields[0]: search_words[0],
+                                        self.search_fields[1]: search_words[1]}.items()
+                ]
+                queryset |= self.model.objects.filter(reduce(and_, q_objects))
+            else:
+                q_objects = [
+                    Q(**{field + "__icontains": word})
+                    for field in self.search_fields
+                    for word in search_words
+                ]
+                queryset |= self.model.objects.filter(reduce(or_, q_objects))
+
+        queryset = queryset & orig_queryset
+
+        return queryset, use_distinct
 
 
 @admin.register(Station)

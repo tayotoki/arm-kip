@@ -6,6 +6,7 @@ from .export_excel import ExportExcelAction
 from openpyxl.styles import Font
 from unidecode import unidecode
 
+
 def style_output_file(file):
     black_font = Font(color='000000', bold=True)
     for cell in file["1:1"]:
@@ -18,13 +19,16 @@ def style_output_file(file):
 
     return file
 
+
 def convert_data_date(value):
     return value.strftime('%d/%m/%Y')
+
 
 def convert_boolean_field(value):
     if value:
         return 'Yes'
     return 'No'
+
 
 def export_as_xls(self, request, queryset):
     if not request.user.is_staff:
@@ -57,4 +61,6 @@ def export_as_xls(self, request, queryset):
     response['Content-Disposition'] = f'attachment; filename={file_name}.xlsx'
     wb.save(response)
     return response
+
+
 export_as_xls.short_description = "Экспортировать в Excel"
