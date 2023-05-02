@@ -1,6 +1,7 @@
 from functools import reduce
 from operator import or_, and_
 
+from django.contrib.admin import AdminSite
 from django.db.models import Q
 from django.contrib import admin
 from django.core.exceptions import ValidationError
@@ -18,6 +19,9 @@ from datetime import date
 
 from .models import Station, Device, Rack, Place, Stock, AVZ, MechanicReport, Tipe, Comment
 from ARM.actions import export_as_xls
+
+
+AdminSite.empty_value_display = '--'
 
 
 @admin.register(Rack)
@@ -64,6 +68,13 @@ class DeviceAdmin(admin.ModelAdmin):
         year = check_date.year + obj.frequency_of_check
         obj.next_check_date = date(year=year, month=check_date.month, day=check_date.day)
         return super().save_model(request, obj, form, change)
+
+    def get_search_results(self, request, queryset, search_term):
+        queryset, may_have_duplicates = super().get_search_results(
+            request, queryset, search_term
+        )
+        queryset |= self.model.objects.filter(name__iregex=search_term)
+        return queryset, may_have_duplicates
 
 
 class AVZInlineAdmin(admin.StackedInline):
@@ -248,16 +259,37 @@ class ReportCommentInline(admin.StackedInline):
         return formset
 
 
+class DevicesReportInline(admin.TabularInline):
+    model = MechanicReport.devices.through
+    extra = 0
+
+    def has_add_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+
 @admin.register(MechanicReport)
 class MechanicReportAdmin(admin.ModelAdmin):
-    inlines = [ReportCommentInline]
+    inlines = [DevicesReportInline, ReportCommentInline]
     form = MechanicReportForm
     readonly_fields = ("devices_links", "user", "created", "modified")
     autocomplete_fields = ("devices",)
-    list_display = ("__str__", "title", "station", *readonly_fields)
+    list_display = ("__str__", "title", "station", *readonly_fields, "devices_l")
     list_display_links = list_display
     search_fields = ("user__username", "station__name")
     search_help_text = ("Введите имя пользователя или станцию для поиска")
+
+    def devices_l(self, obj):
+        device_changelist_url = reverse("admin:ARM_device_changelist")
+        device_links = [f'<a href="{device_changelist_url}?id={d.id}">{d}</a>' for d in obj.devices.all()]
+        return format_html(' || '.join(device_links))
+
+    devices_l.short_description = "связанные устройства"
 
     def devices_links(self, obj):
         count = obj.devices.count()

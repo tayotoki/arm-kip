@@ -1,7 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User, Group
+from django.urls import reverse
 from django.utils import timezone
+from django.utils.html import format_html
 
 
 class Stock(models.Model):
@@ -100,7 +102,8 @@ class Place(models.Model): # место прибора
         verbose_name_plural = "Места"
 
     def __str__(self):
-        return (f"({self.rack.station.__str__()[:5]})"
+        station_name = self.rack.station.__str__()[:5]
+        return (f"({station_name})"
                f"{self.rack.number}-{self.number}")
 
 
@@ -225,24 +228,11 @@ class Device(models.Model):
                     raise ValidationError("Уберите монтажный адрес")
 
     def __str__(self):
-        return f'{self.name}({self.device_type}){self.mounting_address}'
+        return (f'{self.name}({self.device_type}){self.mounting_address}'
+                if self.mounting_address else f'{self.name}({self.device_type})')
 
-
+    
 class MechanicReport(models.Model):
-    MONTHES = {
-        1: "Январь",
-        2: "Февраль",
-        3: "Март",
-        4: "Апрель",
-        5: "Май",
-        6: "Июнь",
-        7: "Август",
-        8: "Сентябрь",
-        9: "Октябрь",
-        10: "Ноябрь",
-        11: "Декабрь",
-    }
-
     title = models.CharField(max_length=30, verbose_name="Заголовок", blank=True, help_text="Краткое пояснение, "
                                                             "например 'просрок', 'заменить в этом месяце' и т.д. "
                                                             "Не более 30 символов")
