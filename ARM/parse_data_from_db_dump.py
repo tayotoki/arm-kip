@@ -55,7 +55,7 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
     #     print(type_)
     #     if type_ != 'null':
     #         tipes_fixture.append({
-    #             "model": "ARM.Tipe",
+    #             "model": "admin.Tipe",
     #             "pk": type_id,
     #             "fields": {
     #                 "name": f"{type_}"
@@ -93,7 +93,7 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
     #                     continue
     #                 racks_fixture.append(
     #                     {
-    #                         "model": "ARM.Rack",
+    #                         "model": "admin.Rack",
     #                         "pk": counter,
     #                         "fields": {
     #                             "station": station,
@@ -107,7 +107,7 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
     #                     continue
     #                 racks_fixture.append(
     #                     {
-    #                         "model": "ARM.Rack",
+    #                         "model": "admin.Rack",
     #                         "pk": counter,
     #                         "fields": {
     #                             "station": station,
@@ -119,7 +119,7 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
     #         else:
     #             racks_fixture.append(
     #                 {
-    #                     "model": "ARM.Rack",
+    #                     "model": "admin.Rack",
     #                     "pk": counter,
     #                     "fields": {
     #                         "station": station,

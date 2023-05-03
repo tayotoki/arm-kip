@@ -73,7 +73,8 @@ class DeviceAdmin(admin.ModelAdmin):
         queryset, may_have_duplicates = super().get_search_results(
             request, queryset, search_term
         )
-        queryset |= self.model.objects.filter(name__iregex=search_term)
+        if search_term:
+            queryset |= self.model.objects.filter(name__iregex=search_term)
         return queryset, may_have_duplicates
 
 
@@ -196,6 +197,8 @@ class MechanicReportForm(forms.ModelForm):
         devices = self.cleaned_data.get("devices")
         if devices:
             for device in devices:
+                if not device.station:
+                    raise ValidationError(f"Прибор {device.__str__()} скорее всего на складе.")
                 if device.station != self.cleaned_data.get("station"):
                     raise ValidationError(f"Прибор {device.name} (тип: {device.device_type}) "
                                           f"(инв. номер: {device.inventory_number}) "
@@ -262,6 +265,32 @@ class ReportCommentInline(admin.StackedInline):
 class DevicesReportInline(admin.TabularInline):
     model = MechanicReport.devices.through
     extra = 0
+    readonly_fields = ("button", "get_status", "get_current_date", "get_next_date")
+    verbose_name_plural = "Приборы в отчете"
+    verbose_name = "Прибор"
+
+    def button(self, obj):
+        device = Device.objects.get(id=obj.device_id)
+        if device.station or device.avz:
+            return mark_safe(
+                f'<a class="button" href="#" onclick="update_device_ajax({device.id})">Прибор заменен</a>'
+            )
+        elif device.stock:
+            return "Прибор на складе"
+
+    def get_current_date(self, obj):
+        date = Device.objects.get(id=obj.device_id).current_check_date.strftime("%d.%m.%Y")
+        return date
+
+    def get_next_date(self, obj):
+        date = Device.objects.get(id=obj.device_id).next_check_date.strftime("%d.%m.%Y")
+        return date
+
+    def get_status(self, obj):
+        return Device.objects.get(id=obj.device_id).status
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
     def has_add_permission(self, request, obj):
         return False
@@ -269,15 +298,15 @@ class DevicesReportInline(admin.TabularInline):
     def has_delete_permission(self, request, obj=None):
         return False
 
-    def has_change_permission(self, request, obj=None):
-        return False
+    class Media:
+        js = ["admin/js/update_device_ajax.js"]
 
 
 @admin.register(MechanicReport)
 class MechanicReportAdmin(admin.ModelAdmin):
     inlines = [DevicesReportInline, ReportCommentInline]
     form = MechanicReportForm
-    readonly_fields = ("devices_links", "user", "created", "modified")
+    readonly_fields = ("user", "created", "modified")
     autocomplete_fields = ("devices",)
     list_display = ("__str__", "title", "station", *readonly_fields, "devices_l")
     list_display_links = list_display
@@ -289,18 +318,7 @@ class MechanicReportAdmin(admin.ModelAdmin):
         device_links = [f'<a href="{device_changelist_url}?id={d.id}">{d}</a>' for d in obj.devices.all()]
         return format_html(' || '.join(device_links))
 
-    devices_l.short_description = "связанные устройства"
-
-    def devices_links(self, obj):
-        count = obj.devices.count()
-        url = (
-            reverse("admin:ARM_device_changelist")
-            + "?"
-            + urlencode({"devices": f"{obj.devices}"})
-        )
-        return format_html('<a href="{}">Приборы ({} шт.)</a>', url, count)
-
-    devices_links.short_description = "Ссылка на приборы"
+    devices_l.short_description = "Приборы в отчете"
 
     def save_model(self, request, obj, form, change):
         obj.user = request.user
@@ -310,3 +328,11 @@ class MechanicReportAdmin(admin.ModelAdmin):
 @admin.register(Tipe)
 class TipeAdmin(admin.ModelAdmin):
     search_fields = ("name",)
+
+    def get_search_results(self, request, queryset, search_term):
+        queryset, may_have_duplicates = super().get_search_results(
+            request, queryset, search_term
+        )
+        if search_term:
+            queryset |= self.model.objects.filter(name__iregex=search_term)
+        return queryset, may_have_duplicates

@@ -108,22 +108,22 @@ class Place(models.Model): # место прибора
 
 
 class Device(models.Model):
-    READY = "ready"
-    SEND = "send"
-    OVERDUE = "overdue"
-    NORMAL = "normal"
-    IN_PROGRESS = "in_progress"
-    DECOMMISIONED = "decommissioned"
-    REPLACED = "replaced"
+    ready = "нужна замена"
+    send = "отправлен"
+    overdue = "просрочен"
+    normal = "сроки в норме"
+    in_progress = "готовится"
+    decommissioned = "списан"
+    replaced = "заменен"
 
     CHOICES = [
-        (READY, "нужна замена"),
-        (SEND, "отправлен"),
-        (OVERDUE, "просрочен"),
-        (NORMAL, "сроки в норме"),
-        (IN_PROGRESS, "готовится"),
-        (DECOMMISIONED, "списан"),
-        (REPLACED, "заменен"),
+        (ready, "нужна замена"),
+        (send, "отправлен"),
+        (overdue, "просрочен"),
+        (normal, "сроки в норме"),
+        (in_progress, "готовится"),
+        (decommissioned, "списан"),
+        (replaced, "заменен"),
     ]
 
     CONTACT_TYPE_CHOICES = [
@@ -134,7 +134,7 @@ class Device(models.Model):
     station = models.ForeignKey(Station, null=True, blank=True, verbose_name="Станция", on_delete=models.SET_NULL)
     avz = models.ForeignKey(AVZ, null=True, blank=True, verbose_name="АВЗ", on_delete=models.SET_NULL)
     stock = models.ForeignKey(Stock, null=True, blank=True, on_delete=models.SET_NULL, verbose_name="Склад")
-    status = models.CharField(verbose_name="Статус", max_length=20, choices=CHOICES, blank=True)
+    status = models.CharField(verbose_name="Статус", max_length=20, choices=CHOICES, blank=True, null=True)
     device_type = models.ForeignKey(Tipe,
                                     null=True,
                                     on_delete=models.SET_NULL,
@@ -147,7 +147,7 @@ class Device(models.Model):
                                     verbose_name="Наличие контактов",
                                     max_length=20,
                                     choices=CONTACT_TYPE_CHOICES)
-    name = models.CharField(verbose_name="Название", max_length=20, blank=True)
+    name = models.CharField(verbose_name="Название", max_length=20, blank=True, null=True)
     inventory_number = models.CharField(max_length=30, verbose_name="Инв. номер", null=True, blank=True)
     mounting_address = models.ForeignKey(Place,
                                          on_delete=models.SET_NULL,
@@ -156,7 +156,7 @@ class Device(models.Model):
                                          verbose_name="Монтажный адрес",
                                          help_text="Введите статив и выберите нужный адрес из списка")
     manufacture_date = models.DateField(verbose_name='дата производства', null=True)
-    frequency_of_check = models.IntegerField(verbose_name='периодичность проверки', null=True, default=0)
+    frequency_of_check = models.PositiveIntegerField(verbose_name='периодичность проверки', null=True, default=0)
     who_prepared = models.ForeignKey(User,
                                      verbose_name='кто готовил',
                                      on_delete=models.SET_NULL,
@@ -169,8 +169,8 @@ class Device(models.Model):
                                     null=True,
                                     blank=True,
                                     related_name='checker')
-    current_check_date = models.DateField(verbose_name='дата проверки')
-    next_check_date = models.DateField(verbose_name='дата следующей проверки')
+    current_check_date = models.DateField(verbose_name='дата проверки', null=True)
+    next_check_date = models.DateField(verbose_name='дата следующей проверки', null=True)
 
     class Meta:
         verbose_name = "Прибор"
@@ -229,7 +229,11 @@ class Device(models.Model):
 
     def __str__(self):
         return (f'{self.name}({self.device_type}){self.mounting_address}'
-                if self.mounting_address else f'{self.name}({self.device_type})')
+                if self.mounting_address else f'{self.name}({self.device_type})'
+                if self.name else f'({self.device_type})({self.inventory_number if self.inventory_number else "--"})')
+
+    def get_admin_change_url(self):
+        return reverse("admin:ARM_device_change", args=(self.id,))
 
     
 class MechanicReport(models.Model):
