@@ -13,6 +13,7 @@ from django.utils.html import format_html
 from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
 from datetime import date
+from django.utils.datetime_safe import strftime
 #
 # from import_export import resources
 # from import_export.admin import ImportExportModelAdmin
@@ -21,6 +22,7 @@ from .models import Station, Device, Rack, Place, Stock, AVZ, MechanicReport, Ti
 from ARM.actions import export_as_xls
 
 
+AdminSite.site_url = ''
 AdminSite.empty_value_display = '--'
 
 
@@ -239,11 +241,29 @@ class CommentAdmin(admin.ModelAdmin):
 
 class ReportCommentInline(admin.StackedInline):
     model = Comment
-    extra = 0
-    fields = ("text", "author", "published")
-    readonly_fields = ("published",)
+    extra = 1
+    fields = ("text", "author", "published", "published_but")
+    readonly_fields = ("published", "published_but")
     can_delete = False
     show_change_link = True
+    widgets = {
+        "text": Textarea(attrs={
+            "cols": 80,
+            "rows": 10,
+            "id": "comment_text"
+        })
+    }
+
+    def published_but(self, obj):
+        if obj.id:
+            return obj.author.username.upper()
+        mech_report_id = obj.mech_report.id
+        return mark_safe(
+            f'<a class="button" href="javascript://" onclick="create_comment_ajax({mech_report_id})">Опубликовать</a>'
+        )
+
+    published_but.short_description = ""
+    published_but.allow_tags = True
 
     def has_change_permission(self, request, obj=None):
         return False
@@ -257,9 +277,12 @@ class ReportCommentInline(admin.StackedInline):
                 super().__init__(*args, **kwargs)
                 self.fields["author"].initial = request.user
                 self.fields["author"].widget = widgets.HiddenInput()
-                
+
         formset.form = CommentForm
         return formset
+
+    class Media:
+        js = ["admin/js/create_comment_ajax.js"]
 
 
 class DevicesReportInline(admin.TabularInline):
@@ -273,7 +296,7 @@ class DevicesReportInline(admin.TabularInline):
         device = Device.objects.get(id=obj.device_id)
         if device.station or device.avz:
             return mark_safe(
-                f'<a class="button" href="#" onclick="update_device_ajax({device.id})">Прибор заменен</a>'
+                f'<a class="button" href="javascript://" onclick="update_device_ajax({device.id})">Прибор заменен</a>'
             )
         elif device.stock:
             return "Прибор на складе"
@@ -287,7 +310,15 @@ class DevicesReportInline(admin.TabularInline):
         return date
 
     def get_status(self, obj):
-        return Device.objects.get(id=obj.device_id).status
+        status = Device.objects.get(id=obj.device_id).status
+        if status:
+            return status
+        return AdminSite.empty_value_display
+
+    button.short_description = "отметить замену прибора"
+    get_status.short_description = "статус"
+    get_current_date.short_description = "дата проверки"
+    get_next_date.short_description = "дата замены"
 
     def has_change_permission(self, request, obj=None):
         return False

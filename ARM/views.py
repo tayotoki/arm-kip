@@ -1,7 +1,9 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .models import Device, Stock
+from .models import Device, Stock, Comment, MechanicReport
 from django.db.utils import IntegrityError
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 
 def update_device(request, device_id):
@@ -30,4 +32,17 @@ def update_device(request, device_id):
             "stock",
             "mounting_address",
         ])
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def create_comment(request, mech_report_id):
+    if request.method == "POST":
+        if request.POST.get("text"):
+            Comment.objects.create(
+                author=request.user,
+                text=request.POST.get("text"),
+                mech_report=MechanicReport.objects.get(id=mech_report_id),
+            )
+        else:
+            raise ValidationError("Пустой комментарий")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
