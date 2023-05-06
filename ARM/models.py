@@ -105,6 +105,26 @@ class Place(models.Model): # место прибора
         station_name = self.rack.station.__str__()[:5]
         return (f"({station_name})"
                f"{self.rack.number}-{self.number}")
+    
+
+class KipReport(models.Model):
+    title = models.CharField(max_length=100,
+                             verbose_name="Заголовок")
+    author = models.ForeignKey(User,
+                               null=True,
+                               on_delete=models.SET_NULL,
+                               related_name="creator",
+                               verbose_name="Автор")
+    explanation = models.TextField(max_length=300, verbose_name="Пояснение", blank=True)
+    created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создан")
+    modified = models.DateTimeField(auto_now=True, editable=False, verbose_name="Изменен")
+
+    class Meta:
+        verbose_name = "Отчет КИП"
+        verbose_name_plural = "Отчеты КИП"
+
+    def __str__(self):
+        return f"Отчет КИП N {self.pk}"
 
 
 class Device(models.Model):
@@ -134,6 +154,12 @@ class Device(models.Model):
     station = models.ForeignKey(Station, null=True, blank=True, verbose_name="Станция", on_delete=models.SET_NULL)
     avz = models.ForeignKey(AVZ, null=True, blank=True, verbose_name="АВЗ", on_delete=models.SET_NULL)
     stock = models.ForeignKey(Stock, null=True, blank=True, on_delete=models.SET_NULL, verbose_name="Склад")
+    kip_report = models.ForeignKey(KipReport,
+                                   null=True,
+                                   blank=True,
+                                   on_delete=models.SET_NULL,
+                                   related_name="kip_report",
+                                   verbose_name="Присутствует в отчете КИП")
     status = models.CharField(verbose_name="Статус", max_length=20, choices=CHOICES, blank=True, null=True)
     device_type = models.ForeignKey(Tipe,
                                     null=True,
@@ -274,3 +300,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.author}"
+
+

@@ -14,11 +14,17 @@ from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
 from datetime import date
 from django.utils.datetime_safe import strftime
-#
-# from import_export import resources
-# from import_export.admin import ImportExportModelAdmin
 
-from .models import Station, Device, Rack, Place, Stock, AVZ, MechanicReport, Tipe, Comment
+from .models import (Station,
+                     Device,
+                     Rack,
+                     Place,
+                     Stock,
+                     AVZ,
+                     MechanicReport,
+                     Tipe,
+                     Comment,
+                     KipReport)
 from ARM.actions import export_as_xls
 
 
@@ -367,3 +373,30 @@ class TipeAdmin(admin.ModelAdmin):
         if search_term:
             queryset |= self.model.objects.filter(name__iregex=search_term)
         return queryset, may_have_duplicates
+
+
+class DeviceReportKipForm(forms.ModelForm):
+    model = Device
+    fields = ("name", "status", "mounting_address")
+
+
+
+class DeviceKipReportInline(admin.TabularInline):
+    model = Device
+    form = DeviceReportKipForm
+    extra = 0
+    readonly_fields = (
+        "device_type",
+        "inventory_number",
+        "mounting_address",
+        "status",
+        "current_check_date",
+        "next_check_date",
+    )
+
+
+@admin.register(KipReport)
+class KipReportAdmin(admin.ModelAdmin):
+    inlines = [DeviceKipReportInline]
+    fields = ("title", "author", "explanation")
+
