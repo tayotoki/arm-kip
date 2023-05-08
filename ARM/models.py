@@ -105,26 +105,6 @@ class Place(models.Model): # место прибора
         station_name = self.rack.station.__str__()[:5]
         return (f"({station_name})"
                f"{self.rack.number}-{self.number}")
-    
-
-class KipReport(models.Model):
-    title = models.CharField(max_length=100,
-                             verbose_name="Заголовок")
-    author = models.ForeignKey(User,
-                               null=True,
-                               on_delete=models.SET_NULL,
-                               related_name="creator",
-                               verbose_name="Автор")
-    explanation = models.TextField(max_length=300, verbose_name="Пояснение", blank=True)
-    created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создан")
-    modified = models.DateTimeField(auto_now=True, editable=False, verbose_name="Изменен")
-
-    class Meta:
-        verbose_name = "Отчет КИП"
-        verbose_name_plural = "Отчеты КИП"
-
-    def __str__(self):
-        return f"Отчет КИП N {self.pk}"
 
 
 class Device(models.Model):
@@ -154,12 +134,6 @@ class Device(models.Model):
     station = models.ForeignKey(Station, null=True, blank=True, verbose_name="Станция", on_delete=models.SET_NULL)
     avz = models.ForeignKey(AVZ, null=True, blank=True, verbose_name="АВЗ", on_delete=models.SET_NULL)
     stock = models.ForeignKey(Stock, null=True, blank=True, on_delete=models.SET_NULL, verbose_name="Склад")
-    kip_report = models.ForeignKey(KipReport,
-                                   null=True,
-                                   blank=True,
-                                   on_delete=models.SET_NULL,
-                                   related_name="kip_report",
-                                   verbose_name="Присутствует в отчете КИП")
     status = models.CharField(verbose_name="Статус", max_length=20, choices=CHOICES, blank=True, null=True)
     device_type = models.ForeignKey(Tipe,
                                     null=True,
@@ -195,7 +169,7 @@ class Device(models.Model):
                                     null=True,
                                     blank=True,
                                     related_name='checker')
-    current_check_date = models.DateField(verbose_name='дата проверки', null=True)
+    current_check_date = models.DateField(verbose_name='дата проверки', null=True, blank=True)
     next_check_date = models.DateField(verbose_name='дата следующей проверки', null=True)
 
     class Meta:
@@ -254,6 +228,8 @@ class Device(models.Model):
                     raise ValidationError("Уберите монтажный адрес")
 
     def __str__(self):
+        if self.avz:
+            return f'({self.device_type})({self.inventory_number if self.inventory_number else "--"})({self.avz.__str__()})'
         return (f'{self.name}({self.device_type}){self.mounting_address}'
                 if self.mounting_address else f'{self.name}({self.device_type})'
                 if self.name else f'({self.device_type})({self.inventory_number if self.inventory_number else "--"})')
@@ -301,4 +277,50 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.author}"
 
+
+class KipReport(models.Model):
+    title = models.CharField(max_length=100,
+                             verbose_name="Заголовок",
+                             null=True,
+                             blank=True)
+    author = models.ForeignKey(User,
+                               null=True,
+                               on_delete=models.SET_NULL,
+                               related_name="creator",
+                               verbose_name="Автор")
+    devices = models.ManyToManyField(Device,
+                                     related_name="kip_devices",
+                                     verbose_name="Виртуальный ящик",
+                                     help_text="Поиск по инвентарному номеру прибора или по типу",
+                                     through="DeviceKipReport")
+    explanation = models.TextField(max_length=300, verbose_name="Пояснение", blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создан")
+    modified = models.DateTimeField(auto_now=True, editable=False, verbose_name="Изменен")
+
+    class Meta:
+        verbose_name = "Отчет КИП"
+        verbose_name_plural = "Отчеты КИП"
+
+    def __str__(self):
+        return f"Отчет КИП N {self.pk}"
+
+    def get_devices(self):
+        return Device.objects.filter(stock=Stock.objects.get(pk=1))
+
+
+class DeviceKipReport(models.Model):
+    kip_report = models.ForeignKey(KipReport, on_delete=models.CASCADE, verbose_name="Текущий отчет")
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name="Прибор")
+    station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name="Станция", null=True)
+    mounting_address = models.CharField(max_length=10,
+                                        verbose_name="Монтажный адрес или АВЗ",
+                                        help_text="Если прибор готовится в АВЗ какой-то станции, "
+                                                  "укажите станцию и впишите в это поле 'авз'.")
+
+    class Meta:
+        verbose_name = "Прибор"
+        verbose_name_plural = "Ящик"
+
+    def __str__(self):
+        return f"{self.device} на {self.station}({self.mounting_address})"
 

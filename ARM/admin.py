@@ -1,6 +1,9 @@
+import re
+
 from functools import reduce
 from operator import or_, and_
 
+from django.contrib import messages
 from django.contrib.admin import AdminSite
 from django.db.models import Q
 from django.contrib import admin
@@ -24,7 +27,8 @@ from .models import (Station,
                      MechanicReport,
                      Tipe,
                      Comment,
-                     KipReport)
+                     KipReport,
+                     DeviceKipReport)
 from ARM.actions import export_as_xls
 
 
@@ -73,8 +77,9 @@ class DeviceAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         check_date = form.cleaned_data["current_check_date"]
-        year = check_date.year + obj.frequency_of_check
-        obj.next_check_date = date(year=year, month=check_date.month, day=check_date.day)
+        if check_date:
+            year = check_date.year + obj.frequency_of_check
+            obj.next_check_date = date(year=year, month=check_date.month, day=check_date.day)
         return super().save_model(request, obj, form, change)
 
     def get_search_results(self, request, queryset, search_term):
@@ -375,28 +380,127 @@ class TipeAdmin(admin.ModelAdmin):
         return queryset, may_have_duplicates
 
 
-class DeviceReportKipForm(forms.ModelForm):
-    model = Device
-    fields = ("name", "status", "mounting_address")
+class DeviceKipReportForm(forms.ModelForm):
+    def clean_device(self):
+        device = self.cleaned_data.get("device")
+        if device:
+            if device.stock is None:
+                raise ValidationError("Вы выбрали прибор со станции, а не со склада, "
+                                      "У приборов на складе нет названия и монтажного адреса")
+        return device
 
+    def clean_mounting_address(self):
+        mounting_address = self.cleaned_data.get("mounting_address")
+        if "-" not in mounting_address and not mounting_address.lower() == "авз":
+            raise ValidationError("Вы ввели некорректный монтажный адрес, "
+                                  "принимаются данные ввиде ссс-ммм"
+                                  ", где ссс - номер статива, ммм - номер места на стативе"
+                                  ". Например 27-712, 110-811, ПВ1-51, тоннель-стрелка №1")
+        return mounting_address
+
+    def clean(self):
+        device = self.cleaned_data.get("device")
+        station = self.cleaned_data.get("station")
+        mounting_address = self.cleaned_data.get("mounting_address")
+        if station and mounting_address:
+            if mounting_address.lower() == "авз":
+                try:
+                    devices_in_avz = AVZ.objects.get(station=station).device_set.all()
+                except AVZ.DoesNotExist:
+                    raise ValidationError("Такого АВЗ не существует")
+                else:
+                    for avz_device in devices_in_avz:
+                        if device.device_type == avz_device.device_type:
+                            break
+                    else:
+                        raise ValidationError(f"Приборов типа {device.device_type} нет в АВЗ "
+                                              f"станции {station.__str__()}")
+            else:
+                rack, number = mounting_address.strip().split("-")
+                try:
+                    existing_rack = Rack.objects.get(station=station, number=rack)
+                except Rack.DoesNotExist:
+                    raise ValidationError(f"Статива {rack} нет на станции {station}")
+                else:
+                    try:
+                        existing_place = Place.objects.get(rack=existing_rack, number=number)
+                    except Place.DoesNotExist:
+                        raise ValidationError(f"Места {number} нет на стативе {rack} станции {station}\n."
+                                              f" Возможные места "
+                                              f"{sorted([obj.number for obj in list(existing_rack.place_set.all())])}")
+                    else:
+                        try:
+                            device_on_this_place = Device.objects.get(mounting_address=existing_place)
+                        except Device.DoesNotExist:
+                            pass
+                        except Device.MultipleObjectsReturned:
+                            pass
+                        else:
+                            if device.device_type != device_on_this_place.device_type:
+                                raise ValidationError(f"Прибор на месте {existing_place.__str__()} "
+                                                      f"{device_on_this_place.name} имеет тип " 
+                                                      f"{device_on_this_place.device_type}. "
+                                                      f"Прибор в ящике - {device.device_type}")
+        return super().clean()
 
 
 class DeviceKipReportInline(admin.TabularInline):
-    model = Device
-    form = DeviceReportKipForm
+    model = DeviceKipReport
+    form = DeviceKipReportForm
     extra = 0
-    readonly_fields = (
-        "device_type",
-        "inventory_number",
-        "mounting_address",
-        "status",
-        "current_check_date",
-        "next_check_date",
-    )
+    autocomplete_fields = ["device"]
+    readonly_fields = ("get_status",)
+    verbose_name = "прибор в ящик"
+    verbose_name_plural = "Собрать виртуальный ящик"
+
+    @admin.display(description="Статус")
+    def get_status(self, obj):
+        status = Device.objects.get(id=obj.device_id).status
+        if status:
+            return status
+        return AdminSite.empty_value_display
 
 
 @admin.register(KipReport)
 class KipReportAdmin(admin.ModelAdmin):
     inlines = [DeviceKipReportInline]
-    fields = ("title", "author", "explanation")
+    readonly_fields = ("author",)
+
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        return super().save_model(request, obj, form, change)
+
+    # def save_formset(self, request, form, formset, change):
+    #     instances = formset.save(commit=False)
+    #     for instance in instances:
+    #         if instance.mounting_address.lower() == "авз":
+    #             ...
+    #         else:
+    #             rack, number = instance.mounting_address.strip().split("-")
+    #             try:
+    #                 place = Place.objects.get(
+    #                     rack__station=instance.station,
+    #                     rack__number=rack,
+    #                     number=number,
+    #                 )
+    #             except Place.DoesNotExist:
+    #                 pass
+    #             else:
+    #                 try:
+    #                     device_on_place = Device.objects.get(mounting_address=place)
+    #                 except Device.DoesNotExist:
+    #                     messages.warning(request, f"На месте {place.__str__()} сейчас нет прибора"
+    #                                               ". Вы уверены, что готовите прибор на нужное место? Уточните у механиков")
+    #                 else:
+    #                     form_device = Device.objects.get(pk=instance.device.pk)
+    #                     form_device.name = device_on_place.name
+    #                     form_device.status = "готовится"
+    #                     form_device.station = device_on_place.station
+    #                     form_device.avz = device_on_place.avz
+    #                     form_device.frequency_of_check = device_on_place.frequency_of_check
+    #                     form_device.mounting_address = device_on_place.mounting_address
+    #                     form_device.save()
+    #     formset.save()
+
+
 
