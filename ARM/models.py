@@ -187,7 +187,7 @@ class Device(models.Model):
             devices_on_address = self.mounting_address.device_set.all()
             devices_on_place = self.mounting_address.device_set.count()
 
-            if devices_on_place > 0 and self.status != "in_progress"\
+            if devices_on_place > 0 and self.status != self.in_progress\
                     and self not in devices_on_address:
                 raise ValidationError("На данном адресе уже установлен прибор, "
                                       "выберите другой адрес или измените статус на 'готовится'")
@@ -202,7 +202,15 @@ class Device(models.Model):
                 if not self.status and other_device_status == "in_progress":
                     raise ValidationError("Вы убираете на склад прибор, но оставляете место на стативе\
                                           пустым, зайдите на страницу места и исправьте ситуацию")
-                if self.status in ("normal", "overdue", "ready") and other_device_status not in ("send", "in_progress"):
+                if (self.status in (
+                    self.normal, self.overdue, self.ready
+                ) and other_device_status not in (
+                    self.send, self.in_progress
+                )) or (other_device_status in (
+                    self.normal, self.overdue, self.ready
+                ) and self.status not in (
+                    self.send, self.in_progress
+                )):
                     raise ValidationError("Указан неверный статус, оба прибора на складе или на стативе одновременно")
 
         if self.station:

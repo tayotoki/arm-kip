@@ -363,6 +363,8 @@ class MechanicReportAdmin(admin.ModelAdmin):
     devices_l.short_description = "Приборы в отчете"
 
     def save_model(self, request, obj, form, change):
+        if change:
+            return super().save_model(request, obj, form, change)
         obj.user = request.user
         return super().save_model(request, obj, form, change)
 
@@ -420,7 +422,9 @@ class DeviceKipReportForm(forms.ModelForm):
                 try:
                     existing_rack = Rack.objects.get(station=station, number=rack)
                 except Rack.DoesNotExist:
-                    raise ValidationError(f"Статива {rack} нет на станции {station}")
+                    raise ValidationError(f"Статива {rack} нет на станции {station}. "
+                                          f"Возможные стативы "
+                                          f"{sorted([rack.number for rack in station.rack_set.all()])}")
                 else:
                     try:
                         existing_place = Place.objects.get(rack=existing_rack, number=number)
@@ -444,12 +448,13 @@ class DeviceKipReportForm(forms.ModelForm):
         return super().clean()
 
 
-class DeviceKipReportInline(admin.TabularInline):
+class DeviceKipReportInline(admin.StackedInline):
     model = DeviceKipReport
     form = DeviceKipReportForm
     extra = 0
     autocomplete_fields = ["device"]
     readonly_fields = ("get_status",)
+    fields = (("device", "station", "mounting_address"), "get_status")
     verbose_name = "прибор в ящик"
     verbose_name_plural = "Собрать виртуальный ящик"
 
@@ -467,40 +472,58 @@ class KipReportAdmin(admin.ModelAdmin):
     readonly_fields = ("author",)
 
     def save_model(self, request, obj, form, change):
-        obj.user = request.user
+        if change:
+            return super().save_model(request, obj, form, change)
+        obj.author = request.user
         return super().save_model(request, obj, form, change)
 
-    # def save_formset(self, request, form, formset, change):
-    #     instances = formset.save(commit=False)
-    #     for instance in instances:
-    #         if instance.mounting_address.lower() == "авз":
-    #             ...
-    #         else:
-    #             rack, number = instance.mounting_address.strip().split("-")
-    #             try:
-    #                 place = Place.objects.get(
-    #                     rack__station=instance.station,
-    #                     rack__number=rack,
-    #                     number=number,
-    #                 )
-    #             except Place.DoesNotExist:
-    #                 pass
-    #             else:
-    #                 try:
-    #                     device_on_place = Device.objects.get(mounting_address=place)
-    #                 except Device.DoesNotExist:
-    #                     messages.warning(request, f"На месте {place.__str__()} сейчас нет прибора"
-    #                                               ". Вы уверены, что готовите прибор на нужное место? Уточните у механиков")
-    #                 else:
-    #                     form_device = Device.objects.get(pk=instance.device.pk)
-    #                     form_device.name = device_on_place.name
-    #                     form_device.status = "готовится"
-    #                     form_device.station = device_on_place.station
-    #                     form_device.avz = device_on_place.avz
-    #                     form_device.frequency_of_check = device_on_place.frequency_of_check
-    #                     form_device.mounting_address = device_on_place.mounting_address
-    #                     form_device.save()
-    #     formset.save()
+    def save_formset(self, request, form, formset, change):
+        form.user = request.user
+        instances = formset.save(commit=False)
+        for instance in instances:
+            form_device = Device.objects.get(pk=instance.device.pk)
+            avz = AVZ.objects.get(station=instance.station)
+            avz_true = False
+            if instance.mounting_address.lower() == "авз":
+                avz_true = True
+            else:
+                rack, number = instance.mounting_address.strip().split("-")
+                try:
+                    place = Place.objects.get(
+                        rack__station=instance.station,
+                        rack__number=rack,
+                        number=number,
+                    )
+                except Place.DoesNotExist:
+                    pass
+                else:
+                    try:
+                        device_on_place = Device.objects.get(mounting_address=place)
+                    except Device.DoesNotExist:
+                        messages.warning(request, f"На месте {place.__str__()} сейчас нет прибора"
+                                                  ". Вы уверены, что готовите прибор на нужное место? Уточните у механиков")
+                        form_device.status = form_device.in_progress
+                        form_device.station = instance.station
+                        if avz_true:
+                            form_device.avz = avz
+                        elif place:
+                            form_device.mounting_address = place
+                            form_device.name = "Без названия"
+                        for avz_device in avz.device_set.all():
+                            if avz_device.device_type == form_device.device_type:
+                                form_device.frequency_of_check = avz_device.frequency_of_check
+                            else:
+                                form_device.frequency_of_check = 1
+                    else:
+                        form_device.name = device_on_place.name
+                        form_device.status = form_device.in_progress
+                        form_device.station = device_on_place.station
+                        form_device.avz = device_on_place.avz
+                        form_device.frequency_of_check = device_on_place.frequency_of_check
+                        form_device.mounting_address = device_on_place.mounting_address
+                    form_device.save()
+        formset.save()
+        return super().save_formset(request, form, formset, change)
 
 
 
