@@ -116,6 +116,9 @@ class Device(models.Model):
     decommissioned = "списан"
     replaced = "заменен"
 
+    contact = "контактная"
+    contactless = "бесконтактная"
+
     CHOICES = [
         (ready, "нужна замена"),
         (send, "отправлен"),
@@ -127,8 +130,8 @@ class Device(models.Model):
     ]
 
     CONTACT_TYPE_CHOICES = [
-        ("contact", "контактная"),
-        ("contactless", "бесконтактная"),
+        (contact, "контактная"),
+        (contactless, "бесконтактная"),
     ]
 
     station = models.ForeignKey(Station, null=True, blank=True, verbose_name="Станция", on_delete=models.SET_NULL)
@@ -226,7 +229,7 @@ class Device(models.Model):
             if self.status:
                 raise ValidationError("Сделайте статус пустым, если хотите изменить статус - укажите станцию")
 
-        if self.device_type == "contact":
+        if self.contact_type == self.contact:
             if not self.inventory_number:
                 raise ValidationError("Укажите инвентарный номер для реле")
 

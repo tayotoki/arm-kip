@@ -71,7 +71,7 @@ class DeviceAdmin(admin.ModelAdmin):
     ]
     autocomplete_fields = ("mounting_address", "device_type")
     list_display_links = list_display
-    search_fields = ("name", "inventory_number")
+    search_fields = ("name", "inventory_number", "device_type__name")
     search_help_text = "Введите название прибора \
         или его инвентарный номер для поиска"
 
@@ -87,7 +87,10 @@ class DeviceAdmin(admin.ModelAdmin):
             request, queryset, search_term
         )
         if search_term:
-            queryset |= self.model.objects.filter(name__iregex=search_term)
+            queryset |= self.model.objects.filter(
+                Q(name__iregex=search_term) | Q(inventory_number__iregex=search_term) | Q(device_type__name__iregex=search_term)
+            )
+            
         return queryset, may_have_duplicates
 
 
@@ -404,6 +407,16 @@ class DeviceKipReportForm(forms.ModelForm):
         device = self.cleaned_data.get("device")
         station = self.cleaned_data.get("station")
         mounting_address = self.cleaned_data.get("mounting_address")
+        
+        if (duplicate_devices := DeviceKipReport.objects.filter(
+            kip_report=self.cleaned_data["kip_report"],
+            station=station,
+            mounting_address=mounting_address,
+        )).count() > 0:
+            raise ValidationError(f"На это место уже готовится прибор "
+                                  f"{duplicate_devices.first().device.inventory_number} "
+                                  f"({duplicate_devices.first().device.device_type})")
+
         if station and mounting_address:
             if mounting_address.lower() == "авз":
                 try:
@@ -419,6 +432,7 @@ class DeviceKipReportForm(forms.ModelForm):
                                               f"станции {station.__str__()}")
             else:
                 rack, number = mounting_address.strip().split("-")
+
                 try:
                     existing_rack = Rack.objects.get(station=station, number=rack)
                 except Rack.DoesNotExist:
@@ -438,7 +452,9 @@ class DeviceKipReportForm(forms.ModelForm):
                         except Device.DoesNotExist:
                             pass
                         except Device.MultipleObjectsReturned:
-                            pass
+                            raise ValidationError(f"К месту {existing_place} "
+                                                  f"станции {station} "
+                                                  f" уже относятся 2 прибора")
                         else:
                             if device.device_type != device_on_this_place.device_type:
                                 raise ValidationError(f"Прибор на месте {existing_place.__str__()} "
@@ -469,7 +485,19 @@ class DeviceKipReportInline(admin.StackedInline):
 @admin.register(KipReport)
 class KipReportAdmin(admin.ModelAdmin):
     inlines = [DeviceKipReportInline]
-    readonly_fields = ("author",)
+    readonly_fields = ("author", "button")
+
+    def button(self, obj):
+        kip_report = KipReport.objects.get(id=obj.id)
+        if devices_ := [device for device in kip_report.devices.all() if device.status != Device.send]:
+            return mark_safe(
+                f'<a class="button" href="javascript://" onclick="send_devices_ajax({kip_report.id})">Приборы отправлены</a>'
+            )
+        else:
+            return "Все приборы отправлены"
+        
+    class Media:
+        js = ["admin/js/send_devices_ajax.js"]
 
     def save_model(self, request, obj, form, change):
         if change:
@@ -478,7 +506,6 @@ class KipReportAdmin(admin.ModelAdmin):
         return super().save_model(request, obj, form, change)
 
     def save_formset(self, request, form, formset, change):
-        form.user = request.user
         instances = formset.save(commit=False)
         for instance in instances:
             form_device = Device.objects.get(pk=instance.device.pk)
@@ -499,9 +526,15 @@ class KipReportAdmin(admin.ModelAdmin):
                 else:
                     try:
                         device_on_place = Device.objects.get(mounting_address=place)
+                    except Device.MultipleObjectsReturned:
+                        pass
                     except Device.DoesNotExist:
-                        messages.warning(request, f"На месте {place.__str__()} сейчас нет прибора"
-                                                  ". Вы уверены, что готовите прибор на нужное место? Уточните у механиков")
+                        messages.warning(
+                            request,
+                            f"На месте {place.__str__()} "
+                            "сейчас нет прибора"
+                            ". Вы уверены, что готовите прибор на нужное место? Уточните у механиков"
+                        )
                         form_device.status = form_device.in_progress
                         form_device.station = instance.station
                         if avz_true:

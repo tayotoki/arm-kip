@@ -1,7 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .models import Device, Stock, Comment, MechanicReport
+from .models import Device, Stock, Comment, MechanicReport, KipReport, DeviceKipReport
 from django.db.utils import IntegrityError
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
@@ -45,4 +46,13 @@ def create_comment(request, mech_report_id):
             )
         else:
             raise ValidationError("Пустой комментарий")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def create_mech_reports(request, kip_report_id):
+    if request.method == "POST":
+        messages.add_message(request, messages.WARNING, "Hello world.")
+        kip_report = KipReport.objects.get(id=kip_report_id)
+        for field in kip_report.devices.through.objects.all():
+            print(field)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
