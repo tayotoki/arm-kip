@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User, Group
@@ -248,6 +250,16 @@ class Device(models.Model):
     def get_admin_change_url(self):
         return reverse("admin:ARM_device_change", args=(self.id,))
 
+    def update_next_check_date(self):
+        if self.current_check_date:
+            year = self.current_check_date.year + self.frequency_of_check
+            self.next_check_date = date(
+                year=year,
+                month=self.current_check_date.month,
+                day=self.current_check_date.day,
+            )
+            self.objects.update(next_check_date=self.next_check_date)
+
     
 class MechanicReport(models.Model):
     title = models.CharField(max_length=30, verbose_name="Заголовок", blank=True, help_text="Краткое пояснение, "
@@ -326,7 +338,11 @@ class DeviceKipReport(models.Model):
     mounting_address = models.CharField(max_length=10,
                                         verbose_name="Монтажный адрес или АВЗ",
                                         help_text="Если прибор готовится в АВЗ какой-то станции, "
-                                                  "укажите станцию и впишите в это поле 'авз'.")
+                                                  "укажите станцию и впишите в это поле 'авз'."
+                                                  "Если готовите много бесконтактной аппаратуры, "
+                                                  "например, предохранителей, укажите количество "
+                                                  "ввиде 'n шт.'")
+    check_date = models.DateField(null=True, blank=True, verbose_name="дата регулировки")
 
     class Meta:
         verbose_name = "Прибор"

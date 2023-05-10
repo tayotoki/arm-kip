@@ -398,7 +398,10 @@ class DeviceKipReportForm(forms.ModelForm):
 
     def clean_mounting_address(self):
         mounting_address = self.cleaned_data.get("mounting_address")
-        if "-" not in mounting_address and not mounting_address.lower() == "авз":
+        if "шт" in mounting_address.lower():
+            if re.search(r"(\d+)", mounting_address) is None:
+                raise ValidationError("Укажите корректное количество аппаратуры")
+        elif "-" not in mounting_address and not mounting_address.lower() == "авз":
             raise ValidationError("Вы ввели некорректный монтажный адрес, "
                                   "принимаются данные ввиде ссс-ммм"
                                   ", где ссс - номер статива, ммм - номер места на стативе"
@@ -432,7 +435,7 @@ class DeviceKipReportForm(forms.ModelForm):
                     else:
                         raise ValidationError(f"Приборов типа {device.device_type} нет в АВЗ "
                                               f"станции {station.__str__()}")
-            else:
+            elif re.fullmatch(r"(\d+)-(\d+)", mounting_address):
                 rack, number = mounting_address.strip().split("-")
 
                 try:
@@ -472,7 +475,7 @@ class DeviceKipReportInline(admin.StackedInline):
     extra = 0
     autocomplete_fields = ["device"]
     readonly_fields = ("get_status",)
-    fields = (("device", "station", "mounting_address"), "get_status")
+    fields = (("device", "station", "mounting_address"), "check_date", "get_status")
     verbose_name = "прибор в ящик"
     verbose_name_plural = "Собрать виртуальный ящик"
 
@@ -509,13 +512,48 @@ class KipReportAdmin(admin.ModelAdmin):
 
     def save_formset(self, request, form, formset, change):
         instances = formset.save(commit=False)
+        kip_report = form.instance
         for instance in instances:
             form_device = Device.objects.get(pk=instance.device.pk)
             avz = AVZ.objects.get(station=instance.station)
             avz_true = False
+
             if instance.mounting_address.lower() == "авз":
                 avz_true = True
-            else:
+                form_device.avz = avz
+                form_device.status = form_device.in_progress
+                form_device.station = instance.avz.station
+           
+            elif "шт" in instance.mounting_address.lower():
+                devices_number = int(
+                    re.search(
+                        r"(\d+)",
+                        instance.mounting_address,
+                    ).group()
+                )
+
+                this_type_devices = Device.objects.filter(
+                    ~Q(pk=form_device.pk),
+                    device_type=form_device.device_type,
+                    stock__id=1,
+                )[:devices_number]
+
+                Device.objects.filter(pk__in=[device.pk for device in this_type_devices]).update(
+                        station=form_device.station,
+                        avz=form_device.avz,
+                        current_check_date=instance.check_date,
+                    ).save()
+                for device in this_type_devices:
+                    kip_report.devices.add(
+                        device.id, 
+                        through_defaults={"station": instance.station,
+                                          "mounting_address": '',
+                                          "check_date": instance.check_date}
+                    )
+
+                instance.mounting_address = ""
+                
+            elif re.fullmatch(r"(\d+)-(\d+)", instance.mounting_address):
                 rack, number = instance.mounting_address.strip().split("-")
                 try:
                     place = Place.objects.get(
@@ -539,11 +577,11 @@ class KipReportAdmin(admin.ModelAdmin):
                         )
                         form_device.status = form_device.in_progress
                         form_device.station = instance.station
-                        if avz_true:
-                            form_device.avz = avz
-                        elif place:
+                        
+                        if place:
                             form_device.mounting_address = place
                             form_device.name = "Без названия"
+
                         for avz_device in avz.device_set.all():
                             if avz_device.device_type == form_device.device_type:
                                 form_device.frequency_of_check = avz_device.frequency_of_check
