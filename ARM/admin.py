@@ -29,6 +29,7 @@ from .models import (Station,
                      Comment,
                      KipReport,
                      DeviceKipReport)
+
 from ARM.actions import export_as_xls
 
 
@@ -153,6 +154,7 @@ class PlaceAdmin(admin.ModelAdmin):
     inlines = [DevicesAdmin]
     search_fields = ("rack__number", "number")
     autocomplete_fields = ("rack",)
+    list_filter = ("rack__station",)
 
     def get_search_results(self, request, queryset, search_term):
         orig_queryset = queryset
@@ -491,7 +493,7 @@ class KipReportAdmin(admin.ModelAdmin):
         kip_report = KipReport.objects.get(id=obj.id)
         if devices_ := [device for device in kip_report.devices.all() if device.status != Device.send]:
             return mark_safe(
-                f'<a class="button" href="javascript://" onclick="send_devices_ajax({kip_report.id})">Приборы отправлены</a>'
+                f'<a class="button" href="javascript://" onclick="send_devices_ajax({kip_report.id})">Отправить приборы</a>'
             )
         else:
             return "Все приборы отправлены"

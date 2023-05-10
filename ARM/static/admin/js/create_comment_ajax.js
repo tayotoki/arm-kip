@@ -2,7 +2,7 @@ function create_comment_ajax(mech_report_id) {
     const csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     const url = "/arm/comment/create/" + mech_report_id + "/";
     const text = document.querySelector('.vLargeTextField[name|=comment_set]').value;
-    if (text.length == 0){
+    if (text.length === 0){
         return;
     }
     django.jQuery.ajax({
