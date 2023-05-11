@@ -176,6 +176,7 @@ class Device(models.Model):
                                     related_name='checker')
     current_check_date = models.DateField(verbose_name='дата проверки', null=True, blank=True)
     next_check_date = models.DateField(verbose_name='дата следующей проверки', null=True)
+    old_information = models.CharField(max_length=60, null=True, blank=True, verbose_name="Старая информация")
 
     class Meta:
         verbose_name = "Прибор"
@@ -343,6 +344,18 @@ class DeviceKipReport(models.Model):
                                                   "например, предохранителей, укажите количество "
                                                   "ввиде 'n шт.'")
     check_date = models.DateField(null=True, blank=True, verbose_name="дата регулировки")
+    who_prepared = models.ForeignKey(User,
+                                     related_name="kip_preparer",
+                                     verbose_name="Регулировал",
+                                     on_delete=models.SET_NULL,
+                                     null=True,
+                                     blank=True)
+    who_checked = models.ForeignKey(User,
+                                    related_name="kip_checker",
+                                    verbose_name="Проверил",
+                                    on_delete=models.SET_NULL,
+                                    null=True,
+                                    blank=True)
 
     class Meta:
         verbose_name = "Прибор"

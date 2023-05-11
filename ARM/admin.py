@@ -388,12 +388,24 @@ class TipeAdmin(admin.ModelAdmin):
 
 
 class DeviceKipReportForm(forms.ModelForm):
+    devices_ids = set()
+
+    def __new__(cls, *args, **kwargs):
+        cls.devices_ids.clear()
+        return super().__new__(cls)
+
     def clean_device(self):
         device = self.cleaned_data.get("device")
+
         if device:
+            if device.id in self.devices_ids:
+                raise ValidationError("Этот прибор уже добавлен выше")
+            self.devices_ids.add(device.id)
+
             if device.stock is None:
                 raise ValidationError("Вы выбрали прибор со станции, а не со склада, "
                                       "У приборов на складе нет названия и монтажного адреса")
+
         return device
 
     def clean_mounting_address(self):
@@ -412,15 +424,17 @@ class DeviceKipReportForm(forms.ModelForm):
         device = self.cleaned_data.get("device")
         station = self.cleaned_data.get("station")
         mounting_address = self.cleaned_data.get("mounting_address")
+        kip_report = self.cleaned_data["kip_report"]
         
         if (duplicate_devices := DeviceKipReport.objects.filter(
-            kip_report=self.cleaned_data["kip_report"],
+            ~Q(device=device),
             station=station,
             mounting_address=mounting_address,
-        )).count() > 0:
+        )).count() >= 1:
             raise ValidationError(f"На это место уже готовится прибор "
                                   f"{duplicate_devices.first().device.inventory_number} "
-                                  f"({duplicate_devices.first().device.device_type})")
+                                  f"({duplicate_devices.first().device.device_type})"
+                                  f" в отчете {duplicate_devices.first().kip_report}")
 
         if station and mounting_address:
             if mounting_address.lower() == "авз":
@@ -475,7 +489,7 @@ class DeviceKipReportInline(admin.StackedInline):
     extra = 0
     autocomplete_fields = ["device"]
     readonly_fields = ("get_status",)
-    fields = (("device", "station", "mounting_address"), "check_date", "get_status")
+    fields = (("device", "station", "mounting_address"), "check_date", ("who_prepared", "who_checked"), "get_status")
     verbose_name = "прибор в ящик"
     verbose_name_plural = "Собрать виртуальный ящик"
 
@@ -499,7 +513,7 @@ class KipReportAdmin(admin.ModelAdmin):
                 f'<a class="button" href="javascript://" onclick="send_devices_ajax({kip_report.id})">Отправить приборы</a>'
             )
         else:
-            return "Все приборы отправлены"
+            return "Приборы отправлены"
         
     class Media:
         js = ["admin/js/send_devices_ajax.js"]
@@ -523,7 +537,7 @@ class KipReportAdmin(admin.ModelAdmin):
                 form_device.avz = avz
                 form_device.status = form_device.in_progress
                 form_device.station = instance.avz.station
-           
+
             elif "шт" in instance.mounting_address.lower():
                 devices_number = int(
                     re.search(
@@ -538,21 +552,28 @@ class KipReportAdmin(admin.ModelAdmin):
                     stock__id=1,
                 )[:devices_number]
 
-                Device.objects.filter(pk__in=[device.pk for device in this_type_devices]).update(
+                update_devices = Device.objects.filter(pk__in=[device.pk for device in this_type_devices]).update(
                         station=form_device.station,
                         avz=form_device.avz,
                         current_check_date=instance.check_date,
-                    ).save()
+                        who_prepared=instance.who_prepared,
+                        who_checked=instance.who_checked,
+                    )
+                print(update_devices)
+                if update_devices.__class__ is not int:
+                    update_devices.save()
                 for device in this_type_devices:
                     kip_report.devices.add(
-                        device.id, 
+                        device.id,
                         through_defaults={"station": instance.station,
                                           "mounting_address": '',
-                                          "check_date": instance.check_date}
+                                          "check_date": instance.check_date,
+                                          "who_prepared": instance.who_prepared,
+                                          "who_checked": instance.who_checked}
                     )
 
                 instance.mounting_address = ""
-                
+
             elif re.fullmatch(r"(\d+)-(\d+)", instance.mounting_address):
                 rack, number = instance.mounting_address.strip().split("-")
                 try:
@@ -577,7 +598,7 @@ class KipReportAdmin(admin.ModelAdmin):
                         )
                         form_device.status = form_device.in_progress
                         form_device.station = instance.station
-                        
+
                         if place:
                             form_device.mounting_address = place
                             form_device.name = "Без названия"
