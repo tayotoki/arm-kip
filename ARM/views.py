@@ -1,7 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .models import Device, Stock, Comment, MechanicReport, KipReport, DeviceKipReport
+from .models import Device, Stock, Comment, MechanicReport, KipReport, DeviceKipReport, Place, Station
 from django.db.utils import IntegrityError
+from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -50,9 +51,51 @@ def create_comment(request, mech_report_id):
 
 
 def create_mech_reports(request, kip_report_id):
+    stations = {}
+    other_places = Place.objects.filter(
+        Q(rack__number="релейная") | Q(rack__number="тоннель") | Q(rack__number="поле"),
+        number="остальное",
+    )
     if request.method == "POST":
         messages.add_message(request, messages.WARNING, "Hello world.")
         kip_report = KipReport.objects.get(id=kip_report_id)
-        for field in kip_report.devices.through.objects.all():
-            print(field)
+        kip_report_devices = kip_report.devices.through.objects.all()
+        counter = 0
+
+        for instance in kip_report_devices:
+            other_device_on_place = [device for device in Device.objects.filter(
+                station=instance.device.station,
+                mounting_address=instance.device.mounting_address
+            ) if device not in [kip_report_devices]]
+
+            if len(other_device_on_place) > 1:
+                for current_place in other_places:
+                    if instance.device.mounting_address == current_place:
+                        this_place_other_device = [device for device in Device.objects.filter(
+                            ~Q(status=Device.send),
+                            station=instance.device.station,
+                            device_type=instance.device.device_type,
+                            mounting_address=current_place,
+                        ) if device not in [kip_report_devices]][counter]
+
+                        counter += 1
+                        stations.setdefault(this_place_other_device.station.pk, []).append(this_place_other_device)
+            elif len(other_device_on_place) == 1:
+                mech_device = list(other_device_on_place)[0]
+                stations.setdefault(mech_device.station.pk, []).append(mech_device)
+            else:
+                ...
+            instance.device.status = Device.send
+            instance.device.save()
+        for station, devices in stations.items():
+            if devices:
+                MechanicReport.objects.create(
+                    title=f"КИП N {kip_report_id} ({Station.objects.get(pk=station).__str__()})",
+                    user=request.user,
+                    station=Station.objects.get(pk=station),
+                    explanation=f"Отправленный ящик из отчета КИП №{kip_report_id}. "
+                                f"Сформированно автоматически"
+                ).devices.set(Device.objects.filter(pk__in=[device.pk for device in devices]))
+        print((stations))
+
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

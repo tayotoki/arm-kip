@@ -421,16 +421,24 @@ class DeviceKipReportForm(forms.ModelForm):
         return mounting_address
 
     def clean(self):
+        other_places = Place.objects.filter(
+            Q(rack__number="релейная") | Q(rack__number="тоннель") | Q(rack__number="поле"),
+            number="остальное",
+        )
         device = self.cleaned_data.get("device")
         station = self.cleaned_data.get("station")
         mounting_address = self.cleaned_data.get("mounting_address")
         kip_report = self.cleaned_data["kip_report"]
         
-        if (duplicate_devices := DeviceKipReport.objects.filter(
-            ~Q(device=device),
-            station=station,
-            mounting_address=mounting_address,
-        )).count() >= 1:
+        if all((
+            (duplicate_devices := DeviceKipReport.objects.filter(
+                ~Q(device=device),
+                station=station,
+                mounting_address=mounting_address,
+            )).count() >= 1,
+            mounting_address not in (f"{place.rack.number}-{place.number}" for place in other_places),
+            mounting_address.lower() != "авз",
+        )):
             raise ValidationError(f"На это место уже готовится прибор "
                                   f"{duplicate_devices.first().device.inventory_number} "
                                   f"({duplicate_devices.first().device.device_type})"
@@ -471,9 +479,12 @@ class DeviceKipReportForm(forms.ModelForm):
                         except Device.DoesNotExist:
                             pass
                         except Device.MultipleObjectsReturned:
-                            raise ValidationError(f"К месту {existing_place} "
-                                                  f"станции {station} "
-                                                  f" уже относятся 2 прибора")
+                            if existing_place in other_places:
+                                pass
+                            else:
+                                raise ValidationError(f"К месту {existing_place} "
+                                                      f"станции {station} "
+                                                      f" уже относятся 2 прибора")
                         else:
                             if device.device_type != device_on_this_place.device_type:
                                 raise ValidationError(f"Прибор на месте {existing_place.__str__()} "
@@ -508,12 +519,14 @@ class KipReportAdmin(admin.ModelAdmin):
 
     def button(self, obj):
         kip_report = KipReport.objects.get(id=obj.id)
-        if devices_ := [device for device in kip_report.devices.all() if device.status != Device.send]:
+        if all([device.status == Device.in_progress for device in kip_report.devices.all()]):
             return mark_safe(
                 f'<a class="button" href="javascript://" onclick="send_devices_ajax({kip_report.id})">Отправить приборы</a>'
             )
-        else:
+        elif all([device.status == Device.send for device in kip_report.devices.all()]):
             return "Приборы отправлены"
+        else:
+            return "Приборы еще не подготовлены к отправке"
         
     class Media:
         js = ["admin/js/send_devices_ajax.js"]
@@ -525,9 +538,14 @@ class KipReportAdmin(admin.ModelAdmin):
         return super().save_model(request, obj, form, change)
 
     def save_formset(self, request, form, formset, change):
+        other_places = Place.objects.filter(
+            Q(rack__number="релейная") | Q(rack__number="тоннель") | Q(rack__number="поле"),
+            number="остальное",
+        )
         instances = formset.save(commit=False)
         kip_report = form.instance
         for instance in instances:
+            print(instance.mounting_address)
             form_device = Device.objects.get(pk=instance.device.pk)
             avz = AVZ.objects.get(station=instance.station)
             avz_true = False
@@ -536,7 +554,8 @@ class KipReportAdmin(admin.ModelAdmin):
                 avz_true = True
                 form_device.avz = avz
                 form_device.status = form_device.in_progress
-                form_device.station = instance.avz.station
+                form_device.station = instance.station
+                print(form_device.name, form_device.avz)
 
             elif "шт" in instance.mounting_address.lower():
                 devices_number = int(
@@ -550,7 +569,7 @@ class KipReportAdmin(admin.ModelAdmin):
                     ~Q(pk=form_device.pk),
                     device_type=form_device.device_type,
                     stock__id=1,
-                )[:devices_number]
+                )[:devices_number - 1]
 
                 update_devices = Device.objects.filter(pk__in=[device.pk for device in this_type_devices]).update(
                         station=form_device.station,
@@ -574,7 +593,7 @@ class KipReportAdmin(admin.ModelAdmin):
 
                 instance.mounting_address = ""
 
-            elif re.fullmatch(r"(\d+)-(\d+)", instance.mounting_address):
+            elif re.fullmatch(r"((\d+)|(релейная)|(тоннель)|(поле))-((\d+)|(остальное))", instance.mounting_address):
                 rack, number = instance.mounting_address.strip().split("-")
                 try:
                     place = Place.objects.get(
@@ -588,7 +607,18 @@ class KipReportAdmin(admin.ModelAdmin):
                     try:
                         device_on_place = Device.objects.get(mounting_address=place)
                     except Device.MultipleObjectsReturned:
-                        pass
+                        form_device.status = form_device.in_progress
+                        form_device.station = instance.station
+
+                        if place:
+                            form_device.mounting_address = place
+                            form_device.name = "Без названия"
+
+                        for avz_device in avz.device_set.all():
+                            if avz_device.device_type == form_device.device_type:
+                                form_device.frequency_of_check = avz_device.frequency_of_check
+                            else:
+                                form_device.frequency_of_check = 1
                     except Device.DoesNotExist:
                         messages.warning(
                             request,
@@ -615,7 +645,7 @@ class KipReportAdmin(admin.ModelAdmin):
                         form_device.avz = device_on_place.avz
                         form_device.frequency_of_check = device_on_place.frequency_of_check
                         form_device.mounting_address = device_on_place.mounting_address
-                    form_device.save()
+            form_device.save()
         formset.save()
         return super().save_formset(request, form, formset, change)
 

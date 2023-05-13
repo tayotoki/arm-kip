@@ -2,6 +2,7 @@ from datetime import date
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import User, Group
 from django.urls import reverse
 from django.utils import timezone
@@ -183,6 +184,10 @@ class Device(models.Model):
         verbose_name_plural = "Приборы"
 
     def clean(self):
+        other_places = Place.objects.filter(
+            Q(rack__number="релейная") | Q(rack__number="тоннель") | Q(rack__number="поле"),
+            number="остальное",
+        )
         if self.name:
             if not self.mounting_address:
                 raise ValidationError("Укажите монтажный адрес или удалите название прибора")
@@ -193,31 +198,34 @@ class Device(models.Model):
             devices_on_address = self.mounting_address.device_set.all()
             devices_on_place = self.mounting_address.device_set.count()
 
-            if devices_on_place > 0 and self.status != self.in_progress\
-                    and self not in devices_on_address:
-                raise ValidationError("На данном адресе уже установлен прибор, "
-                                      "выберите другой адрес или измените статус на 'готовится'")
+            if self.mounting_address not in other_places:
 
-            if devices_on_place > 1 and self not in devices_on_address:
-                raise ValidationError("На данном адресе уже установлен прибор и один прибор уже готовится")
+                if devices_on_place > 0 and self.status != self.in_progress or self.status != self.send\
+                        and self not in devices_on_address:
+                    raise ValidationError("На данном адресе уже установлен прибор, "
+                                          "выберите другой адрес или измените статус на 'готовится', 'отправлен'")
 
-            if devices_on_place > 1 and self in devices_on_address:
-                other_device_status = [device.status for device in devices_on_address if device != self][0]
-                if self.status == other_device_status:
-                    raise ValidationError("На этом адресе уже есть прибор с таким же статусом")
-                if not self.status and other_device_status == "in_progress":
-                    raise ValidationError("Вы убираете на склад прибор, но оставляете место на стативе\
-                                          пустым, зайдите на страницу места и исправьте ситуацию")
-                if (self.status in (
-                    self.normal, self.overdue, self.ready
-                ) and other_device_status not in (
-                    self.send, self.in_progress
-                )) or (other_device_status in (
-                    self.normal, self.overdue, self.ready
-                ) and self.status not in (
-                    self.send, self.in_progress
-                )):
-                    raise ValidationError("Указан неверный статус, оба прибора на складе или на стативе одновременно")
+                if devices_on_place > 1 and self not in devices_on_address:
+                    raise ValidationError("На данном адресе уже установлен прибор и один прибор уже готовится")
+
+                if devices_on_place > 1 and self in devices_on_address:
+                    other_device_status = [device.status for device in devices_on_address if device != self][0]
+                    if self.status == other_device_status:
+                        raise ValidationError("На этом адресе уже есть прибор с таким же статусом")
+                    if not self.status and other_device_status == "in_progress":
+                        raise ValidationError("Вы убираете на склад прибор, но оставляете место на стативе\
+                                              пустым, зайдите на страницу места и исправьте ситуацию")
+                    if (self.status in (
+                        self.normal, self.overdue, self.ready
+                    ) and other_device_status not in (
+                        self.send, self.in_progress
+                    )) or (other_device_status in (
+                        self.normal, self.overdue, self.ready
+                    ) and self.status not in (
+                        self.send, self.in_progress
+                    )):
+                        raise ValidationError("Указан неверный статус, оба прибора на "
+                                              "складе или на стативе одновременно")
 
         if self.station:
             if self.avz:
@@ -336,7 +344,7 @@ class DeviceKipReport(models.Model):
     kip_report = models.ForeignKey(KipReport, on_delete=models.CASCADE, verbose_name="Текущий отчет")
     device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name="Прибор")
     station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name="Станция", null=True)
-    mounting_address = models.CharField(max_length=10,
+    mounting_address = models.CharField(max_length=18,
                                         verbose_name="Монтажный адрес или АВЗ",
                                         help_text="Если прибор готовится в АВЗ какой-то станции, "
                                                   "укажите станцию и впишите в это поле 'авз'."
