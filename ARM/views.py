@@ -67,6 +67,28 @@ def create_mech_reports(request, kip_report_id):
         print("NNNNNNNNNNNNNNNN")
 
         for instance in kip_report_devices:
+
+            if instance.device.avz:
+                station_avz_devices = instance.device.avz.device_set.order_by(
+                    "-next_check_date"
+                ).filter(
+                    ~Q(status__in=[Device.send, Device.in_progress]),
+                    device_type=instance.device.device_type
+                ).exclude(pk__in=[device.pk for device in kip_report.devices.all()] + 
+                                 [device.pk for device in added_devices])
+
+                if station_avz_devices:
+                    mech_device = station_avz_devices.last()
+                    added_devices.append(mech_device)
+                    stations.setdefault(instance.device.station.pk, []).append(mech_device)
+                else:
+                    added_devices.append(instance.device)
+                    stations.setdefault(instance.device.station.pk, []).append(instance.device)
+                
+                instance.device.status = Device.send
+                instance.device.save()
+                continue
+
             other_device_on_place = [device for device in Device.objects.filter(
                 ~Q(pk=instance.device.pk),
                 station=instance.device.station,
@@ -96,10 +118,13 @@ def create_mech_reports(request, kip_report_id):
                             stations.setdefault(this_place_other_device.station.pk, []).append(this_place_other_device)
             elif len(other_device_on_place) == 1:
                 mech_device = list(other_device_on_place)[0]
+                added_devices.append(mech_device)
                 stations.setdefault(mech_device.station.pk, []).append(mech_device)
             else:
                 print("Отлов NoneType в station: ", instance.device)
+                added_devices.append(instance.device)
                 stations.setdefault(instance.device.station.pk, []).append(instance.device)
+            
             instance.device.status = Device.send
             instance.device.save()
         for station, devices in stations.items():

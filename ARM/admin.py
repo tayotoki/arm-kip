@@ -405,26 +405,35 @@ class DeviceKipReportForm(forms.ModelForm):
             if device.stock is None:
                 raise ValidationError("Вы выбрали прибор со станции, а не со склада, "
                                       "У приборов на складе нет названия и монтажного адреса")
-
         return device
 
     def clean_mounting_address(self):
         mounting_address = self.cleaned_data.get("mounting_address")
-        if "шт" in mounting_address.lower():
-            if re.search(r"(\d+)", mounting_address) is None:
-                raise ValidationError("Укажите корректное количество аппаратуры")
-        elif "-" not in mounting_address and not mounting_address.lower() == "авз":
-            raise ValidationError("Вы ввели некорректный монтажный адрес, "
-                                  "принимаются данные ввиде ссс-ммм"
-                                  ", где ссс - номер статива, ммм - номер места на стативе"
-                                  ". Например 27-712, 110-811, ПВ1-51, тоннель-стрелка №1")
+        
+        if mounting_address:
+            if "шт" in mounting_address.lower():
+                if re.search(r"(\d+)", mounting_address) is None:
+                    raise ValidationError("Укажите корректное количество аппаратуры")
+            elif "-" not in mounting_address and not mounting_address.lower() == "авз":
+                raise ValidationError("Вы ввели некорректный монтажный адрес, "
+                                    "принимаются данные ввиде ссс-ммм"
+                                    ", где ссс - номер статива, ммм - номер места на стативе"
+                                    ". Например 27-712, 110-811, ПВ1-51, тоннель-стрелка №1")
         return mounting_address
 
     def clean(self):
+        if not all((
+            self.cleaned_data.get("device"),
+            self.cleaned_data.get("mounting_address"),
+            self.cleaned_data.get("station"),
+        )):
+            raise ValidationError("Не все обязательные поля заполнены")
+        
         other_places = Place.objects.filter(
             Q(rack__number="релейная") | Q(rack__number="тоннель") | Q(rack__number="поле"),
             number="остальное",
         )
+        
         device = self.cleaned_data.get("device")
         station = self.cleaned_data.get("station")
         mounting_address = self.cleaned_data.get("mounting_address")
