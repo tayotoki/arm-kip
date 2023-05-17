@@ -259,7 +259,7 @@ class Device(models.Model):
     def get_admin_change_url(self):
         return reverse("admin:ARM_device_change", args=(self.id,))
 
-    def update_next_check_date(self):
+    def get_next_check_date(self):
         if self.current_check_date:
             year = self.current_check_date.year + self.frequency_of_check
             self.next_check_date = date(
@@ -267,7 +267,7 @@ class Device(models.Model):
                 month=self.current_check_date.month,
                 day=self.current_check_date.day,
             )
-            self.objects.update(next_check_date=self.next_check_date)
+            return self.next_check_date
 
     
 class MechanicReport(models.Model):

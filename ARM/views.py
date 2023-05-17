@@ -68,6 +68,13 @@ def create_mech_reports(request, kip_report_id):
 
         for instance in kip_report_devices:
 
+            instance.device.status = Device.send
+            instance.device.who_checked = instance.who_checked
+            instance.device.who_prepared = instance.who_prepared
+            instance.device.current_check_date = instance.check_date
+            instance.device.next_check_date = instance.device.get_next_check_date()
+            instance.device.save()
+
             if instance.device.avz:
                 station_avz_devices = instance.device.avz.device_set.order_by(
                     "-next_check_date"
@@ -125,8 +132,8 @@ def create_mech_reports(request, kip_report_id):
                 added_devices.append(instance.device)
                 stations.setdefault(instance.device.station.pk, []).append(instance.device)
             
-            instance.device.status = Device.send
-            instance.device.save()
+
+            print(instance.device, instance.__dict__, sep="\n")
         for station, devices in stations.items():
             if devices:
                 MechanicReport.objects.create(
