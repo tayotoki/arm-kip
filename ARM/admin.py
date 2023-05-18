@@ -275,7 +275,8 @@ class ReportCommentInline(admin.StackedInline):
             return obj.author.username.upper()
         mech_report_id = obj.mech_report.id
         return mark_safe(
-            f'<a class="button" href="javascript://" onclick="create_comment_ajax({mech_report_id})">Опубликовать</a>'
+            f'<a class="button" href="javascript://" '
+            f'onclick="create_comment_ajax({mech_report_id})">Опубликовать</a>'
         )
 
     published_but.short_description = ""
@@ -304,18 +305,32 @@ class ReportCommentInline(admin.StackedInline):
 class DevicesReportInline(admin.TabularInline):
     model = MechanicReport.devices.through
     extra = 0
-    readonly_fields = ("button", "get_status", "get_current_date", "get_next_date")
+    readonly_fields = ("button", "defect_button", "get_status", "get_current_date", "get_next_date")
     verbose_name_plural = "Приборы в отчете"
     verbose_name = "Прибор"
 
     def button(self, obj):
         device = Device.objects.get(id=obj.device_id)
-        if device.station or device.avz:
+        if (device.station or device.avz) and device.status != Device.send:
             return mark_safe(
-                f'<a class="button" href="javascript://" onclick="update_device_ajax({device.id})">Прибор заменен</a>'
+                f'<a class="button" href="javascript://" '
+                f'onclick="update_device_ajax({device.id})">Прибор заменен</a>'
             )
-        elif device.stock:
+        elif device.status == Device.send:
+            return mark_safe(
+                f'<a class="button" href="javascript://" '
+                f'onclick="install_device_ajax({device.id})">Прибор установлен</a>'
+            )
+        elif device.stock and not device.station:
             return "Прибор на складе"
+
+    @admin.display(description="Отметить дефекты")
+    def defect_button(self, obj):
+        device = Device.objects.get(id=obj.device_id)
+        return mark_safe(
+            f'<a class="button" href="javascript://" '
+            f'onclick="mark_defect_device_ajax({device.id})">Есть дефекты</a>'
+        )
 
     def get_current_date(self, obj):
         date = Device.objects.get(id=obj.device_id).current_check_date.strftime("%d.%m.%Y")
@@ -346,7 +361,9 @@ class DevicesReportInline(admin.TabularInline):
         return False
 
     class Media:
-        js = ["admin/js/update_device_ajax.js"]
+        js = ["admin/js/update_device_ajax.js",
+              "admin/js/mark_defect_device_ajax.js",
+              "admin/js/install_device_ajax.js"]
 
 
 @admin.register(MechanicReport)
