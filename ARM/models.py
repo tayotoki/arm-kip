@@ -269,6 +269,9 @@ class Device(models.Model):
             )
             return self.next_check_date
 
+    def get_status(self):
+        if self.current_check_date > timezone.localdate():
+            ...
     
 class MechanicReport(models.Model):
     title = models.CharField(max_length=30, verbose_name="Заголовок", blank=True, help_text="Краткое пояснение, "

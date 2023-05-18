@@ -8,6 +8,39 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 
+def copy_fields(old_device, new_device):
+    new_device.name = old_device.name
+    new_device.stock = None
+    new_device.status = new_device.get_status()
+
+
+def send_to_stock(device_id):
+    device_id = device_id
+    device = Device.objects.get(id=device_id)
+    device.name = None
+    device.current_check_date = None
+    device.next_check_date = None
+    device.status = None
+    device.station = None
+    device.avz = None
+    device.who_prepared = None
+    device.who_checked = None
+    device.stock = Stock.objects.get(pk=1)
+    device.mounting_address = None
+    device.save(update_fields=[
+        "name",
+        "current_check_date",
+        "next_check_date",
+        "status",
+        "station",
+        "avz",
+        "who_prepared",
+        "who_checked",
+        "stock",
+        "mounting_address",
+    ])
+
+
 def update_device(request, device_id):
     if request.method == "POST":
         device_id = device_id
@@ -146,3 +179,30 @@ def create_mech_reports(request, kip_report_id):
         print((stations))
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def mark_defect_device(request, device_id):
+    if request.method == "POST":
+        device = Device.objects.get(pk=device_id)
+        if device.status == Device.send:
+            send_to_stock(device.id)
+        else:
+            added_devices = []
+            if device.avz:
+                avz_devices = KipReport.devices.order_by(
+                    "-next_check_date",
+                ).filter(
+                    mounting_address__isnull=True,
+                    status=Device.send,
+                    avz=device.avz,
+                    station=device.station,
+                    device_type=device.device_type,
+                ).exclude(
+                    pk__in=[device.pk for device in added_devices]
+                )
+
+                exchange_device = avz_devices.last()
+                if exchange_device:
+                    added_devices.append(exchange_device)
+                    copy_fields(device, exchange_device)
+                    send_to_stock(device)
