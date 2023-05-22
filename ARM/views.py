@@ -12,6 +12,7 @@ def copy_fields(old_device, new_device):
     new_device.name = old_device.name
     new_device.stock = None
     new_device.status = new_device.get_status()
+    new_device.save(update_fields=["name", "stock", "status"])
 
 
 def send_to_stock(device_id):
@@ -189,9 +190,7 @@ def mark_defect_device(request, device_id):
         else:
             added_devices = []
             if device.avz:
-                avz_devices = KipReport.devices.order_by(
-                    "-next_check_date",
-                ).filter(
+                avz_devices = KipReport.devices.objects.filter(
                     mounting_address__isnull=True,
                     status=Device.send,
                     avz=device.avz,
@@ -199,10 +198,15 @@ def mark_defect_device(request, device_id):
                     device_type=device.device_type,
                 ).exclude(
                     pk__in=[device.pk for device in added_devices]
+                ).order_by(
+                    "-next_check_date",
                 )
 
                 exchange_device = avz_devices.last()
+
                 if exchange_device:
                     added_devices.append(exchange_device)
                     copy_fields(device, exchange_device)
                     send_to_stock(device)
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

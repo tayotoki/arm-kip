@@ -270,8 +270,29 @@ class Device(models.Model):
             return self.next_check_date
 
     def get_status(self):
-        if self.current_check_date > timezone.localdate():
-            ...
+        if self.next_check_date:
+            if self.next_check_date > timezone.localdate():
+                year = self.next_check_date.year
+                month = self.next_check_date.month
+                day = self.next_check_date.day
+                if any(
+                        (
+                            year > timezone.localdate().year,
+                            all((
+                                year == timezone.localdate().year,
+                                month > timezone.localdate().month,
+                            )),
+                        )
+                ):
+                    return self.normal
+                elif all((
+                    year == timezone.localdate().year,
+                    month < timezone.localdate().month,
+                )):
+                    return self.ready
+                else:
+                    return self.overdue
+
     
 class MechanicReport(models.Model):
     title = models.CharField(max_length=30, verbose_name="Заголовок", blank=True, help_text="Краткое пояснение, "
