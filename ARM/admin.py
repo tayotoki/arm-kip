@@ -81,6 +81,9 @@ class DeviceAdmin(admin.ModelAdmin):
         if check_date:
             year = check_date.year + obj.frequency_of_check
             obj.next_check_date = date(year=year, month=check_date.month, day=check_date.day)
+            obj.status = obj.get_status()
+            print(obj.status, obj.get_status(), obj.next_check_date)
+        change = True
         return super().save_model(request, obj, form, change)
 
     def get_search_results(self, request, queryset, search_term):
@@ -547,7 +550,8 @@ class KipReportAdmin(admin.ModelAdmin):
         kip_report = KipReport.objects.get(id=obj.id)
         if all([device.status == Device.in_progress for device in kip_report.devices.all()]):
             return mark_safe(
-                f'<a class="button" href="javascript://" onclick="send_devices_ajax({kip_report.id})">Отправить приборы</a>'
+                f'<a class="button" href="javascript://" '
+                f'onclick="send_devices_ajax({kip_report.id})">Отправить приборы</a>'
             )
         elif all([device.status == Device.send for device in kip_report.devices.all()]):
             return "Приборы отправлены"

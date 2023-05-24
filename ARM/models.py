@@ -200,7 +200,7 @@ class Device(models.Model):
 
             if self.mounting_address not in other_places:
 
-                if devices_on_place > 0 and self.status != self.in_progress or self.status != self.send\
+                if devices_on_place > 0 and (self.status != self.in_progress or self.status != self.send)\
                         and self not in devices_on_address:
                     raise ValidationError("На данном адресе уже установлен прибор, "
                                           "выберите другой адрес или измените статус на 'готовится', 'отправлен'")
@@ -271,27 +271,26 @@ class Device(models.Model):
 
     def get_status(self):
         if self.next_check_date:
-            if self.next_check_date > timezone.localdate():
-                year = self.next_check_date.year
-                month = self.next_check_date.month
-                day = self.next_check_date.day
-                if any(
-                        (
-                            year > timezone.localdate().year,
-                            all((
-                                year == timezone.localdate().year,
-                                month > timezone.localdate().month,
-                            )),
-                        )
-                ):
-                    return self.normal
-                elif all((
-                    year == timezone.localdate().year,
-                    month < timezone.localdate().month,
-                )):
-                    return self.ready
-                else:
-                    return self.overdue
+            year = self.next_check_date.year
+            month = self.next_check_date.month
+            day = self.next_check_date.day
+            if any(
+                    (
+                        year > timezone.localdate().year,
+                        all((
+                            year == timezone.localdate().year,
+                            month > timezone.localdate().month,
+                        )),
+                    )
+            ):
+                return self.normal
+            elif all((
+                year == timezone.localdate().year,
+                month == timezone.localdate().month,
+            )):
+                return self.ready
+            else:
+                return self.overdue
 
     
 class MechanicReport(models.Model):

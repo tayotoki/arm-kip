@@ -1,4 +1,7 @@
-from django.http import HttpResponseRedirect
+import re
+from typing import Type
+
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from .models import Device, Stock, Comment, MechanicReport, KipReport, DeviceKipReport, Place, Station
 from django.db.utils import IntegrityError
@@ -16,7 +19,6 @@ def copy_fields(old_device, new_device):
 
 
 def send_to_stock(device_id):
-    device_id = device_id
     device = Device.objects.get(id=device_id)
     device.name = None
     device.current_check_date = None
@@ -40,6 +42,7 @@ def send_to_stock(device_id):
         "stock",
         "mounting_address",
     ])
+    print(device, "отправлен на склад")
 
 
 def update_device(request, device_id):
@@ -182,31 +185,69 @@ def create_mech_reports(request, kip_report_id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+class DataStorage:
+    instances = []
+
+    def __init__(self, id_: int):
+        self.id_ = id_
+        self.data: list[Device] = []
+
+    @classmethod
+    def find_or_create(cls, id_: int):
+        for instance in cls.instances:
+            if instance.id_ == id_:
+                instance_ = instance
+                break
+        else:
+            instance_ = cls(id_)
+            cls.instances.append(instance_)
+
+        return instance_
+
+
 def mark_defect_device(request, device_id):
     if request.method == "POST":
-        device = Device.objects.get(pk=device_id)
-        if device.status == Device.send:
-            send_to_stock(device.id)
+        mechanic_report_id = int(re.search(r"(?<=mechanicreport/)(\d+)(?=/change)",
+                                           request.META.get("HTTP_REFERER")).group())
+
+        current_storage: DataStorage = DataStorage.find_or_create(mechanic_report_id)
+        try:
+            kip_report_id = int(request.POST.get("kip_report_id"))
+        except TypeError:
+            return
         else:
-            added_devices = []
-            if device.avz:
-                avz_devices = KipReport.devices.objects.filter(
-                    mounting_address__isnull=True,
-                    status=Device.send,
-                    avz=device.avz,
-                    station=device.station,
-                    device_type=device.device_type,
-                ).exclude(
-                    pk__in=[device.pk for device in added_devices]
-                ).order_by(
-                    "-next_check_date",
-                )
+            device = Device.objects.get(pk=device_id)
+            if device.status == Device.send:
+                send_to_stock(device.id)
+            else:
+                if device.avz:
+                    try:
+                        kip_report = KipReport.objects.get(pk=kip_report_id)
+                    except KipReport.DoesNotExist:
+                        return JsonResponse({"success": False,
+                                             "message": f"Отчета КИП N {kip_report_id} не существует"})
+                    else:
+                        avz_devices = kip_report.devices.filter(
+                            status=Device.send,
+                            avz=device.avz,
+                            device_type=device.device_type,
+                        ).order_by("-next_check_date").exclude(
+                            pk__in=[device.pk for device in current_storage.data]
+                        )
 
-                exchange_device = avz_devices.last()
+                        print(avz_devices)
 
-                if exchange_device:
-                    added_devices.append(exchange_device)
-                    copy_fields(device, exchange_device)
-                    send_to_stock(device)
+                        exchange_device = avz_devices.last()
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                        if exchange_device:
+                            current_storage.data.append(exchange_device)
+                            copy_fields(device, exchange_device)
+                            send_to_stock(exchange_device.id)
+                            return JsonResponse({"success": True,
+                                                 "message": f"Прибор {exchange_device} "
+                                                            f"отправлен обратно на склад"})
+                        else:
+                            return JsonResponse({"success": False,
+                                                 "message": "Нет приборов, у которых можно отметить дефект"})
+
+    return JsonResponse({"success": True})
