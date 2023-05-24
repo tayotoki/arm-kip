@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'ARM.apps.ArmConfig',
+    'django_cron',
     # 'import_export',
 ]
 
@@ -126,3 +127,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SITE_ID = 1
+
+CRON_CLASSES = [
+    'ARM.cron.UpdateDeviceStatuses',
+]

@@ -287,6 +287,7 @@ class Device(models.Model):
             elif all((
                 year == timezone.localdate().year,
                 month == timezone.localdate().month,
+                day > timezone.localdate().day,
             )):
                 return self.ready
             else:
