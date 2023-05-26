@@ -13,6 +13,111 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 
 
+class DataStorage:
+    instances = []
+
+    def __init__(self, id_: int):
+        self.id_ = id_
+        self.data: list[Device] = []
+
+    @classmethod
+    def find_or_create(cls, id_: int):
+        for instance in cls.instances:
+            if instance.id_ == id_:
+                instance_ = instance
+                break
+        else:
+            instance_ = cls(id_)
+            cls.instances.append(instance_)
+
+        return instance_
+
+
+class Report:
+    def __init__(self, model):
+        self.model = model
+
+    def __set_name__(self, owner, name):
+        self.name = "_" + name
+
+    def __get__(self, obj, objtype=None):
+        return getattr(obj, self.name)
+
+    def __set__(self, obj, value):
+        setattr(
+            obj,
+            self.name,
+            self.get_object_or_none(value),
+        )
+
+    def get_object_or_none(self, value):
+        try:
+            return self.model.objects.get(pk=value)
+        except self.model.DoesNotExist:
+            return None
+
+
+class KipMechReportAdapter:
+    """Класс для работы с объектами модели
+    Device, которые присутствуют в MechanicReport
+    и KipReport"""
+    mech_report = Report(model=MechanicReport)
+    kip_report = Report(model=KipReport)
+
+    def __init__(self,
+                 mech_report_id: int,
+                 kip_report_id: int,
+                 storage: DataStorage):
+        self.mech_report = mech_report_id
+        self.kip_report = kip_report_id
+        self.storage = storage
+
+    @staticmethod
+    def _copy_fields(old_device: Device,
+                     new_device: Device):
+        new_device.name = old_device.name
+        new_device.stock = None
+        new_device.status = new_device.get_status()
+        new_device.save(update_fields=[
+            "name",
+            "stock",
+            "status",
+        ])
+
+    @staticmethod
+    def _send_to_stock(device_id: int):
+        device = Device.objects.get(id=device_id)
+        device.name = None
+        device.current_check_date = None
+        device.next_check_date = None
+        device.status = None
+        device.station = None
+        device.avz = None
+        device.who_prepared = None
+        device.who_checked = None
+        device.stock = Stock.objects.get(pk=1)
+        device.mounting_address = None
+        device.save(update_fields=[
+            "name",
+            "current_check_date",
+            "next_check_date",
+            "status",
+            "station",
+            "avz",
+            "who_prepared",
+            "who_checked",
+            "stock",
+            "mounting_address",
+        ])
+
+    def _defect_device_actions(self,
+                               device: Device,
+                               exchange_device: Device):
+        self.storage.data.append(exchange_device)
+        self.copy_fields(device, exchange_device)
+        self.send_to_stock(exchange_device.id)
+        self.mech_report.devices.remove(device)
+
 
 def copy_fields(old_device, new_device):
     new_device.name = old_device.name
@@ -190,26 +295,6 @@ def create_mech_reports(request, kip_report_id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-class DataStorage:
-    instances = []
-
-    def __init__(self, id_: int):
-        self.id_ = id_
-        self.data: list[Device] = []
-
-    @classmethod
-    def find_or_create(cls, id_: int):
-        for instance in cls.instances:
-            if instance.id_ == id_:
-                instance_ = instance
-                break
-        else:
-            instance_ = cls(id_)
-            cls.instances.append(instance_)
-
-        return instance_
-
-
 def mark_defect_device(request, device_id):
     if request.method == "POST":
         mechanic_report_id = int(re.search(r"(?<=mechanicreport/)(\d+)(?=/change)",
@@ -220,6 +305,114 @@ def mark_defect_device(request, device_id):
         except TypeError:
             return
         else:
+            try:
+                kip_report = KipReport.objects.get(pk=kip_report_id)
+            except KipReport.DoesNotExist:
+                return JsonResponse({"success": False,
+                                     "message": f"Отчета КИП N {kip_report_id} не существует"})
+            else:
+                device = Device.objects.get(pk=device_id)
+                if device.status == Device.send:
+                    send_to_stock(device.id)
+                else:
+                    if device.avz:
+                        
+                        avz_devices = kip_report.devices.filter(
+                            status=Device.send,
+                            avz=device.avz,
+                            device_type=device.device_type,
+                        ).order_by("-next_check_date").exclude(
+                            pk__in=[device.pk for device in current_storage.data]
+                        )
+
+                        print(avz_devices)
+
+                        exchange_device = avz_devices.last()
+
+                        if exchange_device:
+                            defect_device_action(mechanic_report_id=mechanic_report_id,
+                                                 device=device,
+                                                 exchange_device=exchange_device,
+                                                 current_storage=current_storage)
+                            message = f"Прибор {exchange_device} отправлен обратно на склад"
+                            return JsonResponse({"success": True,
+                                                 "message": message})
+                            
+                        else:
+                            return JsonResponse({"success": False,
+                                                 "message": "Нет приборов, у которых можно отметить дефект"})
+                        
+                    elif device.mounting_address.number == "остальное":
+                        kip_devices = kip_report.devices.filter(
+                            Q(mounting_address__rack__number="поле") |
+                            Q(mounting_address__rack__number="релейная") |
+                            Q(mounting_address__rack__number="тоннель"),
+                            station=device.station,
+                            status=Device.send,
+                            mounting_address=device.mounting_address,
+                            device_type=device.device_type,
+                        ).order_by("-next_check_date").exclude(
+                            pk__in=[device.pk for device in current_storage.data]
+                        )
+
+                        exchange_device = kip_devices.last()
+                        
+                        if exchange_device:
+                            defect_device_action(mechanic_report_id=mechanic_report_id,
+                                                 device=device,
+                                                 exchange_device=exchange_device,
+                                                 current_storage=current_storage)
+                            return JsonResponse({"success": True,
+                                                 "message": f"Прибор {exchange_device} "
+                                                            f"отправлен обратно на склад"})
+                        else:
+                            return JsonResponse({"success": False,
+                                                 "message": "Нет приборов, у которых можно отметить дефект"})
+                    else:
+                        current_mounting_address = device.mounting_address
+                        devices = current_mounting_address.device_set
+                        if devices.count() > 2:
+                            return JsonResponse({"success": False,
+                                                "message": f"На адресе {current_mounting_address}"
+                                                "больше двух приборов, проверьте"})
+                        exchange_device = kip_report.devices.filter(
+                            station=device.station,
+                            mounting_address=device.mounting_address,
+                            device_type=device.device_type,
+                            status=Device.send,
+                        )[0]
+                        defect_device_action(exchange_device=exchange_device,
+                                             device=device,
+                                             mechanic_report_id=mechanic_report_id,
+                                             current_storage=current_storage)
+                        return JsonResponse({"success": True,
+                                             "message": f"Прибор {exchange_device} "
+                                                        f"отправлен обратно на склад"})
+                        
+
+    return JsonResponse({"success": True})
+
+
+
+def mark_defect_device_copy(request, device_id):
+    if request.method == "POST":
+        mechanic_report_id = int(re.search(r"(?<=mechanicreport/)(\d+)(?=/change)",
+                                           request.META.get("HTTP_REFERER")).group())
+        current_storage: DataStorage = DataStorage.find_or_create(mechanic_report_id)
+        try:
+            kip_report_id = int(request.POST.get("kip_report_id"))
+        except TypeError:
+            return
+        else:
+            adapter = KipMechReportAdapter(mech_report_id=mechanic_report_id,
+                                           kip_report_id=kip_report_id,
+                                           storage=current_storage)
+            if not adapter.kip_report:
+                return JsonResponse({"success": False,
+                                     "message": f"Отчета КИП N {kip_report_id} не существует"})
+            else:
+                if device.status == Device.send:
+                    adapter._send_to_stock(device.id)
             try:
                 kip_report = KipReport.objects.get(pk=kip_report_id)
             except KipReport.DoesNotExist:
