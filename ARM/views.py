@@ -114,55 +114,67 @@ class KipMechReportAdapter:
                                device: Device,
                                exchange_device: Device):
         self.storage.data.append(exchange_device)
-        self.copy_fields(device, exchange_device)
-        self.send_to_stock(exchange_device.id)
+        self._copy_fields(device, exchange_device)
+        self._send_to_stock(exchange_device.id)
         self.mech_report.devices.remove(device)
 
+    def find_avz_exchange_device(self, device: Device) -> Device | None:
+        """Возвращает прибор для замены или None, в случае когда
+        прибор находится в аварийно-восстановительном запасе"""
 
-def copy_fields(old_device, new_device):
-    new_device.name = old_device.name
-    new_device.stock = None
-    new_device.status = new_device.get_status()
-    new_device.save(update_fields=["name", "stock", "status"])
+        avz_devices = self.kip_report.devices.filter(
+            status=Device.send,
+            avz=device.avz,
+            device_type=device.device_type,
+        ).order_by("-next_check_date").exclude(
+            pk__in=[device.pk for device in self.storage.data]
+        )
 
+        exchange_device = avz_devices.last()
 
-def send_to_stock(device_id):
-    device = Device.objects.get(id=device_id)
-    device.name = None
-    device.current_check_date = None
-    device.next_check_date = None
-    device.status = None
-    device.station = None
-    device.avz = None
-    device.who_prepared = None
-    device.who_checked = None
-    device.stock = Stock.objects.get(pk=1)
-    device.mounting_address = None
-    device.save(update_fields=[
-        "name",
-        "current_check_date",
-        "next_check_date",
-        "status",
-        "station",
-        "avz",
-        "who_prepared",
-        "who_checked",
-        "stock",
-        "mounting_address",
-    ])
-    print(device, "отправлен на склад")
+        return exchange_device if exchange_device else None
+    
+    def find_other_places_exchange_device(self, device: Device) -> Device | None:
+        """Возвращает прибор для замены или None, в случае если
+        монтажный адрес определен как ...-остальное"""
 
+        kip_devices = self.kip_report.devices.filter(
+            Q(mounting_address__rack__number="поле") |
+            Q(mounting_address__rack__number="релейная") |
+            Q(mounting_address__rack__number="тоннель"),
+            station=device.station,
+            status=Device.send,
+            mounting_address=device.mounting_address,
+            device_type=device.device_type,
+        ).order_by("-next_check_date").exclude(
+            pk__in=[device.pk for device in self.storage.data]
+        )
 
-def defect_device_action(mechanic_report_id: int,
-                         device: Device,
-                         exchange_device: Device,
-                         current_storage):
-    current_storage.data.append(exchange_device)
-    copy_fields(device, exchange_device)
-    send_to_stock(exchange_device.id)
-    MechanicReport.objects.get(
-        pk=mechanic_report_id
-    ).devices.remove(device)
+        exchange_device = kip_devices.last()
+
+        return exchange_device if exchange_device else None
+    
+    def find_exact_mount_addr_exch_device(self, device: Device) -> Device:
+        """Возвращает прибор для замены, в случае если
+        монтажный адрес - точное место на стативе станции"""
+
+        current_mounting_address = device.mounting_address
+        devices = current_mounting_address.device_set
+        
+        if devices.count() > 2:
+            raise ValueError(f"К адресу {current_mounting_address} относится"
+                             "больше двух приборов, "
+                             "проверьте данное место "
+                             "в разделе Места")
+        
+        exchange_device = self.kip_report.devices.filter(
+            station=device.station,
+            mounting_address=device.mounting_address,
+            device_type=device.device_type,
+            status=Device.send,
+        )[0]
+
+        return exchange_device
 
 
 def update_device(request, device_id):
@@ -297,108 +309,12 @@ def create_mech_reports(request, kip_report_id):
 
 def mark_defect_device(request, device_id):
     if request.method == "POST":
-        mechanic_report_id = int(re.search(r"(?<=mechanicreport/)(\d+)(?=/change)",
-                                           request.META.get("HTTP_REFERER")).group())
+        mechanic_report_id = int(
+            re.search(r"(?<=mechanicreport/)(\d+)(?=/change)",
+                      request.META.get("HTTP_REFERER")).group()
+        )
         current_storage: DataStorage = DataStorage.find_or_create(mechanic_report_id)
-        try:
-            kip_report_id = int(request.POST.get("kip_report_id"))
-        except TypeError:
-            return
-        else:
-            try:
-                kip_report = KipReport.objects.get(pk=kip_report_id)
-            except KipReport.DoesNotExist:
-                return JsonResponse({"success": False,
-                                     "message": f"Отчета КИП N {kip_report_id} не существует"})
-            else:
-                device = Device.objects.get(pk=device_id)
-                if device.status == Device.send:
-                    send_to_stock(device.id)
-                else:
-                    if device.avz:
-                        
-                        avz_devices = kip_report.devices.filter(
-                            status=Device.send,
-                            avz=device.avz,
-                            device_type=device.device_type,
-                        ).order_by("-next_check_date").exclude(
-                            pk__in=[device.pk for device in current_storage.data]
-                        )
 
-                        print(avz_devices)
-
-                        exchange_device = avz_devices.last()
-
-                        if exchange_device:
-                            defect_device_action(mechanic_report_id=mechanic_report_id,
-                                                 device=device,
-                                                 exchange_device=exchange_device,
-                                                 current_storage=current_storage)
-                            message = f"Прибор {exchange_device} отправлен обратно на склад"
-                            return JsonResponse({"success": True,
-                                                 "message": message})
-                            
-                        else:
-                            return JsonResponse({"success": False,
-                                                 "message": "Нет приборов, у которых можно отметить дефект"})
-                        
-                    elif device.mounting_address.number == "остальное":
-                        kip_devices = kip_report.devices.filter(
-                            Q(mounting_address__rack__number="поле") |
-                            Q(mounting_address__rack__number="релейная") |
-                            Q(mounting_address__rack__number="тоннель"),
-                            station=device.station,
-                            status=Device.send,
-                            mounting_address=device.mounting_address,
-                            device_type=device.device_type,
-                        ).order_by("-next_check_date").exclude(
-                            pk__in=[device.pk for device in current_storage.data]
-                        )
-
-                        exchange_device = kip_devices.last()
-                        
-                        if exchange_device:
-                            defect_device_action(mechanic_report_id=mechanic_report_id,
-                                                 device=device,
-                                                 exchange_device=exchange_device,
-                                                 current_storage=current_storage)
-                            return JsonResponse({"success": True,
-                                                 "message": f"Прибор {exchange_device} "
-                                                            f"отправлен обратно на склад"})
-                        else:
-                            return JsonResponse({"success": False,
-                                                 "message": "Нет приборов, у которых можно отметить дефект"})
-                    else:
-                        current_mounting_address = device.mounting_address
-                        devices = current_mounting_address.device_set
-                        if devices.count() > 2:
-                            return JsonResponse({"success": False,
-                                                "message": f"На адресе {current_mounting_address}"
-                                                "больше двух приборов, проверьте"})
-                        exchange_device = kip_report.devices.filter(
-                            station=device.station,
-                            mounting_address=device.mounting_address,
-                            device_type=device.device_type,
-                            status=Device.send,
-                        )[0]
-                        defect_device_action(exchange_device=exchange_device,
-                                             device=device,
-                                             mechanic_report_id=mechanic_report_id,
-                                             current_storage=current_storage)
-                        return JsonResponse({"success": True,
-                                             "message": f"Прибор {exchange_device} "
-                                                        f"отправлен обратно на склад"})
-                        
-
-    return JsonResponse({"success": True})
-
-
-
-def mark_defect_device_copy(request, device_id):
-    if request.method == "POST":
-        mechanic_report_id = int(re.search(r"(?<=mechanicreport/)(\d+)(?=/change)",
-                                           request.META.get("HTTP_REFERER")).group())
-        current_storage: DataStorage = DataStorage.find_or_create(mechanic_report_id)
         try:
             kip_report_id = int(request.POST.get("kip_report_id"))
         except TypeError:
@@ -411,65 +327,30 @@ def mark_defect_device_copy(request, device_id):
                 return JsonResponse({"success": False,
                                      "message": f"Отчета КИП N {kip_report_id} не существует"})
             else:
-                if device.status == Device.send:
-                    adapter._send_to_stock(device.id)
-            try:
-                kip_report = KipReport.objects.get(pk=kip_report_id)
-            except KipReport.DoesNotExist:
-                return JsonResponse({"success": False,
-                                     "message": f"Отчета КИП N {kip_report_id} не существует"})
-            else:
                 device = Device.objects.get(pk=device_id)
                 if device.status == Device.send:
-                    send_to_stock(device.id)
+                    adapter._send_to_stock(device.id)
                 else:
                     if device.avz:
-                        
-                        avz_devices = kip_report.devices.filter(
-                            status=Device.send,
-                            avz=device.avz,
-                            device_type=device.device_type,
-                        ).order_by("-next_check_date").exclude(
-                            pk__in=[device.pk for device in current_storage.data]
-                        )
-
-                        print(avz_devices)
-
-                        exchange_device = avz_devices.last()
+                        exchange_device = adapter.find_avz_exchange_device(device)
 
                         if exchange_device:
-                            defect_device_action(mechanic_report_id=mechanic_report_id,
-                                                 device=device,
-                                                 exchange_device=exchange_device,
-                                                 current_storage=current_storage)
+                            adapter._defect_device_actions(device=device,
+                                                           exchange_device=exchange_device)
                             message = f"Прибор {exchange_device} отправлен обратно на склад"
                             return JsonResponse({"success": True,
                                                  "message": message})
-                            
                         else:
                             return JsonResponse({"success": False,
-                                                 "message": "Нет приборов, у которых можно отметить дефект"})
-                        
-                    elif device.mounting_address.number == "остальное":
-                        kip_devices = kip_report.devices.filter(
-                            Q(mounting_address__rack__number="поле") |
-                            Q(mounting_address__rack__number="релейная") |
-                            Q(mounting_address__rack__number="тоннель"),
-                            station=device.station,
-                            status=Device.send,
-                            mounting_address=device.mounting_address,
-                            device_type=device.device_type,
-                        ).order_by("-next_check_date").exclude(
-                            pk__in=[device.pk for device in current_storage.data]
-                        )
+                                                 "message": "Нет приборов, "
+                                                            "у которых можно отметить дефект"})
 
-                        exchange_device = kip_devices.last()
-                        
+                    elif device.mounting_address.number == "остальное":
+                        exchange_device = adapter.find_other_places_exchange_device(device)
+
                         if exchange_device:
-                            defect_device_action(mechanic_report_id=mechanic_report_id,
-                                                 device=device,
-                                                 exchange_device=exchange_device,
-                                                 current_storage=current_storage)
+                            adapter._defect_device_actions(device=device,
+                                                           exchange_device=exchange_device)
                             return JsonResponse({"success": True,
                                                  "message": f"Прибор {exchange_device} "
                                                             f"отправлен обратно на склад"})
@@ -477,25 +358,16 @@ def mark_defect_device_copy(request, device_id):
                             return JsonResponse({"success": False,
                                                  "message": "Нет приборов, у которых можно отметить дефект"})
                     else:
-                        current_mounting_address = device.mounting_address
-                        devices = current_mounting_address.device_set
-                        if devices.count() > 2:
+                        try:
+                            exchange_device = adapter.find_exact_mount_addr_exch_device(device)
+                        except ValueError as e:
                             return JsonResponse({"success": False,
-                                                "message": f"На адресе {current_mounting_address}"
-                                                "больше двух приборов, проверьте"})
-                        exchange_device = kip_report.devices.filter(
-                            station=device.station,
-                            mounting_address=device.mounting_address,
-                            device_type=device.device_type,
-                            status=Device.send,
-                        )[0]
-                        defect_device_action(exchange_device=exchange_device,
-                                             device=device,
-                                             mechanic_report_id=mechanic_report_id,
-                                             current_storage=current_storage)
-                        return JsonResponse({"success": True,
-                                             "message": f"Прибор {exchange_device} "
-                                                        f"отправлен обратно на склад"})
-                        
+                                                 "message": f"{e}"})
+                        else:
+                            adapter._defect_device_actions(device=device,
+                                                           exchange_device=exchange_device)
 
+                            return JsonResponse({"success": True,
+                                                 "message": f"Прибор {exchange_device} "
+                                                            f"отправлен обратно на склад"})
     return JsonResponse({"success": True})
