@@ -352,6 +352,7 @@ class KipReport(models.Model):
     explanation = models.TextField(max_length=300, verbose_name="Пояснение", blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создан")
     modified = models.DateTimeField(auto_now=True, editable=False, verbose_name="Изменен")
+    editable = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Отчет КИП"

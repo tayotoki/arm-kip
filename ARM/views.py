@@ -141,12 +141,12 @@ class KipMechReportAdapter:
         kip_devices = self.kip_report.devices.filter(
             Q(mounting_address__rack__number="поле") |
             Q(mounting_address__rack__number="релейная") |
-            Q(mounting_address__rack__number="тоннель"),
-            station=device.station,
-            status=Device.send,
-            mounting_address=device.mounting_address,
-            device_type=device.device_type,
-        ).order_by("-next_check_date").exclude(
+            Q(mounting_address__rack__number="тоннель") & Q(
+                station=device.station,
+                status=Device.send,
+                mounting_address=device.mounting_address,
+                device_type=device.device_type,
+        )).order_by("-next_check_date").exclude(
             pk__in=[device.pk for device in self.storage.data]
         )
 
@@ -176,21 +176,87 @@ class KipMechReportAdapter:
 
         return exchange_device
 
+    def swap_devices(self, device: Device, exchange_device: Device):
+        self.storage.data.append(exchange_device)
+        self._copy_fields(device, exchange_device)
+        self._send_to_stock(device)
+
+    def install_device(self, device: Device):
+        device.stock = None
+        device.status = device.get_status()
+        device.save(update_fields=[
+            "status",
+            "stock",
+        ])
+        self.storage.data.append(device)
+
 
 def update_device(request, device_id):
     if request.method == "POST":
-        exchange_device = None
-        device = Device.objects.get(pk=device_id)
-        mounting_address = device.mounting_address
-        devices_on_place = mounting_address.device_set.all()
-        for device_ in devices_on_place:
-            if device_ == device:
-                continue
-            exchange_device = device_
-        if exchange_device:
-            copy_fields(device, exchange_device)
-            send_to_stock(device.id)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        mechanic_report_id = int(
+            re.search(r"(?<=mechanicreport/)(\d+)(?=/change)",
+                      request.META.get("HTTP_REFERER")).group()
+        )
+        current_storage: DataStorage = DataStorage.find_or_create(mechanic_report_id)
+
+        try:
+            kip_report_id = int(request.POST.get("kip_report_id"))
+        except TypeError:
+            return
+        else:
+            adapter = KipMechReportAdapter(mech_report_id=mechanic_report_id,
+                                           kip_report_id=kip_report_id,
+                                           storage=current_storage)
+            if not adapter.kip_report:
+                return JsonResponse({"success": False,
+                                     "message": f"Отчета КИП N {kip_report_id} не существует"})
+            else:
+                device = Device.objects.get(pk=device_id)
+                if device.status == Device.send:
+                    adapter.install_device(device)
+                    message = f"{device} установлен на {device.mounting_address}"
+                    return JsonResponse({"success": True,
+                                         "message": message})
+                else:
+                    if device.avz:
+                        exchange_device = adapter.find_avz_exchange_device(device)
+
+                        if exchange_device:
+                            adapter.swap_devices(device=device,
+                                                 exchange_device=exchange_device)
+                            message = f"Прибор {device} заменен на {exchange_device}"
+                            return JsonResponse({"success": True,
+                                                 "message": message})
+                        else:
+                            return JsonResponse({"success": False,
+                                                 "message": "Нет приборов для замены"})
+
+                    elif device.mounting_address.number == "остальное":
+                        exchange_device = adapter.find_other_places_exchange_device(device)
+
+                        if exchange_device:
+                            adapter.swap_devices(device=device,
+                                                 exchange_device=exchange_device)
+                            message = f"Прибор {device} заменен на {exchange_device}"
+                            return JsonResponse({"success": True,
+                                                 "message": message})
+                        else:
+                            return JsonResponse({"success": False,
+                                                 "message": "Нет приборов для замены"})
+                    else:
+                        try:
+                            exchange_device = adapter.find_exact_mount_addr_exch_device(device)
+                        except ValueError as e:
+                            return JsonResponse({"success": False,
+                                                 "message": f"{e}"})
+                        else:
+                            adapter.swap_devices(device=device,
+                                                 exchange_device=exchange_device)
+
+                            message = f"Прибор {device} заменен на {exchange_device}"
+                            return JsonResponse({"success": True,
+                                                 "message": message})
+    return JsonResponse({"success": True})
 
 
 def create_comment(request, mech_report_id):
@@ -303,6 +369,8 @@ def create_mech_reports(request, kip_report_id):
                                 f"Сформированно автоматически"
                 ).devices.set(Device.objects.filter(pk__in=[device.pk for device in devices]))
         print((stations))
+        kip_report.editable = False
+        kip_report.save()
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

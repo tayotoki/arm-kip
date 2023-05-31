@@ -2,6 +2,7 @@ import re
 
 from functools import reduce
 from operator import or_, and_
+from typing import Optional
 
 from django.contrib import messages
 from django.contrib.admin import AdminSite
@@ -10,6 +11,7 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django import forms
 from django.forms import TextInput, Textarea, models, widgets, HiddenInput
+from django.http.request import HttpRequest
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import format_html
@@ -314,7 +316,8 @@ class DevicesReportInline(admin.TabularInline):
 
     def button(self, obj):
         device = Device.objects.get(id=obj.device_id)
-        if (device.station or device.avz) and device.status != Device.send:
+        print(device.status, device.stock)
+        if (device.station or device.avz) and device.status not in (Device.send, Device.normal):
             return mark_safe(
                 f'<a class="button" href="javascript://" '
                 f'onclick="update_device_ajax({device.id})">Прибор заменен</a>'
@@ -322,10 +325,12 @@ class DevicesReportInline(admin.TabularInline):
         elif device.status == Device.send:
             return mark_safe(
                 f'<a class="button" href="javascript://" '
-                f'onclick="install_device_ajax({device.id})">Прибор установлен</a>'
+                f'onclick="update_device_ajax({device.id})">Прибор установлен</a>'
             )
         elif device.stock and not device.station:
             return "Прибор на складе"
+        elif device.stock is None:
+            return f"{device.status}"
 
     @admin.display(description="Отметить дефекты")
     def defect_button(self, obj):
@@ -365,8 +370,7 @@ class DevicesReportInline(admin.TabularInline):
 
     class Media:
         js = ["admin/js/update_device_ajax.js",
-              "admin/js/mark_defect_device_ajax.js",
-              "admin/js/install_device_ajax.js"]
+              "admin/js/mark_defect_device_ajax.js"]
 
 
 @admin.register(MechanicReport)
@@ -544,8 +548,14 @@ class DeviceKipReportInline(admin.StackedInline):
 @admin.register(KipReport)
 class KipReportAdmin(admin.ModelAdmin):
     inlines = [DeviceKipReportInline]
-    readonly_fields = ("author", "button")
+    readonly_fields = ("author", "button", "created")
+    exclude = ("editable",)
 
+    def has_change_permission(self, request: HttpRequest, obj=None) -> bool:
+        if obj:
+            return obj.editable
+
+    @admin.display(description="Действия")
     def button(self, obj):
         kip_report = KipReport.objects.get(id=obj.id)
         if all([device.status == Device.in_progress for device in kip_report.devices.all()]):
@@ -553,7 +563,9 @@ class KipReportAdmin(admin.ModelAdmin):
                 f'<a class="button" href="javascript://" '
                 f'onclick="send_devices_ajax({kip_report.id})">Отправить приборы</a>'
             )
-        elif all([device.status == Device.send for device in kip_report.devices.all()]):
+        elif all(
+            [device.status == Device.send for device in kip_report.devices.all()]
+        ) or not obj.editable:
             return "Приборы отправлены"
         else:
             return "Приборы еще не подготовлены к отправке"
@@ -632,12 +644,13 @@ class KipReportAdmin(admin.ModelAdmin):
                         number=number,
                     )
                 except Place.DoesNotExist:
+                    print(rack, "-", number, " Не существует")
                     pass
                 else:
                     try:
                         device_on_place = Device.objects.get(mounting_address=place)
                     except Device.MultipleObjectsReturned:
-                        form_device.status = form_device.in_progress
+                        form_device.status = Device.in_progress
                         form_device.station = instance.station
 
                         if place:
@@ -656,7 +669,7 @@ class KipReportAdmin(admin.ModelAdmin):
                             "сейчас нет прибора"
                             ". Вы уверены, что готовите прибор на нужное место? Уточните у механиков"
                         )
-                        form_device.status = form_device.in_progress
+                        form_device.status = Device.in_progress
                         form_device.station = instance.station
 
                         if place:
@@ -670,7 +683,7 @@ class KipReportAdmin(admin.ModelAdmin):
                                 form_device.frequency_of_check = 1
                     else:
                         form_device.name = device_on_place.name
-                        form_device.status = form_device.in_progress
+                        form_device.status = Device.in_progress
                         form_device.station = device_on_place.station
                         form_device.avz = device_on_place.avz
                         form_device.frequency_of_check = device_on_place.frequency_of_check
