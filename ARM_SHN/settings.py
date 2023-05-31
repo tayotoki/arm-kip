@@ -31,6 +31,9 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
+
     'django.contrib.contenttypes',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -126,8 +129,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SITE_ID = 1
-
 CRON_CLASSES = [
     'ARM.cron.UpdateDeviceStatuses',
 ]
+
+ADMIN_INTERFACE_THEME = 'dark'
+X_FRAME_OPTIONS = "SAMEORIGIN"
+SILENCED_SYSTEM_CHECKS = ["security.W019"]

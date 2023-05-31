@@ -32,7 +32,7 @@ from .models import (Station,
                      KipReport,
                      DeviceKipReport)
 
-from ARM.actions import export_as_xls
+from ARM.actions import export_as_xls, add_to_kipreport
 
 
 AdminSite.site_url = ''
@@ -61,8 +61,8 @@ class DeviceForm(forms.ModelForm):
 class DeviceAdmin(admin.ModelAdmin):
     form = DeviceForm
     readonly_fields = ("next_check_date",)
-    actions = [export_as_xls]
-    list_filter = ["station", "stock", "contact_type", "next_check_date"]
+    actions = [export_as_xls, add_to_kipreport]
+    list_filter = ["station", "stock", "status", "contact_type", "next_check_date"]
     list_display = [
         "station",
         "name",

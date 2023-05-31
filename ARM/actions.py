@@ -5,6 +5,7 @@ from datetime import datetime, date
 from .export_excel import ExportExcelAction
 from openpyxl.styles import Font
 from unidecode import unidecode
+from .models import KipReport
 
 
 def style_output_file(file):
@@ -38,6 +39,7 @@ def export_as_xls(self, request, queryset):
     file_name = unidecode(opts.verbose_name)
     blank_line = []
     wb = Workbook()
+
     ws = wb.active
     ws.append(ExportExcelAction.generate_header(self, self.model, field_names))
 
@@ -63,4 +65,25 @@ def export_as_xls(self, request, queryset):
     return response
 
 
+def add_to_kipreport(self, request, queryset):
+    editable_kip_report = KipReport.objects.filter(
+        editable=True,
+    ).last()
+
+    queryset = queryset.exclude(
+        pk__in=[
+            device.pk for device in queryset if device.status in (
+                device.send, device.in_progress
+            )
+        ]
+    )
+
+    if editable_kip_report:
+        editable_kip_report.devices.set(queryset)
+    else:
+        KipReport.objects.create(author=request.user).devices.set(queryset)
+
+
+
 export_as_xls.short_description = "Экспортировать в Excel"
+add_to_kipreport.short_description = "Добавить в отчет КИП"

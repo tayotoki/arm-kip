@@ -321,7 +321,8 @@ def create_mech_reports(request, kip_report_id):
             other_device_on_place = [device for device in Device.objects.filter(
                 ~Q(pk=instance.device.pk),
                 station=instance.device.station,
-                mounting_address=instance.device.mounting_address
+                mounting_address=instance.device.mounting_address,
+                device_type=instance.device.device_type,
             )]
 
             print("----------")
