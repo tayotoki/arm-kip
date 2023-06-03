@@ -73,16 +73,16 @@ def add_to_kipreport(self, request, queryset):
     queryset = queryset.exclude(
         pk__in=[
             device.pk for device in queryset if device.status in (
-                device.send, device.in_progress
+                device.send,
+                device.in_progress,
             )
         ]
     )
 
     if editable_kip_report:
-        editable_kip_report.devices.set(queryset)
+        editable_kip_report.devices.set(queryset | editable_kip_report.devices.all())
     else:
         KipReport.objects.create(author=request.user).devices.set(queryset)
-
 
 
 export_as_xls.short_description = "Экспортировать в Excel"

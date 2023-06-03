@@ -179,7 +179,7 @@ class KipMechReportAdapter:
     def swap_devices(self, device: Device, exchange_device: Device):
         self.storage.data.append(exchange_device)
         self._copy_fields(device, exchange_device)
-        self._send_to_stock(device)
+        self._send_to_stock(device.id)
 
     def install_device(self, device: Device):
         device.stock = None
