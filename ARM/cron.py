@@ -4,6 +4,8 @@ from .models import Device
 
 
 class UpdateDeviceStatuses(CronJobBase):
+    devices = []
+
     RUN_EVERY_MINS = 1
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
@@ -19,4 +21,5 @@ class UpdateDeviceStatuses(CronJobBase):
         for device in devices:
             if device.next_check_date:
                 device.status = device.get_status()
-                device.save()
+
+        Device.objects.bulk_update(devices, fields=["status"])

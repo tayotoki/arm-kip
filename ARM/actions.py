@@ -55,7 +55,7 @@ def export_as_xls(self, request, queryset):
                     value = convert_data_date(value)
                 elif isinstance(value, bool):
                     value = convert_boolean_field(value)
-            row.append(str(value))
+            row.append(str(value) if value is not None else "--")
         ws.append(row)
 
     ws = style_output_file(ws)
@@ -75,7 +75,7 @@ def add_to_kipreport(self, request, queryset):
             device.pk for device in queryset if device.status in (
                 device.send,
                 device.in_progress,
-            )
+            ) and (device.stock is None or device.station)
         ]
     )
 

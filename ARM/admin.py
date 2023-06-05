@@ -70,6 +70,7 @@ class DeviceAdmin(admin.ModelAdmin):
         "inventory_number",
         "mounting_address",
         "avz",
+        "next_check_date",
         "status",
     ]
     autocomplete_fields = ("mounting_address", "device_type")

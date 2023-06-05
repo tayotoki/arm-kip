@@ -1,1 +1,1834 @@
-[{"model": "ARM.Rack", "pk": 1, "fields": {"station": 1, "number": "12"}}, {"model": "ARM.Rack", "pk": 2, "fields": {"station": 1, "number": "13"}}, {"model": "ARM.Rack", "pk": 3, "fields": {"station": 1, "number": "14"}}, {"model": "ARM.Rack", "pk": 4, "fields": {"station": 1, "number": "15"}}, {"model": "ARM.Rack", "pk": 5, "fields": {"station": 1, "number": "16"}}, {"model": "ARM.Rack", "pk": 6, "fields": {"station": 1, "number": "17"}}, {"model": "ARM.Rack", "pk": 7, "fields": {"station": 1, "number": "18"}}, {"model": "ARM.Rack", "pk": 8, "fields": {"station": 1, "number": "19"}}, {"model": "ARM.Rack", "pk": 9, "fields": {"station": 1, "number": "22"}}, {"model": "ARM.Rack", "pk": 10, "fields": {"station": 1, "number": "23"}}, {"model": "ARM.Rack", "pk": 11, "fields": {"station": 1, "number": "24"}}, {"model": "ARM.Rack", "pk": 12, "fields": {"station": 1, "number": "25"}}, {"model": "ARM.Rack", "pk": 13, "fields": {"station": 1, "number": "26"}}, {"model": "ARM.Rack", "pk": 14, "fields": {"station": 1, "number": "27"}}, {"model": "ARM.Rack", "pk": 15, "fields": {"station": 1, "number": "28"}}, {"model": "ARM.Rack", "pk": 16, "fields": {"station": 1, "number": "29"}}, {"model": "ARM.Rack", "pk": 17, "fields": {"station": 1, "number": "36"}}, {"model": "ARM.Rack", "pk": 18, "fields": {"station": 1, "number": "37"}}, {"model": "ARM.Rack", "pk": 19, "fields": {"station": 1, "number": "38"}}, {"model": "ARM.Rack", "pk": 20, "fields": {"station": 1, "number": "39"}}, {"model": "ARM.Rack", "pk": 21, "fields": {"station": 1, "number": "110"}}, {"model": "ARM.Rack", "pk": 22, "fields": {"station": 1, "number": "111"}}, {"model": "ARM.Rack", "pk": 23, "fields": {"station": 1, "number": "210"}}, {"model": "ARM.Rack", "pk": 24, "fields": {"station": 1, "number": "211"}}, {"model": "ARM.Rack", "pk": 25, "fields": {"station": 1, "number": "310"}}, {"model": "ARM.Rack", "pk": 26, "fields": {"station": 1, "number": "311"}}, {"model": "ARM.Rack", "pk": 27, "fields": {"station": 1, "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"}}, {"model": "ARM.Rack", "pk": 28, "fields": {"station": 2, "number": "12"}}, {"model": "ARM.Rack", "pk": 29, "fields": {"station": 2, "number": "13"}}, {"model": "ARM.Rack", "pk": 30, "fields": {"station": 2, "number": "14"}}, {"model": "ARM.Rack", "pk": 31, "fields": {"station": 2, "number": "15"}}, {"model": "ARM.Rack", "pk": 32, "fields": {"station": 2, "number": "21"}}, {"model": "ARM.Rack", "pk": 33, "fields": {"station": 2, "number": "22"}}, {"model": "ARM.Rack", "pk": 34, "fields": {"station": 2, "number": "23"}}, {"model": "ARM.Rack", "pk": 35, "fields": {"station": 2, "number": "24"}}, {"model": "ARM.Rack", "pk": 36, "fields": {"station": 2, "number": "25"}}, {"model": "ARM.Rack", "pk": 37, "fields": {"station": 2, "number": "31"}}, {"model": "ARM.Rack", "pk": 38, "fields": {"station": 2, "number": "32"}}, {"model": "ARM.Rack", "pk": 39, "fields": {"station": 2, "number": "33"}}, {"model": "ARM.Rack", "pk": 40, "fields": {"station": 2, "number": "34"}}, {"model": "ARM.Rack", "pk": 41, "fields": {"station": 2, "number": "35"}}, {"model": "ARM.Rack", "pk": 42, "fields": {"station": 2, "number": "41"}}, {"model": "ARM.Rack", "pk": 43, "fields": {"station": 2, "number": "42"}}, {"model": "ARM.Rack", "pk": 44, "fields": {"station": 2, "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"}}, {"model": "ARM.Rack", "pk": 45, "fields": {"station": 3, "number": "11"}}, {"model": "ARM.Rack", "pk": 46, "fields": {"station": 3, "number": "12"}}, {"model": "ARM.Rack", "pk": 47, "fields": {"station": 3, "number": "13"}}, {"model": "ARM.Rack", "pk": 48, "fields": {"station": 3, "number": "14"}}, {"model": "ARM.Rack", "pk": 49, "fields": {"station": 3, "number": "21"}}, {"model": "ARM.Rack", "pk": 50, "fields": {"station": 3, "number": "22"}}, {"model": "ARM.Rack", "pk": 51, "fields": {"station": 3, "number": "23"}}, {"model": "ARM.Rack", "pk": 52, "fields": {"station": 3, "number": "24"}}, {"model": "ARM.Rack", "pk": 53, "fields": {"station": 3, "number": "31"}}, {"model": "ARM.Rack", "pk": 54, "fields": {"station": 3, "number": "32"}}, {"model": "ARM.Rack", "pk": 55, "fields": {"station": 3, "number": "33"}}, {"model": "ARM.Rack", "pk": 56, "fields": {"station": 3, "number": "34"}}, {"model": "ARM.Rack", "pk": 57, "fields": {"station": 3, "number": "41"}}, {"model": "ARM.Rack", "pk": 58, "fields": {"station": 3, "number": "42"}}, {"model": "ARM.Rack", "pk": 59, "fields": {"station": 3, "number": "43"}}, {"model": "ARM.Rack", "pk": 60, "fields": {"station": 3, "number": "44"}}, {"model": "ARM.Rack", "pk": 61, "fields": {"station": 3, "number": "51"}}, {"model": "ARM.Rack", "pk": 62, "fields": {"station": 3, "number": "52"}}, {"model": "ARM.Rack", "pk": 63, "fields": {"station": 3, "number": "54"}}, {"model": "ARM.Rack", "pk": 64, "fields": {"station": 3, "number": "55"}}, {"model": "ARM.Rack", "pk": 65, "fields": {"station": 3, "number": "61"}}, {"model": "ARM.Rack", "pk": 66, "fields": {"station": 3, "number": "62"}}, {"model": "ARM.Rack", "pk": 67, "fields": {"station": 3, "number": "63"}}, {"model": "ARM.Rack", "pk": 68, "fields": {"station": 3, "number": "64"}}, {"model": "ARM.Rack", "pk": 69, "fields": {"station": 3, "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"}}, {"model": "ARM.Rack", "pk": 70, "fields": {"station": 3, "number": "\u041f\u04121"}}, {"model": "ARM.Rack", "pk": 71, "fields": {"station": 3, "number": "\u041f\u0420\u042d"}}, {"model": "ARM.Rack", "pk": 72, "fields": {"station": 4, "number": "01"}}, {"model": "ARM.Rack", "pk": 73, "fields": {"station": 4, "number": "02"}}, {"model": "ARM.Rack", "pk": 74, "fields": {"station": 4, "number": "11"}}, {"model": "ARM.Rack", "pk": 75, "fields": {"station": 4, "number": "12"}}, {"model": "ARM.Rack", "pk": 76, "fields": {"station": 4, "number": "13"}}, {"model": "ARM.Rack", "pk": 77, "fields": {"station": 4, "number": "14"}}, {"model": "ARM.Rack", "pk": 78, "fields": {"station": 4, "number": "21"}}, {"model": "ARM.Rack", "pk": 79, "fields": {"station": 4, "number": "22"}}, {"model": "ARM.Rack", "pk": 80, "fields": {"station": 4, "number": "23"}}, {"model": "ARM.Rack", "pk": 81, "fields": {"station": 4, "number": "24"}}, {"model": "ARM.Rack", "pk": 82, "fields": {"station": 4, "number": "31"}}, {"model": "ARM.Rack", "pk": 83, "fields": {"station": 4, "number": "32"}}, {"model": "ARM.Rack", "pk": 84, "fields": {"station": 4, "number": "33"}}, {"model": "ARM.Rack", "pk": 85, "fields": {"station": 4, "number": "34"}}, {"model": "ARM.Rack", "pk": 86, "fields": {"station": 4, "number": "41"}}, {"model": "ARM.Rack", "pk": 87, "fields": {"station": 4, "number": "42"}}, {"model": "ARM.Rack", "pk": 88, "fields": {"station": 4, "number": "43"}}, {"model": "ARM.Rack", "pk": 89, "fields": {"station": 4, "number": "44"}}, {"model": "ARM.Rack", "pk": 90, "fields": {"station": 4, "number": "51"}}, {"model": "ARM.Rack", "pk": 91, "fields": {"station": 4, "number": "64"}}, {"model": "ARM.Rack", "pk": 92, "fields": {"station": 4, "number": "CTP"}}, {"model": "ARM.Rack", "pk": 93, "fields": {"station": 4, "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"}}, {"model": "ARM.Rack", "pk": 94, "fields": {"station": 4, "number": "\u041f\u04126"}}, {"model": "ARM.Rack", "pk": 95, "fields": {"station": 5, "number": "1"}}, {"model": "ARM.Rack", "pk": 96, "fields": {"station": 5, "number": "2"}}, {"model": "ARM.Rack", "pk": 97, "fields": {"station": 5, "number": "3"}}, {"model": "ARM.Rack", "pk": 98, "fields": {"station": 5, "number": "4"}}, {"model": "ARM.Rack", "pk": 99, "fields": {"station": 5, "number": "01"}}, {"model": "ARM.Rack", "pk": 100, "fields": {"station": 5, "number": "02"}}, {"model": "ARM.Rack", "pk": 101, "fields": {"station": 5, "number": "29"}}, {"model": "ARM.Rack", "pk": 102, "fields": {"station": 5, "number": "30"}}, {"model": "ARM.Rack", "pk": 103, "fields": {"station": 5, "number": "31"}}, {"model": "ARM.Rack", "pk": 104, "fields": {"station": 5, "number": "32"}}, {"model": "ARM.Rack", "pk": 105, "fields": {"station": 5, "number": "33"}}, {"model": "ARM.Rack", "pk": 106, "fields": {"station": 5, "number": "41"}}, {"model": "ARM.Rack", "pk": 107, "fields": {"station": 5, "number": "42"}}, {"model": "ARM.Rack", "pk": 108, "fields": {"station": 5, "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"}}, {"model": "ARM.Rack", "pk": 109, "fields": {"station": 5, "number": "\u041f\u04121"}}, {"model": "ARM.Rack", "pk": 110, "fields": {"station": 5, "number": "\u041f\u0414\u0426"}}, {"model": "ARM.Rack", "pk": 111, "fields": {"station": 7, "number": "1"}}, {"model": "ARM.Rack", "pk": 112, "fields": {"station": 7, "number": "2"}}, {"model": "ARM.Rack", "pk": 113, "fields": {"station": 7, "number": "3"}}, {"model": "ARM.Rack", "pk": 114, "fields": {"station": 7, "number": "4"}}, {"model": "ARM.Rack", "pk": 115, "fields": {"station": 7, "number": "5"}}, {"model": "ARM.Rack", "pk": 116, "fields": {"station": 7, "number": "7"}}, {"model": "ARM.Rack", "pk": 117, "fields": {"station": 7, "number": "9"}}, {"model": "ARM.Rack", "pk": 118, "fields": {"station": 7, "number": "01"}}, {"model": "ARM.Rack", "pk": 119, "fields": {"station": 7, "number": "02"}}, {"model": "ARM.Rack", "pk": 120, "fields": {"station": 7, "number": "29"}}, {"model": "ARM.Rack", "pk": 121, "fields": {"station": 7, "number": "30"}}, {"model": "ARM.Rack", "pk": 122, "fields": {"station": 7, "number": "31"}}, {"model": "ARM.Rack", "pk": 123, "fields": {"station": 7, "number": "32"}}, {"model": "ARM.Rack", "pk": 124, "fields": {"station": 7, "number": "33"}}, {"model": "ARM.Rack", "pk": 125, "fields": {"station": 7, "number": "35"}}, {"model": "ARM.Rack", "pk": 126, "fields": {"station": 7, "number": "41"}}, {"model": "ARM.Rack", "pk": 127, "fields": {"station": 7, "number": "42"}}, {"model": "ARM.Rack", "pk": 128, "fields": {"station": 7, "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"}}, {"model": "ARM.Rack", "pk": 129, "fields": {"station": 7, "number": "\u041f\u0412\u042d"}}, {"model": "ARM.Rack", "pk": 130, "fields": {"station": 7, "number": "\u041f\u0414\u0426"}}, {"model": "ARM.Rack", "pk": 131, "fields": {"station": 8, "number": "1"}}, {"model": "ARM.Rack", "pk": 132, "fields": {"station": 8, "number": "2"}}, {"model": "ARM.Rack", "pk": 133, "fields": {"station": 8, "number": "3"}}, {"model": "ARM.Rack", "pk": 134, "fields": {"station": 8, "number": "4"}}, {"model": "ARM.Rack", "pk": 135, "fields": {"station": 8, "number": "01"}}, {"model": "ARM.Rack", "pk": 136, "fields": {"station": 8, "number": "02"}}, {"model": "ARM.Rack", "pk": 137, "fields": {"station": 8, "number": "30"}}, {"model": "ARM.Rack", "pk": 138, "fields": {"station": 8, "number": "31"}}, {"model": "ARM.Rack", "pk": 139, "fields": {"station": 8, "number": "32"}}, {"model": "ARM.Rack", "pk": 140, "fields": {"station": 8, "number": "33"}}, {"model": "ARM.Rack", "pk": 141, "fields": {"station": 8, "number": "41"}}, {"model": "ARM.Rack", "pk": 142, "fields": {"station": 8, "number": "42"}}, {"model": "ARM.Rack", "pk": 143, "fields": {"station": 8, "number": "44"}}, {"model": "ARM.Rack", "pk": 144, "fields": {"station": 8, "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"}}, {"model": "ARM.Rack", "pk": 145, "fields": {"station": 8, "number": "\u041f\u0412\u042d"}}, {"model": "ARM.Rack", "pk": 146, "fields": {"station": 8, "number": "\u041f\u0414\u0426"}}, {"model": "ARM.Rack", "pk": 147, "fields": {"station": 9, "number": "1"}}, {"model": "ARM.Rack", "pk": 148, "fields": {"station": 9, "number": "2"}}, {"model": "ARM.Rack", "pk": 149, "fields": {"station": 9, "number": "3"}}, {"model": "ARM.Rack", "pk": 150, "fields": {"station": 9, "number": "4"}}, {"model": "ARM.Rack", "pk": 151, "fields": {"station": 9, "number": "6"}}, {"model": "ARM.Rack", "pk": 152, "fields": {"station": 9, "number": "8"}}, {"model": "ARM.Rack", "pk": 153, "fields": {"station": 9, "number": "01"}}, {"model": "ARM.Rack", "pk": 154, "fields": {"station": 9, "number": "02"}}, {"model": "ARM.Rack", "pk": 155, "fields": {"station": 9, "number": "10"}}, {"model": "ARM.Rack", "pk": 156, "fields": {"station": 9, "number": "29"}}, {"model": "ARM.Rack", "pk": 157, "fields": {"station": 9, "number": "30"}}, {"model": "ARM.Rack", "pk": 158, "fields": {"station": 9, "number": "31"}}, {"model": "ARM.Rack", "pk": 159, "fields": {"station": 9, "number": "32"}}, {"model": "ARM.Rack", "pk": 160, "fields": {"station": 9, "number": "33"}}, {"model": "ARM.Rack", "pk": 161, "fields": {"station": 9, "number": "35"}}, {"model": "ARM.Rack", "pk": 162, "fields": {"station": 9, "number": "37"}}, {"model": "ARM.Rack", "pk": 163, "fields": {"station": 9, "number": "39"}}, {"model": "ARM.Rack", "pk": 164, "fields": {"station": 9, "number": "41"}}, {"model": "ARM.Rack", "pk": 165, "fields": {"station": 9, "number": "42"}}, {"model": "ARM.Rack", "pk": 166, "fields": {"station": 9, "number": "43"}}, {"model": "ARM.Rack", "pk": 167, "fields": {"station": 9, "number": "44"}}, {"model": "ARM.Rack", "pk": 168, "fields": {"station": 9, "number": "45"}}, {"model": "ARM.Rack", "pk": 169, "fields": {"station": 9, "number": "46"}}, {"model": "ARM.Rack", "pk": 170, "fields": {"station": 9, "number": "47"}}, {"model": "ARM.Rack", "pk": 171, "fields": {"station": 9, "number": "48"}}, {"model": "ARM.Rack", "pk": 172, "fields": {"station": 9, "number": "49"}}, {"model": "ARM.Rack", "pk": 173, "fields": {"station": 9, "number": "50"}}, {"model": "ARM.Rack", "pk": 174, "fields": {"station": 9, "number": "51"}}, {"model": "ARM.Rack", "pk": 175, "fields": {"station": 9, "number": "53"}}, {"model": "ARM.Rack", "pk": 176, "fields": {"station": 9, "number": "\u041f\u0412"}}, {"model": "ARM.Rack", "pk": 177, "fields": {"station": 9, "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"}}, {"model": "ARM.Rack", "pk": 178, "fields": {"station": 9, "number": "\u041f\u0412-"}}, {"model": "ARM.Rack", "pk": 179, "fields": {"station": 9, "number": "\u041f\u0412\u042d"}}, {"model": "ARM.Rack", "pk": 180, "fields": {"station": 9, "number": "\u041f\u04141"}}, {"model": "ARM.Rack", "pk": 181, "fields": {"station": 9, "number": "\u0421\u0442p"}}, {"model": "ARM.Rack", "pk": 182, "fields": {"station": 10, "number": "\u041f\u0412"}}, {"model": "ARM.Rack", "pk": 183, "fields": {"station": 10, "number": "101"}}, {"model": "ARM.Rack", "pk": 184, "fields": {"station": 10, "number": "102"}}, {"model": "ARM.Rack", "pk": 185, "fields": {"station": 10, "number": "103"}}, {"model": "ARM.Rack", "pk": 186, "fields": {"station": 10, "number": "104"}}, {"model": "ARM.Rack", "pk": 187, "fields": {"station": 10, "number": "105"}}, {"model": "ARM.Rack", "pk": 188, "fields": {"station": 10, "number": "111"}}, {"model": "ARM.Rack", "pk": 189, "fields": {"station": 10, "number": "112"}}, {"model": "ARM.Rack", "pk": 190, "fields": {"station": 10, "number": "113"}}, {"model": "ARM.Rack", "pk": 191, "fields": {"station": 10, "number": "114"}}, {"model": "ARM.Rack", "pk": 192, "fields": {"station": 10, "number": "115"}}, {"model": "ARM.Rack", "pk": 193, "fields": {"station": 10, "number": "121"}}, {"model": "ARM.Rack", "pk": 194, "fields": {"station": 10, "number": "122"}}, {"model": "ARM.Rack", "pk": 195, "fields": {"station": 10, "number": "123"}}, {"model": "ARM.Rack", "pk": 196, "fields": {"station": 10, "number": "124"}}, {"model": "ARM.Rack", "pk": 197, "fields": {"station": 10, "number": "125"}}, {"model": "ARM.Rack", "pk": 198, "fields": {"station": 10, "number": "131"}}, {"model": "ARM.Rack", "pk": 199, "fields": {"station": 10, "number": "132"}}, {"model": "ARM.Rack", "pk": 200, "fields": {"station": 10, "number": "133"}}, {"model": "ARM.Rack", "pk": 201, "fields": {"station": 10, "number": "134"}}, {"model": "ARM.Rack", "pk": 202, "fields": {"station": 10, "number": "135"}}, {"model": "ARM.Rack", "pk": 203, "fields": {"station": 10, "number": "141"}}, {"model": "ARM.Rack", "pk": 204, "fields": {"station": 10, "number": "142"}}, {"model": "ARM.Rack", "pk": 205, "fields": {"station": 10, "number": "143"}}, {"model": "ARM.Rack", "pk": 206, "fields": {"station": 10, "number": "144"}}, {"model": "ARM.Rack", "pk": 207, "fields": {"station": 10, "number": "145"}}, {"model": "ARM.Rack", "pk": 208, "fields": {"station": 10, "number": "\u043f\u043e\u043b\u0435"}}, {"model": "ARM.Rack", "pk": 209, "fields": {"station": 10, "number": "\u041f\u0420\u0411"}}, {"model": "ARM.Rack", "pk": 210, "fields": {"station": 10, "number": "\u041f\u0420\u041f"}}, {"model": "ARM.Rack", "pk": 211, "fields": {"station": 6, "number": "1"}}, {"model": "ARM.Rack", "pk": 212, "fields": {"station": 6, "number": "2"}}, {"model": "ARM.Rack", "pk": 213, "fields": {"station": 6, "number": "3"}}, {"model": "ARM.Rack", "pk": 214, "fields": {"station": 6, "number": "4"}}, {"model": "ARM.Rack", "pk": 215, "fields": {"station": 6, "number": "6"}}, {"model": "ARM.Rack", "pk": 216, "fields": {"station": 6, "number": "8"}}, {"model": "ARM.Rack", "pk": 217, "fields": {"station": 6, "number": "01"}}, {"model": "ARM.Rack", "pk": 218, "fields": {"station": 6, "number": "02"}}, {"model": "ARM.Rack", "pk": 219, "fields": {"station": 6, "number": "30"}}, {"model": "ARM.Rack", "pk": 220, "fields": {"station": 6, "number": "31"}}, {"model": "ARM.Rack", "pk": 221, "fields": {"station": 6, "number": "32"}}, {"model": "ARM.Rack", "pk": 222, "fields": {"station": 6, "number": "33"}}, {"model": "ARM.Rack", "pk": 223, "fields": {"station": 6, "number": "41"}}, {"model": "ARM.Rack", "pk": 224, "fields": {"station": 6, "number": "42"}}, {"model": "ARM.Rack", "pk": 225, "fields": {"station": 6, "number": "44"}}, {"model": "ARM.Rack", "pk": 226, "fields": {"station": 6, "number": "51"}}, {"model": "ARM.Rack", "pk": 227, "fields": {"station": 6, "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"}}, {"model": "ARM.Rack", "pk": 228, "fields": {"station": 6, "number": "\u041f\u04121"}}, {"model": "ARM.Rack", "pk": 229, "fields": {"station": 6, "number": "\u041f\u0414\u0426"}}]
+[
+  {
+    "model": "ARM.Rack",
+    "pk": 1,
+    "fields": {
+      "station": 1,
+      "number": "12"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 2,
+    "fields": {
+      "station": 1,
+      "number": "13"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 3,
+    "fields": {
+      "station": 1,
+      "number": "14"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 4,
+    "fields": {
+      "station": 1,
+      "number": "15"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 5,
+    "fields": {
+      "station": 1,
+      "number": "16"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 6,
+    "fields": {
+      "station": 1,
+      "number": "17"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 7,
+    "fields": {
+      "station": 1,
+      "number": "18"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 8,
+    "fields": {
+      "station": 1,
+      "number": "19"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 9,
+    "fields": {
+      "station": 1,
+      "number": "22"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 10,
+    "fields": {
+      "station": 1,
+      "number": "23"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 11,
+    "fields": {
+      "station": 1,
+      "number": "24"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 12,
+    "fields": {
+      "station": 1,
+      "number": "25"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 13,
+    "fields": {
+      "station": 1,
+      "number": "26"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 14,
+    "fields": {
+      "station": 1,
+      "number": "27"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 15,
+    "fields": {
+      "station": 1,
+      "number": "28"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 16,
+    "fields": {
+      "station": 1,
+      "number": "29"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 17,
+    "fields": {
+      "station": 1,
+      "number": "36"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 18,
+    "fields": {
+      "station": 1,
+      "number": "37"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 19,
+    "fields": {
+      "station": 1,
+      "number": "38"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 20,
+    "fields": {
+      "station": 1,
+      "number": "39"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 21,
+    "fields": {
+      "station": 1,
+      "number": "110"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 22,
+    "fields": {
+      "station": 1,
+      "number": "111"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 23,
+    "fields": {
+      "station": 1,
+      "number": "210"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 24,
+    "fields": {
+      "station": 1,
+      "number": "211"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 25,
+    "fields": {
+      "station": 1,
+      "number": "310"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 26,
+    "fields": {
+      "station": 1,
+      "number": "311"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 27,
+    "fields": {
+      "station": 1,
+      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 28,
+    "fields": {
+      "station": 2,
+      "number": "12"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 29,
+    "fields": {
+      "station": 2,
+      "number": "13"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 30,
+    "fields": {
+      "station": 2,
+      "number": "14"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 31,
+    "fields": {
+      "station": 2,
+      "number": "15"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 32,
+    "fields": {
+      "station": 2,
+      "number": "21"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 33,
+    "fields": {
+      "station": 2,
+      "number": "22"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 34,
+    "fields": {
+      "station": 2,
+      "number": "23"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 35,
+    "fields": {
+      "station": 2,
+      "number": "24"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 36,
+    "fields": {
+      "station": 2,
+      "number": "25"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 37,
+    "fields": {
+      "station": 2,
+      "number": "31"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 38,
+    "fields": {
+      "station": 2,
+      "number": "32"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 39,
+    "fields": {
+      "station": 2,
+      "number": "33"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 40,
+    "fields": {
+      "station": 2,
+      "number": "34"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 41,
+    "fields": {
+      "station": 2,
+      "number": "35"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 42,
+    "fields": {
+      "station": 2,
+      "number": "41"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 43,
+    "fields": {
+      "station": 2,
+      "number": "42"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 44,
+    "fields": {
+      "station": 2,
+      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 45,
+    "fields": {
+      "station": 3,
+      "number": "11"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 46,
+    "fields": {
+      "station": 3,
+      "number": "12"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 47,
+    "fields": {
+      "station": 3,
+      "number": "13"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 48,
+    "fields": {
+      "station": 3,
+      "number": "14"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 49,
+    "fields": {
+      "station": 3,
+      "number": "21"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 50,
+    "fields": {
+      "station": 3,
+      "number": "22"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 51,
+    "fields": {
+      "station": 3,
+      "number": "23"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 52,
+    "fields": {
+      "station": 3,
+      "number": "24"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 53,
+    "fields": {
+      "station": 3,
+      "number": "31"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 54,
+    "fields": {
+      "station": 3,
+      "number": "32"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 55,
+    "fields": {
+      "station": 3,
+      "number": "33"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 56,
+    "fields": {
+      "station": 3,
+      "number": "34"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 57,
+    "fields": {
+      "station": 3,
+      "number": "41"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 58,
+    "fields": {
+      "station": 3,
+      "number": "42"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 59,
+    "fields": {
+      "station": 3,
+      "number": "43"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 60,
+    "fields": {
+      "station": 3,
+      "number": "44"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 61,
+    "fields": {
+      "station": 3,
+      "number": "51"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 62,
+    "fields": {
+      "station": 3,
+      "number": "52"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 63,
+    "fields": {
+      "station": 3,
+      "number": "54"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 64,
+    "fields": {
+      "station": 3,
+      "number": "55"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 65,
+    "fields": {
+      "station": 3,
+      "number": "61"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 66,
+    "fields": {
+      "station": 3,
+      "number": "62"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 67,
+    "fields": {
+      "station": 3,
+      "number": "63"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 68,
+    "fields": {
+      "station": 3,
+      "number": "64"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 69,
+    "fields": {
+      "station": 3,
+      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 70,
+    "fields": {
+      "station": 3,
+      "number": "\u041f\u04121"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 71,
+    "fields": {
+      "station": 3,
+      "number": "\u041f\u0420\u042d"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 72,
+    "fields": {
+      "station": 4,
+      "number": "01"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 73,
+    "fields": {
+      "station": 4,
+      "number": "02"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 74,
+    "fields": {
+      "station": 4,
+      "number": "11"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 75,
+    "fields": {
+      "station": 4,
+      "number": "12"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 76,
+    "fields": {
+      "station": 4,
+      "number": "13"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 77,
+    "fields": {
+      "station": 4,
+      "number": "14"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 78,
+    "fields": {
+      "station": 4,
+      "number": "21"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 79,
+    "fields": {
+      "station": 4,
+      "number": "22"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 80,
+    "fields": {
+      "station": 4,
+      "number": "23"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 81,
+    "fields": {
+      "station": 4,
+      "number": "24"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 82,
+    "fields": {
+      "station": 4,
+      "number": "31"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 83,
+    "fields": {
+      "station": 4,
+      "number": "32"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 84,
+    "fields": {
+      "station": 4,
+      "number": "33"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 85,
+    "fields": {
+      "station": 4,
+      "number": "34"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 86,
+    "fields": {
+      "station": 4,
+      "number": "41"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 87,
+    "fields": {
+      "station": 4,
+      "number": "42"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 88,
+    "fields": {
+      "station": 4,
+      "number": "43"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 89,
+    "fields": {
+      "station": 4,
+      "number": "44"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 90,
+    "fields": {
+      "station": 4,
+      "number": "51"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 91,
+    "fields": {
+      "station": 4,
+      "number": "64"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 92,
+    "fields": {
+      "station": 4,
+      "number": "CTP"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 93,
+    "fields": {
+      "station": 4,
+      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 94,
+    "fields": {
+      "station": 4,
+      "number": "\u041f\u04126"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 95,
+    "fields": {
+      "station": 5,
+      "number": "1"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 96,
+    "fields": {
+      "station": 5,
+      "number": "2"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 97,
+    "fields": {
+      "station": 5,
+      "number": "3"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 98,
+    "fields": {
+      "station": 5,
+      "number": "4"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 99,
+    "fields": {
+      "station": 5,
+      "number": "01"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 100,
+    "fields": {
+      "station": 5,
+      "number": "02"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 101,
+    "fields": {
+      "station": 5,
+      "number": "29"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 102,
+    "fields": {
+      "station": 5,
+      "number": "30"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 103,
+    "fields": {
+      "station": 5,
+      "number": "31"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 104,
+    "fields": {
+      "station": 5,
+      "number": "32"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 105,
+    "fields": {
+      "station": 5,
+      "number": "33"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 106,
+    "fields": {
+      "station": 5,
+      "number": "41"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 107,
+    "fields": {
+      "station": 5,
+      "number": "42"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 108,
+    "fields": {
+      "station": 5,
+      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 109,
+    "fields": {
+      "station": 5,
+      "number": "\u041f\u04121"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 110,
+    "fields": {
+      "station": 5,
+      "number": "\u041f\u0414\u0426"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 111,
+    "fields": {
+      "station": 7,
+      "number": "1"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 112,
+    "fields": {
+      "station": 7,
+      "number": "2"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 113,
+    "fields": {
+      "station": 7,
+      "number": "3"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 114,
+    "fields": {
+      "station": 7,
+      "number": "4"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 115,
+    "fields": {
+      "station": 7,
+      "number": "5"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 116,
+    "fields": {
+      "station": 7,
+      "number": "7"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 117,
+    "fields": {
+      "station": 7,
+      "number": "9"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 118,
+    "fields": {
+      "station": 7,
+      "number": "01"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 119,
+    "fields": {
+      "station": 7,
+      "number": "02"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 120,
+    "fields": {
+      "station": 7,
+      "number": "29"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 121,
+    "fields": {
+      "station": 7,
+      "number": "30"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 122,
+    "fields": {
+      "station": 7,
+      "number": "31"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 123,
+    "fields": {
+      "station": 7,
+      "number": "32"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 124,
+    "fields": {
+      "station": 7,
+      "number": "33"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 125,
+    "fields": {
+      "station": 7,
+      "number": "35"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 126,
+    "fields": {
+      "station": 7,
+      "number": "41"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 127,
+    "fields": {
+      "station": 7,
+      "number": "42"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 128,
+    "fields": {
+      "station": 7,
+      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 129,
+    "fields": {
+      "station": 7,
+      "number": "\u041f\u0412\u042d"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 130,
+    "fields": {
+      "station": 7,
+      "number": "\u041f\u0414\u0426"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 131,
+    "fields": {
+      "station": 8,
+      "number": "1"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 132,
+    "fields": {
+      "station": 8,
+      "number": "2"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 133,
+    "fields": {
+      "station": 8,
+      "number": "3"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 134,
+    "fields": {
+      "station": 8,
+      "number": "4"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 135,
+    "fields": {
+      "station": 8,
+      "number": "01"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 136,
+    "fields": {
+      "station": 8,
+      "number": "02"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 137,
+    "fields": {
+      "station": 8,
+      "number": "30"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 138,
+    "fields": {
+      "station": 8,
+      "number": "31"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 139,
+    "fields": {
+      "station": 8,
+      "number": "32"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 140,
+    "fields": {
+      "station": 8,
+      "number": "33"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 141,
+    "fields": {
+      "station": 8,
+      "number": "41"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 142,
+    "fields": {
+      "station": 8,
+      "number": "42"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 143,
+    "fields": {
+      "station": 8,
+      "number": "44"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 144,
+    "fields": {
+      "station": 8,
+      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 145,
+    "fields": {
+      "station": 8,
+      "number": "\u041f\u0412\u042d"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 146,
+    "fields": {
+      "station": 8,
+      "number": "\u041f\u0414\u0426"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 147,
+    "fields": {
+      "station": 9,
+      "number": "1"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 148,
+    "fields": {
+      "station": 9,
+      "number": "2"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 149,
+    "fields": {
+      "station": 9,
+      "number": "3"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 150,
+    "fields": {
+      "station": 9,
+      "number": "4"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 151,
+    "fields": {
+      "station": 9,
+      "number": "6"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 152,
+    "fields": {
+      "station": 9,
+      "number": "8"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 153,
+    "fields": {
+      "station": 9,
+      "number": "01"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 154,
+    "fields": {
+      "station": 9,
+      "number": "02"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 155,
+    "fields": {
+      "station": 9,
+      "number": "10"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 156,
+    "fields": {
+      "station": 9,
+      "number": "29"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 157,
+    "fields": {
+      "station": 9,
+      "number": "30"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 158,
+    "fields": {
+      "station": 9,
+      "number": "31"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 159,
+    "fields": {
+      "station": 9,
+      "number": "32"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 160,
+    "fields": {
+      "station": 9,
+      "number": "33"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 161,
+    "fields": {
+      "station": 9,
+      "number": "35"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 162,
+    "fields": {
+      "station": 9,
+      "number": "37"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 163,
+    "fields": {
+      "station": 9,
+      "number": "39"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 164,
+    "fields": {
+      "station": 9,
+      "number": "41"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 165,
+    "fields": {
+      "station": 9,
+      "number": "42"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 166,
+    "fields": {
+      "station": 9,
+      "number": "43"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 167,
+    "fields": {
+      "station": 9,
+      "number": "44"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 168,
+    "fields": {
+      "station": 9,
+      "number": "45"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 169,
+    "fields": {
+      "station": 9,
+      "number": "46"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 170,
+    "fields": {
+      "station": 9,
+      "number": "47"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 171,
+    "fields": {
+      "station": 9,
+      "number": "48"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 172,
+    "fields": {
+      "station": 9,
+      "number": "49"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 173,
+    "fields": {
+      "station": 9,
+      "number": "50"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 174,
+    "fields": {
+      "station": 9,
+      "number": "51"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 175,
+    "fields": {
+      "station": 9,
+      "number": "53"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 176,
+    "fields": {
+      "station": 9,
+      "number": "\u041f\u0412"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 177,
+    "fields": {
+      "station": 9,
+      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 178,
+    "fields": {
+      "station": 9,
+      "number": "\u041f\u0412-"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 179,
+    "fields": {
+      "station": 9,
+      "number": "\u041f\u0412\u042d"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 180,
+    "fields": {
+      "station": 9,
+      "number": "\u041f\u04141"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 181,
+    "fields": {
+      "station": 9,
+      "number": "\u0421\u0442p"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 182,
+    "fields": {
+      "station": 10,
+      "number": "\u041f\u0412"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 183,
+    "fields": {
+      "station": 10,
+      "number": "101"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 184,
+    "fields": {
+      "station": 10,
+      "number": "102"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 185,
+    "fields": {
+      "station": 10,
+      "number": "103"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 186,
+    "fields": {
+      "station": 10,
+      "number": "104"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 187,
+    "fields": {
+      "station": 10,
+      "number": "105"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 188,
+    "fields": {
+      "station": 10,
+      "number": "111"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 189,
+    "fields": {
+      "station": 10,
+      "number": "112"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 190,
+    "fields": {
+      "station": 10,
+      "number": "113"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 191,
+    "fields": {
+      "station": 10,
+      "number": "114"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 192,
+    "fields": {
+      "station": 10,
+      "number": "115"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 193,
+    "fields": {
+      "station": 10,
+      "number": "121"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 194,
+    "fields": {
+      "station": 10,
+      "number": "122"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 195,
+    "fields": {
+      "station": 10,
+      "number": "123"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 196,
+    "fields": {
+      "station": 10,
+      "number": "124"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 197,
+    "fields": {
+      "station": 10,
+      "number": "125"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 198,
+    "fields": {
+      "station": 10,
+      "number": "131"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 199,
+    "fields": {
+      "station": 10,
+      "number": "132"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 200,
+    "fields": {
+      "station": 10,
+      "number": "133"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 201,
+    "fields": {
+      "station": 10,
+      "number": "134"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 202,
+    "fields": {
+      "station": 10,
+      "number": "135"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 203,
+    "fields": {
+      "station": 10,
+      "number": "141"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 204,
+    "fields": {
+      "station": 10,
+      "number": "142"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 205,
+    "fields": {
+      "station": 10,
+      "number": "143"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 206,
+    "fields": {
+      "station": 10,
+      "number": "144"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 207,
+    "fields": {
+      "station": 10,
+      "number": "145"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 208,
+    "fields": {
+      "station": 10,
+      "number": "\u043f\u043e\u043b\u0435"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 209,
+    "fields": {
+      "station": 10,
+      "number": "\u041f\u0420\u0411"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 210,
+    "fields": {
+      "station": 10,
+      "number": "\u041f\u0420\u041f"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 211,
+    "fields": {
+      "station": 6,
+      "number": "1"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 212,
+    "fields": {
+      "station": 6,
+      "number": "2"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 213,
+    "fields": {
+      "station": 6,
+      "number": "3"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 214,
+    "fields": {
+      "station": 6,
+      "number": "4"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 215,
+    "fields": {
+      "station": 6,
+      "number": "6"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 216,
+    "fields": {
+      "station": 6,
+      "number": "8"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 217,
+    "fields": {
+      "station": 6,
+      "number": "01"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 218,
+    "fields": {
+      "station": 6,
+      "number": "02"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 219,
+    "fields": {
+      "station": 6,
+      "number": "30"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 220,
+    "fields": {
+      "station": 6,
+      "number": "31"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 221,
+    "fields": {
+      "station": 6,
+      "number": "32"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 222,
+    "fields": {
+      "station": 6,
+      "number": "33"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 223,
+    "fields": {
+      "station": 6,
+      "number": "41"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 224,
+    "fields": {
+      "station": 6,
+      "number": "42"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 225,
+    "fields": {
+      "station": 6,
+      "number": "44"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 226,
+    "fields": {
+      "station": 6,
+      "number": "51"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 227,
+    "fields": {
+      "station": 6,
+      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 228,
+    "fields": {
+      "station": 6,
+      "number": "\u041f\u04121"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 229,
+    "fields": {
+      "station": 6,
+      "number": "\u041f\u0414\u0426"
+    }
+  }
+]

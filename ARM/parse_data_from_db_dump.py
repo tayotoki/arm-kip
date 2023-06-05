@@ -12,8 +12,10 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'ARM_SHN.settings'
 django.setup()
 
 from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
 
 from ARM.models import Device, Stock, Station, Place, Tipe, Rack, AVZ
+
 
 
 station_id_decode = {
@@ -31,25 +33,61 @@ station_id_decode = {
 }
 
 place_objects = []
+device_objects = []
 
 print(Station.objects.all())
 print(Station.objects.get(pk=1))
 print(Rack.objects.all())
 Place.objects.all().delete()
+Device.objects.all().delete()
 print(Place.objects.all())
 
 with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234', db='test_bd') as db:
     cursor = db.cursor()
 
     cursor.execute(f"""
-        SELECT Stan_Id, Stativ, Mesto, Nazn, Zn, Dw, Du, Per, Dat_Sp, Tip_N FROM glav;
+        SELECT 
+            Stan_Id, 
+            Stativ, 
+            Mesto, 
+            Nazn, 
+            Zn, 
+            Dw, 
+            Du, 
+            Per, 
+            Dat_Sp, 
+            Tipe_Id,
+            Reg,
+            Prow
+        FROM glav;
     """)
 
     data = cursor.fetchall()
-    for station_id, rack_number, place, *_ in data:
+    for station_id, rack_number, place, *other_data in data:
+        device_fields = {
+            "name": other_data[0],
+            "inventory_number": other_data[1],
+            "manufacture_date": other_data[2],
+            "current_check_date": other_data[3],
+            "frequency_of_check": other_data[4],
+            "next_check_date": other_data[5],
+            "device_type_id": other_data[6],
+            "old_information": f"Регулировал: {other_data[7]} "
+                               f"Проверил: {other_data[8]}",
+            "stock": None,
+        }
+
         rack_number = rack_number.strip()
         if station_id == 20:
-            continue
+
+            device_fields |= {
+                "name": None,
+                "current_check_date": None,
+                "frequency_of_check": None,
+                "next_check_date": None,
+                "stock_id": 1
+            }
+
         if rack_number.strip() in ("АВЗ", "зап", "запас"):
             continue
         print(station_id, rack_number, place)
@@ -67,17 +105,31 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
                 Q(station=Station.objects.get(pk=station_id_decode.get(station_id))) &
                 (Q(number="тоннель") | Q(number="поле")),
             )
+        except Station.DoesNotExist:
+            rack = None
 
         obj = Place(
             rack=rack,
             number=place.strip(),
+        ) if rack else None
+
+        device = Device(
+            mounting_address=obj,
+            station=obj.rack.station if rack else None,
+            **device_fields,
         )
 
-        print("Serialazed: ", rack.station.name, rack.number, obj.number)
+        print(
+            "Serialazed: ", rack.station.name if rack else "Stock", rack.number if rack else "",
+            obj.number if obj else None
+        )
 
-        place_objects.append(obj)
+        if obj:
+            place_objects.append(obj)
+        device_objects.append(device)
 
 
 Place.objects.bulk_create(place_objects)
+Device.objects.bulk_create(device_objects)
 
 
