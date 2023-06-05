@@ -93,6 +93,7 @@ class DeviceAdmin(admin.ModelAdmin):
         queryset, may_have_duplicates = super().get_search_results(
             request, queryset, search_term
         )
+
         if search_term:
             queryset |= self.model.objects.filter(
                 Q(name__iregex=search_term) | Q(inventory_number__iregex=search_term) | Q(device_type__name__iregex=search_term)

@@ -81,7 +81,7 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
         if station_id == 20:
 
             device_fields |= {
-                "name": None,
+                "name": None if other_data[6] != 300 else other_data[0],
                 "current_check_date": None,
                 "frequency_of_check": None,
                 "next_check_date": None,
