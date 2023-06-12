@@ -6,6 +6,7 @@ from .export_excel import ExportExcelAction
 from openpyxl.styles import Font
 from unidecode import unidecode
 from .models import KipReport
+from django.contrib import messages
 
 
 def style_output_file(file):
@@ -75,14 +76,44 @@ def add_to_kipreport(self, request, queryset):
             device.pk for device in queryset if device.status in (
                 device.send,
                 device.in_progress,
-            ) and (device.stock is None or device.station)
+            ) or (device.stock is None or device.station)
         ]
     )
 
+    if not queryset:
+        self.message_user(
+            request,
+            f"Ни один прибор не был добавлен в отчет. "
+            f"Возможные причины:\n "
+            f"- Приборы не на складе,\n - Приборы уже были добавлены "
+            f"в текущий или другой отчеты КИП",
+            messages.ERROR,
+        )
+
+        return
+    
+    print(queryset)
+
     if editable_kip_report:
         editable_kip_report.devices.set(queryset | editable_kip_report.devices.all())
+
+        self.message_user(
+            request,
+            f"Выделенные приборы были добавлены в отчет {editable_kip_report}",
+            messages.SUCCESS,
+        )
+
     else:
-        KipReport.objects.create(author=request.user).devices.set(queryset)
+        new_kip_report = KipReport.objects.create(author=request.user)
+
+        new_kip_report.devices.set(queryset)
+
+        self.message_user(
+            request,
+            f"Отчет КИП №{new_kip_report.pk} был успешно создан и в него добавлены выделенные приборы",
+            messages.SUCCESS,
+        )
+
 
 
 export_as_xls.short_description = "Экспортировать в Excel"

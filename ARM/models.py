@@ -371,8 +371,6 @@ class DeviceKipReport(models.Model):
         Device,
         on_delete=models.CASCADE,
         verbose_name="Прибор",
-        limit_choices_to={"stock_id": 1,
-                          "station": None}
     )
     station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name="Станция", null=True)
     mounting_address = models.CharField(max_length=18,

@@ -379,7 +379,7 @@ class DevicesReportInline(admin.TabularInline):
 class MechanicReportAdmin(admin.ModelAdmin):
     inlines = [DevicesReportInline, ReportCommentInline]
     form = MechanicReportForm
-    readonly_fields = ("user", "created", "modified")
+    readonly_fields = ("count", "user", "created", "modified")
     autocomplete_fields = ("devices",)
     list_display = ("__str__", "title", "station", *readonly_fields, "devices_l")
     list_display_links = list_display
@@ -388,8 +388,18 @@ class MechanicReportAdmin(admin.ModelAdmin):
 
     def devices_l(self, obj):
         device_changelist_url = reverse("admin:ARM_device_changelist")
-        device_links = [f'<a href="{device_changelist_url}?id={d.id}">{d}</a>' for d in obj.devices.all()]
-        return format_html(' || '.join(device_links))
+        all_devices = obj.devices.all()
+        device_links = [f'<a href="{device_changelist_url}?id={d.id}">{d}</a>' for d in all_devices[:7]]
+        counter = all_devices.count()
+
+        if counter > 5:
+            device_links[-1] = f"...еще {counter - 5} приборов"
+
+        return format_html(f' {chr(9679)} '.join(device_links))
+
+    @admin.display(description="Количество")
+    def count(seelf, obj):
+        return f"{obj.devices.all().count()} приборов"
 
     devices_l.short_description = "Приборы в отчете"
 
@@ -448,6 +458,9 @@ class DeviceKipReportForm(forms.ModelForm):
         return mounting_address
 
     def clean(self):
+        if not self.changed_data:
+            return super().clean()
+        
         if not all((
             self.cleaned_data.get("device"),
             self.cleaned_data.get("mounting_address"),
@@ -629,10 +642,10 @@ class KipReportAdmin(admin.ModelAdmin):
                     kip_report.devices.add(
                         device.id,
                         through_defaults={"station": instance.station,
-                                          "mounting_address": '',
-                                          "check_date": instance.check_date,
-                                          "who_prepared": instance.who_prepared,
-                                          "who_checked": instance.who_checked}
+                                        "mounting_address": '',
+                                        "check_date": instance.check_date,
+                                        "who_prepared": instance.who_prepared,
+                                        "who_checked": instance.who_checked}
                     )
 
                 instance.mounting_address = ""
