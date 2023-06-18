@@ -1,0 +1,49 @@
+<style>
+  label {
+    display: inline-block;
+    width: 60px;
+    text-align: right;
+    margin-right: 10px;
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input[type="text"] {
+    width: 200px;
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+  }
+  
+  button[type="submit"] {
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 3px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0062cc;
+  }
+</style>
+
+<h3>{{ filter_title }}</h3>
+
+<ul>
+  <li>
+    <form method="GET" action="">
+      <label for="{{ spec.parameter_name }}">Месяц:</label>
+      <input
+         type="text"
+         value="{{ spec.value|default_if_none:'' }}"
+         name="{{ spec.parameter_name }}"
+         id="{{ spec.parameter_name }}"/>
+      <button type="submit">Найти</button>
+    </form>
+  </li>
+</ul>

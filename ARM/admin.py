@@ -33,6 +33,7 @@ from .models import (Station,
                      DeviceKipReport)
 
 from ARM.actions import export_as_xls, add_to_kipreport
+from ARM import filters
 
 
 AdminSite.site_url = ''
@@ -62,7 +63,7 @@ class DeviceAdmin(admin.ModelAdmin):
     form = DeviceForm
     readonly_fields = ("next_check_date",)
     actions = [export_as_xls, add_to_kipreport]
-    list_filter = ["station", "stock", "status", "contact_type", "next_check_date"]
+    list_filter = ["station", "stock", "status", "contact_type", "next_check_date", filters.DateFilter]
     list_display = [
         "station",
         "name",
@@ -165,7 +166,9 @@ class PlaceAdmin(admin.ModelAdmin):
 
     def get_search_results(self, request, queryset, search_term):
         orig_queryset = queryset
-        queryset, use_distinct = super().get_search_results(request, queryset, search_term)
+        queryset, use_distinct = super().get_search_results(
+            request, queryset, search_term
+        )
         search_words = search_term.split("-")
         if search_words:
             if len(search_words) == 2:
@@ -192,20 +195,6 @@ class PlaceAdmin(admin.ModelAdmin):
 class StationAdmin(admin.ModelAdmin):
     inlines = [AVZInlineAdmin, DevicesAdmin]
     readonly_fields = ('name',)
-
-    def has_add_permission(self, request):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-    def has_change_permission(self, request, obj=None):
-        return False
-
-
-@admin.register(Stock)
-class StockAdmin(admin.ModelAdmin):
-    inlines = [DevicesAdmin]
 
     def has_add_permission(self, request):
         return False
