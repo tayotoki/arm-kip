@@ -13,6 +13,7 @@ function create_comment_ajax(mech_report_id) {
         success: function(data) {
             console.log("Comment created");
             location.reload();
+
         },
         error: function(err) {
             console.error("Error creating comment:", err);
