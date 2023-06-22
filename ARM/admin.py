@@ -271,8 +271,10 @@ class ReportCommentInline(admin.StackedInline):
             return obj.author.username.upper()
         mech_report_id = obj.mech_report.id
         return mark_safe(
-            f'<a class="button" href="javascript://" '
-            f'onclick="create_comment_ajax({mech_report_id})">Опубликовать</a>'
+            f'<button id="comment-button" class="button" onclick="create_comment_ajax({mech_report_id})">'
+            '<a href="javascript://" class="button" '
+            f'>Опубликовать</a>'
+            f'</button>'
         )
 
     published_but.short_description = ""
@@ -307,7 +309,8 @@ class DevicesReportInline(admin.TabularInline):
 
     def button(self, obj):
         device = Device.objects.get(id=obj.device_id)
-        print(device.status, device.stock)
+        print(obj.user)
+
         if (device.station or device.avz) and device.status not in (Device.send, Device.normal):
             return mark_safe(
                 f'<a class="button" href="javascript://" '
@@ -326,6 +329,10 @@ class DevicesReportInline(admin.TabularInline):
     @admin.display(description="Отметить дефекты")
     def defect_button(self, obj):
         device = Device.objects.get(id=obj.device_id)
+        
+        if obj.user.groups.all().filter(name="электромеханики"):
+            return "--"
+
         return mark_safe(
             f'<a class="button" href="javascript://" '
             f'onclick="mark_defect_device_ajax({device.id})">Есть дефекты</a>'

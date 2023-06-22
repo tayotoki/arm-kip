@@ -300,7 +300,7 @@ class MechanicReport(models.Model):
                                                             "Не более 30 символов")
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, verbose_name="Работник")
     station = models.ForeignKey(Station, on_delete=models.CASCADE, verbose_name="Станция")
-    devices = models.ManyToManyField(Device, related_name="marked_devices", verbose_name="Помеченные приборы", help_text=(
+    devices = models.ManyToManyField(Device, related_name="marked_devices", verbose_name="Отмеченные приборы", help_text=(
         "Поиск по названию, но лучше по инвентарному номеру для точности"
     ))
     explanation = models.TextField(max_length=300, verbose_name="Пояснение", blank=True)
