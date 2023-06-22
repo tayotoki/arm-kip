@@ -246,6 +246,9 @@ class CommentAdmin(admin.ModelAdmin):
             return request.user == obj.author
         return False
 
+    def has_add_permission(self, request: HttpRequest) -> bool:
+        return not request.META.get("HTTP_REFERER").endswith("comment/add/")
+
     def save_model(self, request, obj, form, change):
         obj.user = request.user
         return super().save_model(request, obj, form, change)
@@ -260,7 +263,7 @@ class ReportCommentInline(admin.StackedInline):
     show_change_link = True
     widgets = {
         "text": Textarea(attrs={
-            "cols": 80,
+            "cols": 50,
             "rows": 10,
             "id": "comment_text"
         })
@@ -303,13 +306,22 @@ class ReportCommentInline(admin.StackedInline):
 class DevicesReportInline(admin.TabularInline):
     model = MechanicReport.devices.through
     extra = 0
-    readonly_fields = ("button", "defect_button", "get_status", "get_current_date", "get_next_date")
+    readonly_fields = (
+        "button",
+        "defect_button",
+        "get_status",
+        "get_current_date",
+        "get_next_date",
+    )
     verbose_name_plural = "Приборы в отчете"
     verbose_name = "Прибор"
 
     def button(self, obj):
         device = Device.objects.get(id=obj.device_id)
-        print(obj.user)
+        mechanic_report = MechanicReport.objects.get(id=obj.mechanicreport_id)
+
+        if mechanic_report.user.groups.filter(name="электромеханики"):
+            return "--"
 
         if (device.station or device.avz) and device.status not in (Device.send, Device.normal):
             return mark_safe(
@@ -330,7 +342,7 @@ class DevicesReportInline(admin.TabularInline):
     def defect_button(self, obj):
         device = Device.objects.get(id=obj.device_id)
         
-        if obj.user.groups.all().filter(name="электромеханики"):
+        if obj.user.groups.filter(name="электромеханики"):
             return "--"
 
         return mark_safe(
@@ -379,6 +391,7 @@ class MechanicReportAdmin(admin.ModelAdmin):
     autocomplete_fields = ("devices",)
     list_display = ("__str__", "title", "station", *readonly_fields, "devices_l")
     list_display_links = list_display
+    list_filter = ["user", "station", "created"]
     search_fields = ("user__username", "station__name")
     search_help_text = ("Введите имя пользователя или станцию для поиска")
 
@@ -702,6 +715,3 @@ class KipReportAdmin(admin.ModelAdmin):
             form_device.save()
         formset.save()
         return super().save_formset(request, form, formset, change)
-
-
-

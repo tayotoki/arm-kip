@@ -7,6 +7,7 @@ from openpyxl.styles import Font
 from unidecode import unidecode
 from .models import KipReport
 from django.contrib import messages
+from django.db.models import Q
 
 
 def style_output_file(file):
@@ -67,6 +68,14 @@ def export_as_xls(self, request, queryset):
 
 
 def add_to_kipreport(self, request, queryset):
+    if request.user.groups.filter(~Q(name="КИП")):
+        self.message_user(
+            request,
+            "У вас нет доступа к данной функции",
+            messages.ERROR,
+        )
+        return
+
     editable_kip_report = KipReport.objects.filter(
         editable=True,
     ).last()
@@ -91,8 +100,6 @@ def add_to_kipreport(self, request, queryset):
         )
 
         return
-    
-    print(queryset)
 
     if editable_kip_report:
         editable_kip_report.devices.set(queryset | editable_kip_report.devices.all())

@@ -13,10 +13,7 @@ django.setup()
 
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
-
 from ARM.models import Device, Stock, Station, Place, Tipe, Rack, AVZ
-
-
 
 station_id_decode = {
     1: 1,
@@ -131,5 +128,3 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
 
 Place.objects.bulk_create(place_objects)
 Device.objects.bulk_create(device_objects)
-
-

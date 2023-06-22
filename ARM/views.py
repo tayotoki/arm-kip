@@ -133,7 +133,7 @@ class KipMechReportAdapter:
         exchange_device = avz_devices.last()
 
         return exchange_device if exchange_device else None
-    
+
     def find_other_places_exchange_device(self, device: Device) -> Device | None:
         """Возвращает прибор для замены или None, в случае если
         монтажный адрес определен как ...-остальное"""
@@ -153,20 +153,20 @@ class KipMechReportAdapter:
         exchange_device = kip_devices.last()
 
         return exchange_device if exchange_device else None
-    
+
     def find_exact_mount_addr_exch_device(self, device: Device) -> Device:
         """Возвращает прибор для замены, в случае если
         монтажный адрес - точное место на стативе станции"""
 
         current_mounting_address = device.mounting_address
         devices = current_mounting_address.device_set
-        
+
         if devices.count() > 2:
             raise ValueError(f"К адресу {current_mounting_address} относится"
                              "больше двух приборов, "
                              "проверьте данное место "
                              "в разделе Места")
-        
+
         exchange_device = self.kip_report.devices.filter(
             station=device.station,
             mounting_address=device.mounting_address,
@@ -261,10 +261,10 @@ def update_device(request, device_id):
 
 def create_comment(request, mech_report_id):
     if request.method == "POST":
-        if request.POST.get("text"):
+        if text := request.POST.get("text"):
             Comment.objects.create(
                 author=request.user,
-                text=request.POST.get("text"),
+                text=text,
                 mech_report=MechanicReport.objects.get(id=mech_report_id),
             )
         else:
@@ -313,7 +313,7 @@ def create_mech_reports(request, kip_report_id):
                 else:
                     added_devices.append(instance.device)
                     stations.setdefault(instance.device.station.pk, []).append(instance.device)
-                
+
                 instance.device.status = Device.send
                 instance.device.save()
                 continue
@@ -357,7 +357,7 @@ def create_mech_reports(request, kip_report_id):
                 print("Отлов NoneType в station: ", instance.device)
                 added_devices.append(instance.device)
                 stations.setdefault(instance.device.station.pk, []).append(instance.device)
-            
+
             print(instance.device, instance.__dict__, sep="\n")
 
         for station, devices in stations.items():
