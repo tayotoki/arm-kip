@@ -247,7 +247,10 @@ class CommentAdmin(admin.ModelAdmin):
         return False
 
     def has_add_permission(self, request: HttpRequest) -> bool:
-        return not request.META.get("HTTP_REFERER").endswith("comment/add/")
+        url = request.META.get("HTTP_REFERER")
+        if url is not None:
+            return url.endswith("comment/add/")
+        return False
 
     def save_model(self, request, obj, form, change):
         obj.user = request.user
