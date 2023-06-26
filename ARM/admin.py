@@ -323,7 +323,7 @@ class DevicesReportInline(admin.TabularInline):
         device = Device.objects.get(id=obj.device_id)
         mechanic_report = MechanicReport.objects.get(id=obj.mechanicreport_id)
 
-        if mechanic_report.user.groups.filter(name="электромеханики"):
+        if mechanic_report.user.groups.filter(name="КИП"):
             return "--"
 
         if (device.station or device.avz) and device.status not in (Device.send, Device.normal):
@@ -344,8 +344,9 @@ class DevicesReportInline(admin.TabularInline):
     @admin.display(description="Отметить дефекты")
     def defect_button(self, obj):
         device = Device.objects.get(id=obj.device_id)
+        mechanic_report = MechanicReport.objects.get(id=obj.mechanicreport_id)
         
-        if obj.user.groups.filter(name="электромеханики"):
+        if mechanic_report.user.groups.filter(name="КИП"):
             return "--"
 
         return mark_safe(
