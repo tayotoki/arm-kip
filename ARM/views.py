@@ -193,6 +193,9 @@ class KipMechReportAdapter:
 
 def update_device(request, device_id):
     if request.method == "POST":
+        if request.user.groups.filter(~Q(name="электромеханики")):
+            return JsonResponse({"success": False,
+                                 "message": f"У вас нет прав для данной операции"})
         mechanic_report_id = int(
             re.search(r"(?<=mechanicreport/)(\d+)(?=/change)",
                       request.META.get("HTTP_REFERER")).group()
@@ -378,6 +381,10 @@ def create_mech_reports(request, kip_report_id):
 
 def mark_defect_device(request, device_id):
     if request.method == "POST":
+        if request.user.groups.filter(~Q(name="электромеханики")):
+            return JsonResponse({"success": True,
+                                 "message": f"У вас нет прав для данной операции"})
+
         mechanic_report_id = int(
             re.search(r"(?<=mechanicreport/)(\d+)(?=/change)",
                       request.META.get("HTTP_REFERER")).group()

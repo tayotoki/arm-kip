@@ -323,7 +323,8 @@ class DevicesReportInline(admin.TabularInline):
         device = Device.objects.get(id=obj.device_id)
         mechanic_report = MechanicReport.objects.get(id=obj.mechanicreport_id)
 
-        if mechanic_report.user.groups.filter(name="КИП"):
+        if mechanic_report.user.groups.filter(name="электромеханики"):
+            print(mechanic_report.user.groups.all())
             return "--"
 
         if (device.station or device.avz) and device.status not in (Device.send, Device.normal):
@@ -346,7 +347,7 @@ class DevicesReportInline(admin.TabularInline):
         device = Device.objects.get(id=obj.device_id)
         mechanic_report = MechanicReport.objects.get(id=obj.mechanicreport_id)
         
-        if mechanic_report.user.groups.filter(name="КИП"):
+        if mechanic_report.user.groups.filter(name="электромеханики"):
             return "--"
 
         return mark_safe(
@@ -421,6 +422,10 @@ class MechanicReportAdmin(admin.ModelAdmin):
             return super().save_model(request, obj, form, change)
         obj.user = request.user
         return super().save_model(request, obj, form, change)
+
+    def has_change_permission(self, request: HttpRequest, obj=None) -> bool:
+        if obj is not None:
+            return not bool(obj.user.groups.filter(name="КИП"))
 
 
 @admin.register(Tipe)
