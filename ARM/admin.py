@@ -327,7 +327,7 @@ class DevicesReportInline(admin.TabularInline):
             print(mechanic_report.user.groups.all())
             return "--"
 
-        if (device.station or device.avz) and device.status not in (Device.send, Device.normal):
+        if (device.station or device.avz) and device.status not in (Device.send, ):
             return mark_safe(
                 f'<a class="button" href="javascript://" '
                 f'onclick="update_device_ajax({device.id})">Прибор заменен</a>'
@@ -678,6 +678,12 @@ class KipReportAdmin(admin.ModelAdmin):
                     )
                 except Place.DoesNotExist:
                     print(rack, "-", number, " Не существует")
+                    self.message_user(
+                        request,
+                        f"На станции {instance.station} нет монтажного адреса "
+                        f"{rack}-{number}",
+                        messages.ERROR,
+                    )
                     pass
                 else:
                     try:
@@ -690,11 +696,13 @@ class KipReportAdmin(admin.ModelAdmin):
                             form_device.mounting_address = place
                             form_device.name = "Без названия"
 
-                        for avz_device in avz.device_set.all():
+                        for avz_device in list(avz.device_set.all()):
                             if avz_device.device_type == form_device.device_type:
                                 form_device.frequency_of_check = avz_device.frequency_of_check
-                            else:
-                                form_device.frequency_of_check = 1
+                                break
+                        else:
+                            form_device.frequency_of_check = 1
+
                     except Device.DoesNotExist:
                         messages.warning(
                             request,
@@ -709,11 +717,14 @@ class KipReportAdmin(admin.ModelAdmin):
                             form_device.mounting_address = place
                             form_device.name = "Без названия"
 
-                        for avz_device in avz.device_set.all():
+                        for avz_device in list(avz.device_set.all()):
                             if avz_device.device_type == form_device.device_type:
                                 form_device.frequency_of_check = avz_device.frequency_of_check
-                            else:
-                                form_device.frequency_of_check = 1
+                                break
+                        else:
+                            print(f"Вот тут почему NoneType, а прибор {form_device}")
+                            form_device.frequency_of_check = 1
+                    
                     else:
                         form_device.name = device_on_place.name
                         form_device.status = Device.in_progress
