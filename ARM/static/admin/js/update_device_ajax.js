@@ -2,6 +2,7 @@ function update_device_ajax(device_id) {
     const csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     const url = "/arm/device/update/" + device_id + "/";
     let title = document.getElementsByName("title");
+    
     if (title.length > 0) {
         title = title[0].value;
     }
@@ -9,6 +10,7 @@ function update_device_ajax(device_id) {
         title = document.querySelector('.field-title > div:first-child .readonly').textContent;
     }
     const kip_report_id = parseInt(title.match(/\d+/));
+
     django.jQuery.ajax({
         type: "POST",
         url: url,

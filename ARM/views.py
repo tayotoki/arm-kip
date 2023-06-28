@@ -61,6 +61,7 @@ class KipMechReportAdapter:
     """Класс для работы с объектами модели
     Device, которые присутствуют в MechanicReport
     и KipReport"""
+    
     mech_report = Report(model=MechanicReport)
     kip_report = Report(model=KipReport)
 
