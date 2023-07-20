@@ -63,7 +63,7 @@ class DeviceAdmin(admin.ModelAdmin):
     form = DeviceForm
     readonly_fields = ("next_check_date",)
     actions = [export_as_xls, add_to_kipreport]
-    list_filter = ["station", "stock", "status", "contact_type", "next_check_date", filters.DateFilter]
+    list_filter = ["station", "stock", "avz", "status", "contact_type", "next_check_date", filters.DateFilter]
     list_display = [
         "station",
         "name",
@@ -91,16 +91,16 @@ class DeviceAdmin(admin.ModelAdmin):
         return super().save_model(request, obj, form, change)
 
     def get_search_results(self, request, queryset, search_term):
-        queryset, may_have_duplicates = super().get_search_results(
+        queryset, distinct = super().get_search_results(
             request, queryset, search_term
         )
 
         if search_term:
-            queryset |= self.model.objects.filter(
+            queryset &= self.model.objects.filter(
                 Q(name__iregex=search_term) | Q(inventory_number__iregex=search_term) | Q(device_type__name__iregex=search_term)
             )
-            
-        return queryset, may_have_duplicates
+        
+        return queryset, distinct
 
 
 class AVZInlineAdmin(admin.StackedInline):
