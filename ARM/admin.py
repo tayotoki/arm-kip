@@ -63,7 +63,17 @@ class DeviceAdmin(admin.ModelAdmin):
     form = DeviceForm
     readonly_fields = ("next_check_date",)
     actions = [export_as_xls, add_to_kipreport]
-    list_filter = ["station", "stock", "avz", "status", "contact_type", "next_check_date", filters.DateFilter]
+    list_filter = [
+        "station",
+        "stock",
+        "avz",
+        "status",
+        "contact_type",
+        "device_type",
+        "next_check_date",
+        filters.YearFilter,
+        filters.MonthFilter
+    ]
     list_display = [
         "station",
         "name",
@@ -668,7 +678,7 @@ class KipReportAdmin(admin.ModelAdmin):
 
                 instance.mounting_address = ""
 
-            elif re.fullmatch(r"((\d+)|(релейная)|(тоннель)|(поле))-((\d+)|(остальное))", instance.mounting_address):
+            elif re.fullmatch(r"((\w+)|(релейная)|(тоннель)|(поле))-((\w+)|(остальное))", instance.mounting_address):
                 rack, number = instance.mounting_address.strip().split("-")
                 try:
                     place = Place.objects.get(
