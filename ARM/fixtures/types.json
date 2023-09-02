@@ -3,910 +3,840 @@
     "model": "ARM.Tipe",
     "pk": 150,
     "fields": {
-      "name": "\u0422\u0440-\u0440 \u0421\u0422-4"
+      "name": "Тр-р СТ-4"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 2,
     "fields": {
-      "name": "\u041d\u041c\u04281-1440(1800)"
+      "name": "НМШ1-1440(1800)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 98,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0411\u0414\u0421\u041a\u0428"
+      "name": "Блок БДСКШ"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 200,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.00.27"
+      "name": "КДРШ-1 617.00.27"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 155,
     "fields": {
-      "name": "\u0422\u0440-\u0440 \u041f\u041e\u0411\u0421-2\u0410"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 11,
-    "fields": {
-      "name": "\u041d\u041c\u04282-4000"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 1,
-    "fields": {
-      "name": "\u041d\u041c\u04281-400(500)"
+      "name": "Тр-р ПОБС-2А"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 157,
     "fields": {
-      "name": "\u0422\u0440-\u0440 \u041f\u041e\u0411\u0421-5\u0410"
+      "name": "Тр-р ПОБС-5А"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 142,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041f\u0423-1"
+      "name": "Блок ПУ-1"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 140,
+    "pk": 1,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041f\u0413-\u0410\u041b\u0421"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 144,
-    "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0424\u041f-\u0410\u041b\u0421"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 18,
-    "fields": {
-      "name": "\u041d\u041c\u04283-550/400"
+      "name": "НМШ1-400(500)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 5,
     "fields": {
-      "name": "\u041d\u041c\u0428\u041c1-360"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 7,
-    "fields": {
-      "name": "H\u041c\u0428\u041c1-1120(1400)"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 22,
-    "fields": {
-      "name": "H\u041c\u04284-2400(3000)"
+      "name": "НМШМ1-360"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 14,
     "fields": {
-      "name": "\u041d\u041c\u0428\u041c2-1500"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 21,
-    "fields": {
-      "name": "\u041d\u041c\u04284-530(600)"
+      "name": "НМШМ2-1500"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 156,
     "fields": {
-      "name": "\u0422\u0440-\u0440 \u041f\u041e\u0411\u0421-3\u0410"
+      "name": "Тр-р ПОБС-3А"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 144,
+    "fields": {
+      "name": "Блок ФП-АЛС"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 11,
+    "fields": {
+      "name": "НМШ2-4000"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 6,
     "fields": {
-      "name": "\u041d\u041c\u0428\u041c1-560(700)"
+      "name": "НМШМ1-560(700)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 10,
     "fields": {
-      "name": "\u041d\u041c\u04282-900(1000)"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 103,
-    "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041cII"
+      "name": "НМШ2-900(1000)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 104,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0412I"
+      "name": "Блок ВI"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 111,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041d\u0421\u0421"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 116,
-    "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041d\u041c-II\u0410\u041f"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 102,
-    "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041cI"
+      "name": "Блок НСС"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 114,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041d\u041c-I\u0414"
+      "name": "Блок НМ-IД"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 214,
+    "pk": 22,
     "fields": {
-      "name": "\u0414\u0421\u041d\u041f-2"
+      "name": "HМШ4-2400(3000)"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 215,
+    "pk": 21,
     "fields": {
-      "name": "\u0412\u0423\u0421-1.3"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 25,
-    "fields": {
-      "name": "\u041d\u041c\u0428\u041c4-100/1100(105/)"
+      "name": "НМШ4-530(600)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 35,
     "fields": {
-      "name": "\u0410\u041d\u0428\u041c2-380(320,310)"
+      "name": "АНШМ2-380(320,310)"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 25,
+    "fields": {
+      "name": "НМШМ4-100/1100(105/)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 32,
     "fields": {
-      "name": "\u0410\u041d\u04282-1600(1230)"
+      "name": "АНШ2-1600(1230)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 31,
     "fields": {
-      "name": "\u0410\u041d\u04282-40"
+      "name": "АНШ2-40"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 113,
+    "pk": 7,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041d\u0421\u041ex2"
+      "name": "HМШМ1-1120(1400)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 110,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041d\u041cI"
+      "name": "Блок НМI"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 38,
+    "pk": 116,
     "fields": {
-      "name": "\u0410\u041d\u0412\u04282-2400"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 41,
-    "fields": {
-      "name": "\u041e\u041c\u04282-46"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 95,
-    "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0411\u0414\u0428-20"
+      "name": "Блок НМ-IIАП"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 218,
     "fields": {
-      "name": "\u0420\u041d\u041f"
+      "name": "РНП"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 216,
     "fields": {
-      "name": "\u0410\u04282-1440"
+      "name": "АШ2-1440"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 219,
     "fields": {
-      "name": "\u0421\u0417\u0418-1"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 220,
-    "fields": {
-      "name": "\u0421\u0417\u0418-2"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 97,
-    "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0411\u041a\u0420-76"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 76,
-    "fields": {
-      "name": "\u0420\u042d\u041b1-1600"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 89,
-    "fields": {
-      "name": "\u041a\u0411-4x4"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 86,
-    "fields": {
-      "name": "\u0411\u041f\u0428"
+      "name": "СЗИ-1"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 72,
     "fields": {
-      "name": "\u0414\u0421\u0428-2"
+      "name": "ДСШ-2"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 145,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041f\u0422\u0426"
+      "name": "Блок ПТЦ"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 99,
+    "pk": 76,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0411\u0412"
+      "name": "РЭЛ1-1600"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 81,
     "fields": {
-      "name": "\u041e\u041b2-88"
+      "name": "ОЛ2-88"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 77,
     "fields": {
-      "name": "\u0420\u042d\u041b1-400"
+      "name": "РЭЛ1-400"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 75,
     "fields": {
-      "name": "\u0420\u042d\u041b1-6,8"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 85,
-    "fields": {
-      "name": "\u0417\u041f\u0420\u0428-2"
+      "name": "РЭЛ1-6,8"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 172,
     "fields": {
-      "name": "\u0412\u044b\u043f\u0440.\u041a\u0414-205\u0410"
+      "name": "Выпр.КД-205А"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 78,
     "fields": {
-      "name": "\u0420\u042d\u041b1\u041c-600"
+      "name": "РЭЛ1М-600"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 97,
+    "fields": {
+      "name": "Блок БКР-76"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 85,
+    "fields": {
+      "name": "ЗПРШ-2"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 38,
+    "fields": {
+      "name": "АНВШ2-2400"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 66,
     "fields": {
-      "name": "\u041f\u041c\u041f\u0423\u0428-150/150"
+      "name": "ПМПУШ-150/150"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 151,
     "fields": {
-      "name": "\u0422\u0440-\u0440 \u0421\u0422-5"
+      "name": "Тр-р СТ-5"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 88,
     "fields": {
-      "name": "\u0411\u041a\u0422"
+      "name": "БКТ"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 160,
     "fields": {
-      "name": "\u0412\u0410\u041a-16\u0411"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 221,
-    "fields": {
-      "name": "\u041e\u041f-12 \u041e\u04242"
+      "name": "ВАК-16Б"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 53,
     "fields": {
-      "name": "\u0410\u04282-110/220"
+      "name": "АШ2-110/220"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 140,
+    "fields": {
+      "name": "Блок ПГ-АЛС"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 58,
     "fields": {
-      "name": "\u0410\u041f\u0428-220"
+      "name": "АПШ-220"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 94,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0411\u0412\u041c\u0428"
+      "name": "Блок БВМШ"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 57,
+    "pk": 86,
     "fields": {
-      "name": "\u0410\u041f\u0428-24"
+      "name": "БПШ"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 143,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041f\u0423-2"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 91,
-    "fields": {
-      "name": "\u0424\u041a-75"
+      "name": "Блок ПУ-2"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 100,
     "fields": {
-      "name": "\u041c\u0422-2"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 44,
-    "fields": {
-      "name": "\u041d\u041c\u041f\u04282-400"
+      "name": "МТ-2"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 198,
     "fields": {
-      "name": "\u041a\u0414\u0420\u04281-6170017"
+      "name": "КДРШ1-6170017"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 199,
     "fields": {
-      "name": "\u041a\u0414\u0420\u04281-6171202"
+      "name": "КДРШ1-6171202"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 188,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.11.26"
+      "name": "КДРШ-1 617.11.26"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 203,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.00.09"
+      "name": "КДРШ-1 617.00.09"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 195,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 616.12.20.02"
+      "name": "КДРШ-1 616.12.20.02"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 192,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 616.11.12."
+      "name": "КДРШ-1 616.11.12."
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 191,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.00.04"
+      "name": "КДРШ-1 617.00.04"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 190,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.00.15"
+      "name": "КДРШ-1 617.00.15"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 213,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.12.20"
+      "name": "КДРШ-1 617.12.20"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 209,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.11.16"
+      "name": "КДРШ-1 617.11.16"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 207,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.00.25"
+      "name": "КДРШ-1 617.00.25"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 184,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 616.12.20"
+      "name": "КДРШ-1 616.12.20"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 189,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.00.22"
+      "name": "КДРШ-1 617.00.22"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 208,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.00.40"
+      "name": "КДРШ-1 617.00.40"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 194,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 616.12.20.04"
+      "name": "КДРШ-1 616.12.20.04"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 186,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.22.02"
+      "name": "КДРШ-1 617.22.02"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 187,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.00.17"
+      "name": "КДРШ-1 617.00.17"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 183,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.11.13."
+      "name": "КДРШ-1 617.11.13."
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 182,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.00.29"
+      "name": "КДРШ-1 617.00.29"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 185,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.12.02"
+      "name": "КДРШ-1 617.12.02"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 41,
+    "fields": {
+      "name": "ОМШ2-46"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 134,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0411\u0414\u0421"
+      "name": "Блок БДС"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 173,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.11.12."
+      "name": "КДРШ-1 617.11.12."
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 131,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0420"
+      "name": "Блок Р"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 204,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.00.11"
+      "name": "КДРШ-1 617.00.11"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 171,
     "fields": {
-      "name": "\u041a\u0414\u0420\u04281 615.68.15."
+      "name": "КДРШ1 615.68.15."
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 45,
     "fields": {
-      "name": "\u041d\u041c\u041f\u0428-900(1000)"
+      "name": "НМПШ-900(1000)"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 57,
+    "fields": {
+      "name": "АПШ-24"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 146,
     "fields": {
-      "name": "\u0422\u041f-24"
+      "name": "ТП-24"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 141,
+    "pk": 91,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041f\u0413-75"
+      "name": "ФК-75"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 132,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041f\u041f\u0423"
+      "name": "Блок ППУ"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 163,
     "fields": {
-      "name": "\u0422\u0440-\u0440 \u0420\u0422\u042d-1\u0410"
+      "name": "Тр-р РТЭ-1А"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 46,
+    "pk": 141,
     "fields": {
-      "name": "\u041d\u041c\u041f\u0428-03/90"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 224,
-    "fields": {
-      "name": "\u043fp\u0435\u0434-\u043b\u044c 0.5\u0410"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 227,
-    "fields": {
-      "name": "\u043fp\u0435\u0434-\u043b\u044c 3\u0410"
+      "name": "Блок ПГ-75"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 228,
     "fields": {
-      "name": "\u043fp\u0435\u0434-\u043b\u044c 5\u0410"
+      "name": "пpед-ль 5А"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 229,
     "fields": {
-      "name": "\u043fp\u0435\u0434-\u043b\u044c 10\u0410"
+      "name": "пpед-ль 10А"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 230,
     "fields": {
-      "name": "\u043fp\u0435\u0434-\u043b\u044c 15\u0410"
+      "name": "пpед-ль 15А"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 231,
     "fields": {
-      "name": "\u043fp\u0435\u0434-\u043b\u044c 20\u0410"
+      "name": "пpед-ль 20А"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 223,
     "fields": {
-      "name": "\u043fp\u0435\u0434-\u043b\u044c 0.3\u0410"
+      "name": "пpед-ль 0.3А"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 224,
+    "fields": {
+      "name": "пpед-ль 0.5А"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 225,
     "fields": {
-      "name": "\u043fp\u0435\u0434-\u043b\u044c 1\u0410"
+      "name": "пpед-ль 1А"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 226,
     "fields": {
-      "name": "\u043fp\u0435\u0434-\u043b\u044c 2\u0410"
+      "name": "пpед-ль 2А"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 227,
+    "fields": {
+      "name": "пpед-ль 3А"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 89,
+    "fields": {
+      "name": "КБ-4x4"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 20,
     "fields": {
-      "name": "\u041d\u041c\u04284-3.0(3.4)"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 40,
-    "fields": {
-      "name": "\u041e\u041c\u0428\u041c1-1"
+      "name": "НМШ4-3.0(3.4)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 60,
     "fields": {
-      "name": "\u0410\u0421\u04282-220\u041c"
+      "name": "АСШ2-220М"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 54,
     "fields": {
-      "name": "\u0410\u04282-12/24"
+      "name": "АШ2-12/24"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 63,
     "fields": {
-      "name": "\u041a\u041c\u0428-450"
+      "name": "КМШ-450"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 105,
+    "pk": 44,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0412\u0414-62"
+      "name": "НМПШ2-400"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 46,
+    "fields": {
+      "name": "НМПШ-03/90"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 193,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 616.12.22.05"
+      "name": "КДРШ-1 616.12.22.05"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 196,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 616.12.20.01"
+      "name": "КДРШ-1 616.12.20.01"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 205,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.00.21"
+      "name": "КДРШ-1 617.00.21"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 197,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 616.12.22"
+      "name": "КДРШ-1 616.12.22"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 201,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 617.00.06"
+      "name": "КДРШ-1 617.00.06"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 181,
     "fields": {
-      "name": "\u041a\u0414\u0420\u0428-1 615.44.15"
+      "name": "КДРШ-1 615.44.15"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 115,
+    "pk": 103,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041d\u041c-II\u041f"
+      "name": "Блок МII"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 117,
+    "pk": 105,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041d\u041f\u041c-69"
+      "name": "Блок ВД-62"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 113,
+    "fields": {
+      "name": "Блок НСОx2"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 69,
     "fields": {
-      "name": "\u041a\u04281-280"
+      "name": "КШ1-280"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 28,
     "fields": {
-      "name": "\u041d\u041c\u0428\u0422-1440(1800)"
+      "name": "НМШТ-1440(1800)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 47,
     "fields": {
-      "name": "\u041d\u041c\u041f\u04281200/250"
+      "name": "НМПШ1200/250"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 222,
+    "pk": 117,
     "fields": {
-      "name": "\u0411\u041a\u041f"
+      "name": "Блок НПМ-69"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 233,
     "fields": {
-      "name": "\u0441\u0442p.\u0434\u0432\u0438\u0433-\u043b\u044c"
+      "name": "стp.двиг-ль"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 115,
+    "fields": {
+      "name": "Блок НМ-IIП"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 112,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u041d\u041d"
+      "name": "Блок НН"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 106,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0421\u041f-69"
+      "name": "Блок СП-69"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 108,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0421"
+      "name": "Блок С"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 107,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0423\u041f-65"
+      "name": "Блок УП-65"
     }
   },
   {
@@ -918,142 +848,121 @@
   },
   {
     "model": "ARM.Tipe",
-    "pk": 234,
-    "fields": {
-      "name": "\u043fp\u0435\u0434-\u043b\u044c2\u0410-\u0424"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
     "pk": 235,
     "fields": {
-      "name": "\u043fp\u0435\u0434-\u043b\u044c 10\u0410-\u0424"
+      "name": "пpед-ль 10А-Ф"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 237,
+    "pk": 102,
     "fields": {
-      "name": "\u0410\u0412\u041c-10\u0410"
+      "name": "Блок МI"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 236,
+    "pk": 18,
     "fields": {
-      "name": "\u0410\u0412\u041c-5\u0410"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 49,
-    "fields": {
-      "name": "\u041d\u041c\u0428\u041c2-3000(3500)"
+      "name": "НМШ3-550/400"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 130,
     "fields": {
-      "name": "\u0411\u043b\u043e\u043a \u0411\u0422\u0413"
+      "name": "Блок БТГ"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 43,
+    "pk": 222,
     "fields": {
-      "name": "\u041d\u041c\u041f\u04283-0.2/250"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 50,
-    "fields": {
-      "name": "\u041d\u041c\u0428\u041c2-320"
+      "name": "БКП"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 238,
     "fields": {
-      "name": "\u041f\u0422\u0426"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 239,
-    "fields": {
-      "name": "\u041f\u0421\u0420\u0426-7"
+      "name": "ПТЦ"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 240,
     "fields": {
-      "name": "\u041f\u0421\u0420\u0426-10"
+      "name": "ПСРЦ-10"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 243,
     "fields": {
-      "name": "\u0424\u041f3-2"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 241,
-    "fields": {
-      "name": "\u0413\u0421\u0420\u0426"
+      "name": "ФП3-2"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 242,
     "fields": {
-      "name": "\u0424\u041f3-1"
+      "name": "ФП3-1"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 244,
     "fields": {
-      "name": "\u041f\u0421\u0420\u0426-3"
+      "name": "ПСРЦ-3"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 246,
     "fields": {
-      "name": "\u0423\u041a"
+      "name": "УК"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 247,
     "fields": {
-      "name": "\u0414\u0418\u041c-1"
+      "name": "ДИМ-1"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 245,
     "fields": {
-      "name": "\u041f\u0421\u0420\u0426-8"
+      "name": "ПСРЦ-8"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 241,
+    "fields": {
+      "name": "ГСРЦ"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 50,
+    "fields": {
+      "name": "НМШМ2-320"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 248,
     "fields": {
-      "name": "\u041f\u0421\u0420\u0426-9"
+      "name": "ПСРЦ-9"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 250,
+    "pk": 215,
     "fields": {
-      "name": "\u041f\u0421\u0420\u0426-2"
+      "name": "ВУС-1.3"
     }
   },
   {
@@ -1067,91 +976,161 @@
     "model": "ARM.Tipe",
     "pk": 249,
     "fields": {
-      "name": "\u0423\u041f-\u041c\u0410"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 251,
-    "fields": {
-      "name": "\u0422\u0428-65\u0412"
+      "name": "УП-МА"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 252,
     "fields": {
-      "name": "\u0423\u041f-\u041c\u0410"
+      "name": "УП-МА"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 232,
     "fields": {
-      "name": "\u0411\u0412\u0421"
+      "name": "БВС"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 251,
+    "fields": {
+      "name": "ТШ-65В"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 12,
     "fields": {
-      "name": "\u041d\u041c\u0428\u041c2-640(700)"
+      "name": "НМШМ2-640(700)"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 49,
+    "fields": {
+      "name": "НМШМ2-3000(3500)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 254,
     "fields": {
-      "name": "\u043b\u0430\u043c\u043f\u044b"
+      "name": "лампы"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 253,
     "fields": {
-      "name": "\u0411\u041c"
+      "name": "БМ"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 237,
+    "fields": {
+      "name": "АВМ-10А"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 90,
     "fields": {
-      "name": "1\u041d-1350"
+      "name": "1Н-1350"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 92,
     "fields": {
-      "name": "2\u041d-2250"
+      "name": "2Н-2250"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 255,
     "fields": {
-      "name": "\u0423\u0422\u0417"
+      "name": "УТЗ"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 257,
     "fields": {
-      "name": "\u041f\u0421\u0420\u0426-4"
+      "name": "ПСРЦ-4"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 258,
     "fields": {
-      "name": "2\u041e\u041b-25"
+      "name": "2ОЛ-25"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 93,
     "fields": {
-      "name": "1\u041d\u041c-950"
+      "name": "1НМ-950"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 259,
+    "fields": {
+      "name": "СзИЦ-Д-Л"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 260,
+    "fields": {
+      "name": "2НМ-1000"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 239,
+    "fields": {
+      "name": "ПСРЦ-7"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 99,
+    "fields": {
+      "name": "Блок БВ"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 262,
+    "fields": {
+      "name": "1Н-8,2"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 261,
+    "fields": {
+      "name": "РЗФШ"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 234,
+    "fields": {
+      "name": "пpед-ль2А-Ф"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 263,
+    "fields": {
+      "name": "Д3-2700"
     }
   },
   {
@@ -1163,149 +1142,114 @@
   },
   {
     "model": "ARM.Tipe",
-    "pk": 259,
+    "pk": 221,
     "fields": {
-      "name": "\u0421\u0437\u0418\u0426-\u0414-\u041b"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 260,
-    "fields": {
-      "name": "2\u041d\u041c-1000"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 262,
-    "fields": {
-      "name": "1\u041d-8,2"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 261,
-    "fields": {
-      "name": "\u0420\u0417\u0424\u0428"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 263,
-    "fields": {
-      "name": "\u04143-2700"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 264,
-    "fields": {
-      "name": "1\u041d\u041c-240"
+      "name": "ОП-12 ОФ2"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 266,
     "fields": {
-      "name": "\u0418\u0421\u041c\u041f\u041b\u0437"
+      "name": "ИСМПЛз"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 265,
     "fields": {
-      "name": "\u0418\u0421\u041c\u041f\u041b\u0436"
+      "name": "ИСМПЛж"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 267,
     "fields": {
-      "name": "\u0418\u0421\u041c\u041f\u041b\u043a"
+      "name": "ИСМПЛк"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 270,
     "fields": {
-      "name": "\u0418\u0421\u041c\u041f\u041b\u0431"
+      "name": "ИСМПЛб"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 271,
     "fields": {
-      "name": "\u0418\u0421\u041c\u041f\u041b\u0441"
+      "name": "ИСМПЛс"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 268,
     "fields": {
-      "name": "\u0414\u0411\u041b(\u0414\u0411\u041b\u041c)"
+      "name": "ДБЛ(ДБЛМ)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 269,
     "fields": {
-      "name": "\u0414\u0412\u041f(\u0414\u0411\u041f\u041c)"
+      "name": "ДВП(ДБПМ)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 272,
     "fields": {
-      "name": "\u0421\u0421\u041a 160(\u0431\u0435\u043b\u044b\u0439)"
+      "name": "ССК 160(белый)"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 274,
     "fields": {
-      "name": "\u0411\u0410\u0420 12/20"
+      "name": "БАР 12/20"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 13,
     "fields": {
-      "name": "H\u041c\u0428\u041c2-11/1500"
+      "name": "HМШМ2-11/1500"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 275,
     "fields": {
-      "name": "\u043f\u0440\u0435-\u043b\u044c15\u0410-\u0424"
+      "name": "пре-ль15А-Ф"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 276,
     "fields": {
-      "name": "\u0410\u0412\u041c/15\u0410"
-    }
-  },
-  {
-    "model": "ARM.Tipe",
-    "pk": 277,
-    "fields": {
-      "name": "\u0420\u041d\u041f =24\u0412"
+      "name": "АВМ/15А"
     }
   },
   {
     "model": "ARM.Tipe",
     "pk": 278,
     "fields": {
-      "name": "\u0428\u0443\u043d\u0442"
+      "name": "Шунт"
     }
   },
   {
     "model": "ARM.Tipe",
-    "pk": 300,
+    "pk": 277,
     "fields": {
-      "name": "Неизвестный тип"
+      "name": "РНП =24В"
+    }
+  },
+  {
+    "model": "ARM.Tipe",
+    "pk": 250,
+    "fields": {
+      "name": "ПСРЦ-2"
     }
   }
 ]

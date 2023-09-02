@@ -212,15 +212,15 @@
     "pk": 27,
     "fields": {
       "station": 1,
-      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+      "number": "тоннель"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 28,
     "fields": {
-      "station": 2,
-      "number": "12"
+      "station": 1,
+      "number": "КТСМ"
     }
   },
   {
@@ -228,7 +228,7 @@
     "pk": 29,
     "fields": {
       "station": 2,
-      "number": "13"
+      "number": "12"
     }
   },
   {
@@ -236,7 +236,7 @@
     "pk": 30,
     "fields": {
       "station": 2,
-      "number": "14"
+      "number": "13"
     }
   },
   {
@@ -244,7 +244,7 @@
     "pk": 31,
     "fields": {
       "station": 2,
-      "number": "15"
+      "number": "14"
     }
   },
   {
@@ -252,7 +252,7 @@
     "pk": 32,
     "fields": {
       "station": 2,
-      "number": "21"
+      "number": "15"
     }
   },
   {
@@ -260,7 +260,7 @@
     "pk": 33,
     "fields": {
       "station": 2,
-      "number": "22"
+      "number": "21"
     }
   },
   {
@@ -268,7 +268,7 @@
     "pk": 34,
     "fields": {
       "station": 2,
-      "number": "23"
+      "number": "22"
     }
   },
   {
@@ -276,7 +276,7 @@
     "pk": 35,
     "fields": {
       "station": 2,
-      "number": "24"
+      "number": "23"
     }
   },
   {
@@ -284,7 +284,7 @@
     "pk": 36,
     "fields": {
       "station": 2,
-      "number": "25"
+      "number": "24"
     }
   },
   {
@@ -292,7 +292,7 @@
     "pk": 37,
     "fields": {
       "station": 2,
-      "number": "31"
+      "number": "25"
     }
   },
   {
@@ -300,7 +300,7 @@
     "pk": 38,
     "fields": {
       "station": 2,
-      "number": "32"
+      "number": "31"
     }
   },
   {
@@ -308,7 +308,7 @@
     "pk": 39,
     "fields": {
       "station": 2,
-      "number": "33"
+      "number": "32"
     }
   },
   {
@@ -316,7 +316,7 @@
     "pk": 40,
     "fields": {
       "station": 2,
-      "number": "34"
+      "number": "33"
     }
   },
   {
@@ -324,7 +324,7 @@
     "pk": 41,
     "fields": {
       "station": 2,
-      "number": "35"
+      "number": "34"
     }
   },
   {
@@ -332,7 +332,7 @@
     "pk": 42,
     "fields": {
       "station": 2,
-      "number": "41"
+      "number": "35"
     }
   },
   {
@@ -340,7 +340,7 @@
     "pk": 43,
     "fields": {
       "station": 2,
-      "number": "42"
+      "number": "41"
     }
   },
   {
@@ -348,31 +348,31 @@
     "pk": 44,
     "fields": {
       "station": 2,
-      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+      "number": "42"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 45,
     "fields": {
-      "station": 3,
-      "number": "11"
+      "station": 2,
+      "number": "тоннель"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 46,
     "fields": {
-      "station": 3,
-      "number": "12"
+      "station": 2,
+      "number": "КТСМ"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 47,
     "fields": {
-      "station": 3,
-      "number": "13"
+      "station": 2,
+      "number": "техкласс"
     }
   },
   {
@@ -380,7 +380,7 @@
     "pk": 48,
     "fields": {
       "station": 3,
-      "number": "14"
+      "number": "11"
     }
   },
   {
@@ -388,7 +388,7 @@
     "pk": 49,
     "fields": {
       "station": 3,
-      "number": "21"
+      "number": "12"
     }
   },
   {
@@ -396,7 +396,7 @@
     "pk": 50,
     "fields": {
       "station": 3,
-      "number": "22"
+      "number": "13"
     }
   },
   {
@@ -404,7 +404,7 @@
     "pk": 51,
     "fields": {
       "station": 3,
-      "number": "23"
+      "number": "14"
     }
   },
   {
@@ -412,7 +412,7 @@
     "pk": 52,
     "fields": {
       "station": 3,
-      "number": "24"
+      "number": "21"
     }
   },
   {
@@ -420,7 +420,7 @@
     "pk": 53,
     "fields": {
       "station": 3,
-      "number": "31"
+      "number": "22"
     }
   },
   {
@@ -428,7 +428,7 @@
     "pk": 54,
     "fields": {
       "station": 3,
-      "number": "32"
+      "number": "23"
     }
   },
   {
@@ -436,7 +436,7 @@
     "pk": 55,
     "fields": {
       "station": 3,
-      "number": "33"
+      "number": "24"
     }
   },
   {
@@ -444,7 +444,7 @@
     "pk": 56,
     "fields": {
       "station": 3,
-      "number": "34"
+      "number": "31"
     }
   },
   {
@@ -452,7 +452,7 @@
     "pk": 57,
     "fields": {
       "station": 3,
-      "number": "41"
+      "number": "32"
     }
   },
   {
@@ -460,7 +460,7 @@
     "pk": 58,
     "fields": {
       "station": 3,
-      "number": "42"
+      "number": "33"
     }
   },
   {
@@ -468,7 +468,7 @@
     "pk": 59,
     "fields": {
       "station": 3,
-      "number": "43"
+      "number": "34"
     }
   },
   {
@@ -476,7 +476,7 @@
     "pk": 60,
     "fields": {
       "station": 3,
-      "number": "44"
+      "number": "41"
     }
   },
   {
@@ -484,7 +484,7 @@
     "pk": 61,
     "fields": {
       "station": 3,
-      "number": "51"
+      "number": "42"
     }
   },
   {
@@ -492,7 +492,7 @@
     "pk": 62,
     "fields": {
       "station": 3,
-      "number": "52"
+      "number": "43"
     }
   },
   {
@@ -500,7 +500,7 @@
     "pk": 63,
     "fields": {
       "station": 3,
-      "number": "54"
+      "number": "44"
     }
   },
   {
@@ -508,7 +508,7 @@
     "pk": 64,
     "fields": {
       "station": 3,
-      "number": "55"
+      "number": "51"
     }
   },
   {
@@ -516,7 +516,7 @@
     "pk": 65,
     "fields": {
       "station": 3,
-      "number": "61"
+      "number": "52"
     }
   },
   {
@@ -524,7 +524,7 @@
     "pk": 66,
     "fields": {
       "station": 3,
-      "number": "62"
+      "number": "54"
     }
   },
   {
@@ -532,7 +532,7 @@
     "pk": 67,
     "fields": {
       "station": 3,
-      "number": "63"
+      "number": "55"
     }
   },
   {
@@ -540,7 +540,7 @@
     "pk": 68,
     "fields": {
       "station": 3,
-      "number": "64"
+      "number": "61"
     }
   },
   {
@@ -548,7 +548,7 @@
     "pk": 69,
     "fields": {
       "station": 3,
-      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+      "number": "62"
     }
   },
   {
@@ -556,7 +556,7 @@
     "pk": 70,
     "fields": {
       "station": 3,
-      "number": "\u041f\u04121"
+      "number": "63"
     }
   },
   {
@@ -564,39 +564,39 @@
     "pk": 71,
     "fields": {
       "station": 3,
-      "number": "\u041f\u0420\u042d"
+      "number": "64"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 72,
     "fields": {
-      "station": 4,
-      "number": "01"
+      "station": 3,
+      "number": "тоннель"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 73,
     "fields": {
-      "station": 4,
-      "number": "02"
+      "station": 3,
+      "number": "КТСМ"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 74,
     "fields": {
-      "station": 4,
-      "number": "11"
+      "station": 3,
+      "number": "ПВ1"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 75,
     "fields": {
-      "station": 4,
-      "number": "12"
+      "station": 3,
+      "number": "ПРЭ"
     }
   },
   {
@@ -604,7 +604,7 @@
     "pk": 76,
     "fields": {
       "station": 4,
-      "number": "13"
+      "number": "01"
     }
   },
   {
@@ -612,7 +612,7 @@
     "pk": 77,
     "fields": {
       "station": 4,
-      "number": "14"
+      "number": "02"
     }
   },
   {
@@ -620,7 +620,7 @@
     "pk": 78,
     "fields": {
       "station": 4,
-      "number": "21"
+      "number": "11"
     }
   },
   {
@@ -628,7 +628,7 @@
     "pk": 79,
     "fields": {
       "station": 4,
-      "number": "22"
+      "number": "12"
     }
   },
   {
@@ -636,7 +636,7 @@
     "pk": 80,
     "fields": {
       "station": 4,
-      "number": "23"
+      "number": "13"
     }
   },
   {
@@ -644,7 +644,7 @@
     "pk": 81,
     "fields": {
       "station": 4,
-      "number": "24"
+      "number": "14"
     }
   },
   {
@@ -652,7 +652,7 @@
     "pk": 82,
     "fields": {
       "station": 4,
-      "number": "31"
+      "number": "21"
     }
   },
   {
@@ -660,7 +660,7 @@
     "pk": 83,
     "fields": {
       "station": 4,
-      "number": "32"
+      "number": "22"
     }
   },
   {
@@ -668,7 +668,7 @@
     "pk": 84,
     "fields": {
       "station": 4,
-      "number": "33"
+      "number": "23"
     }
   },
   {
@@ -676,7 +676,7 @@
     "pk": 85,
     "fields": {
       "station": 4,
-      "number": "34"
+      "number": "24"
     }
   },
   {
@@ -684,7 +684,7 @@
     "pk": 86,
     "fields": {
       "station": 4,
-      "number": "41"
+      "number": "31"
     }
   },
   {
@@ -692,7 +692,7 @@
     "pk": 87,
     "fields": {
       "station": 4,
-      "number": "42"
+      "number": "32"
     }
   },
   {
@@ -700,7 +700,7 @@
     "pk": 88,
     "fields": {
       "station": 4,
-      "number": "43"
+      "number": "33"
     }
   },
   {
@@ -708,7 +708,7 @@
     "pk": 89,
     "fields": {
       "station": 4,
-      "number": "44"
+      "number": "34"
     }
   },
   {
@@ -716,7 +716,7 @@
     "pk": 90,
     "fields": {
       "station": 4,
-      "number": "51"
+      "number": "41"
     }
   },
   {
@@ -724,7 +724,7 @@
     "pk": 91,
     "fields": {
       "station": 4,
-      "number": "64"
+      "number": "42"
     }
   },
   {
@@ -732,7 +732,7 @@
     "pk": 92,
     "fields": {
       "station": 4,
-      "number": "CTP"
+      "number": "43"
     }
   },
   {
@@ -740,7 +740,7 @@
     "pk": 93,
     "fields": {
       "station": 4,
-      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+      "number": "44"
     }
   },
   {
@@ -748,47 +748,47 @@
     "pk": 94,
     "fields": {
       "station": 4,
-      "number": "\u041f\u04126"
+      "number": "51"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 95,
     "fields": {
-      "station": 5,
-      "number": "1"
+      "station": 4,
+      "number": "64"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 96,
     "fields": {
-      "station": 5,
-      "number": "2"
+      "station": 4,
+      "number": "тоннель"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 97,
     "fields": {
-      "station": 5,
-      "number": "3"
+      "station": 4,
+      "number": "КТСМ"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 98,
     "fields": {
-      "station": 5,
-      "number": "4"
+      "station": 4,
+      "number": "ПВ6"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 99,
     "fields": {
-      "station": 5,
-      "number": "01"
+      "station": 4,
+      "number": "ПДЦ"
     }
   },
   {
@@ -796,7 +796,7 @@
     "pk": 100,
     "fields": {
       "station": 5,
-      "number": "02"
+      "number": "1"
     }
   },
   {
@@ -804,7 +804,7 @@
     "pk": 101,
     "fields": {
       "station": 5,
-      "number": "29"
+      "number": "2"
     }
   },
   {
@@ -812,7 +812,7 @@
     "pk": 102,
     "fields": {
       "station": 5,
-      "number": "30"
+      "number": "3"
     }
   },
   {
@@ -820,7 +820,7 @@
     "pk": 103,
     "fields": {
       "station": 5,
-      "number": "31"
+      "number": "4"
     }
   },
   {
@@ -828,7 +828,7 @@
     "pk": 104,
     "fields": {
       "station": 5,
-      "number": "32"
+      "number": "01"
     }
   },
   {
@@ -836,7 +836,7 @@
     "pk": 105,
     "fields": {
       "station": 5,
-      "number": "33"
+      "number": "02"
     }
   },
   {
@@ -844,7 +844,7 @@
     "pk": 106,
     "fields": {
       "station": 5,
-      "number": "41"
+      "number": "29"
     }
   },
   {
@@ -852,7 +852,7 @@
     "pk": 107,
     "fields": {
       "station": 5,
-      "number": "42"
+      "number": "30"
     }
   },
   {
@@ -860,7 +860,7 @@
     "pk": 108,
     "fields": {
       "station": 5,
-      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+      "number": "31"
     }
   },
   {
@@ -868,7 +868,7 @@
     "pk": 109,
     "fields": {
       "station": 5,
-      "number": "\u041f\u04121"
+      "number": "32"
     }
   },
   {
@@ -876,47 +876,47 @@
     "pk": 110,
     "fields": {
       "station": 5,
-      "number": "\u041f\u0414\u0426"
+      "number": "33"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 111,
     "fields": {
-      "station": 7,
-      "number": "1"
+      "station": 5,
+      "number": "41"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 112,
     "fields": {
-      "station": 7,
-      "number": "2"
+      "station": 5,
+      "number": "42"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 113,
     "fields": {
-      "station": 7,
-      "number": "3"
+      "station": 5,
+      "number": "тоннель"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 114,
     "fields": {
-      "station": 7,
-      "number": "4"
+      "station": 5,
+      "number": "ПВ1"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 115,
     "fields": {
-      "station": 7,
-      "number": "5"
+      "station": 5,
+      "number": "ПДЦ"
     }
   },
   {
@@ -924,7 +924,7 @@
     "pk": 116,
     "fields": {
       "station": 7,
-      "number": "7"
+      "number": "1"
     }
   },
   {
@@ -932,7 +932,7 @@
     "pk": 117,
     "fields": {
       "station": 7,
-      "number": "9"
+      "number": "2"
     }
   },
   {
@@ -940,7 +940,7 @@
     "pk": 118,
     "fields": {
       "station": 7,
-      "number": "01"
+      "number": "3"
     }
   },
   {
@@ -948,7 +948,7 @@
     "pk": 119,
     "fields": {
       "station": 7,
-      "number": "02"
+      "number": "4"
     }
   },
   {
@@ -956,7 +956,7 @@
     "pk": 120,
     "fields": {
       "station": 7,
-      "number": "29"
+      "number": "5"
     }
   },
   {
@@ -964,7 +964,7 @@
     "pk": 121,
     "fields": {
       "station": 7,
-      "number": "30"
+      "number": "7"
     }
   },
   {
@@ -972,7 +972,7 @@
     "pk": 122,
     "fields": {
       "station": 7,
-      "number": "31"
+      "number": "9"
     }
   },
   {
@@ -980,7 +980,7 @@
     "pk": 123,
     "fields": {
       "station": 7,
-      "number": "32"
+      "number": "01"
     }
   },
   {
@@ -988,7 +988,7 @@
     "pk": 124,
     "fields": {
       "station": 7,
-      "number": "33"
+      "number": "02"
     }
   },
   {
@@ -996,7 +996,7 @@
     "pk": 125,
     "fields": {
       "station": 7,
-      "number": "35"
+      "number": "29"
     }
   },
   {
@@ -1004,7 +1004,7 @@
     "pk": 126,
     "fields": {
       "station": 7,
-      "number": "41"
+      "number": "30"
     }
   },
   {
@@ -1012,7 +1012,7 @@
     "pk": 127,
     "fields": {
       "station": 7,
-      "number": "42"
+      "number": "31"
     }
   },
   {
@@ -1020,7 +1020,7 @@
     "pk": 128,
     "fields": {
       "station": 7,
-      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+      "number": "32"
     }
   },
   {
@@ -1028,7 +1028,7 @@
     "pk": 129,
     "fields": {
       "station": 7,
-      "number": "\u041f\u0412\u042d"
+      "number": "33"
     }
   },
   {
@@ -1036,47 +1036,47 @@
     "pk": 130,
     "fields": {
       "station": 7,
-      "number": "\u041f\u0414\u0426"
+      "number": "35"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 131,
     "fields": {
-      "station": 8,
-      "number": "1"
+      "station": 7,
+      "number": "41"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 132,
     "fields": {
-      "station": 8,
-      "number": "2"
+      "station": 7,
+      "number": "42"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 133,
     "fields": {
-      "station": 8,
-      "number": "3"
+      "station": 7,
+      "number": "тоннель"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 134,
     "fields": {
-      "station": 8,
-      "number": "4"
+      "station": 7,
+      "number": "ПВЭ"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 135,
     "fields": {
-      "station": 8,
-      "number": "01"
+      "station": 7,
+      "number": "ПДЦ"
     }
   },
   {
@@ -1084,7 +1084,7 @@
     "pk": 136,
     "fields": {
       "station": 8,
-      "number": "02"
+      "number": "1"
     }
   },
   {
@@ -1092,7 +1092,7 @@
     "pk": 137,
     "fields": {
       "station": 8,
-      "number": "30"
+      "number": "2"
     }
   },
   {
@@ -1100,7 +1100,7 @@
     "pk": 138,
     "fields": {
       "station": 8,
-      "number": "31"
+      "number": "3"
     }
   },
   {
@@ -1108,7 +1108,7 @@
     "pk": 139,
     "fields": {
       "station": 8,
-      "number": "32"
+      "number": "4"
     }
   },
   {
@@ -1116,7 +1116,7 @@
     "pk": 140,
     "fields": {
       "station": 8,
-      "number": "33"
+      "number": "01"
     }
   },
   {
@@ -1124,7 +1124,7 @@
     "pk": 141,
     "fields": {
       "station": 8,
-      "number": "41"
+      "number": "02"
     }
   },
   {
@@ -1132,7 +1132,7 @@
     "pk": 142,
     "fields": {
       "station": 8,
-      "number": "42"
+      "number": "30"
     }
   },
   {
@@ -1140,7 +1140,7 @@
     "pk": 143,
     "fields": {
       "station": 8,
-      "number": "44"
+      "number": "31"
     }
   },
   {
@@ -1148,7 +1148,7 @@
     "pk": 144,
     "fields": {
       "station": 8,
-      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+      "number": "32"
     }
   },
   {
@@ -1156,7 +1156,7 @@
     "pk": 145,
     "fields": {
       "station": 8,
-      "number": "\u041f\u0412\u042d"
+      "number": "33"
     }
   },
   {
@@ -1164,47 +1164,47 @@
     "pk": 146,
     "fields": {
       "station": 8,
-      "number": "\u041f\u0414\u0426"
+      "number": "41"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 147,
     "fields": {
-      "station": 9,
-      "number": "1"
+      "station": 8,
+      "number": "42"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 148,
     "fields": {
-      "station": 9,
-      "number": "2"
+      "station": 8,
+      "number": "44"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 149,
     "fields": {
-      "station": 9,
-      "number": "3"
+      "station": 8,
+      "number": "тоннель"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 150,
     "fields": {
-      "station": 9,
-      "number": "4"
+      "station": 8,
+      "number": "ПВЭ"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 151,
     "fields": {
-      "station": 9,
-      "number": "6"
+      "station": 8,
+      "number": "ПДЦ"
     }
   },
   {
@@ -1212,7 +1212,7 @@
     "pk": 152,
     "fields": {
       "station": 9,
-      "number": "8"
+      "number": "1"
     }
   },
   {
@@ -1220,7 +1220,7 @@
     "pk": 153,
     "fields": {
       "station": 9,
-      "number": "01"
+      "number": "2"
     }
   },
   {
@@ -1228,7 +1228,7 @@
     "pk": 154,
     "fields": {
       "station": 9,
-      "number": "02"
+      "number": "3"
     }
   },
   {
@@ -1236,7 +1236,7 @@
     "pk": 155,
     "fields": {
       "station": 9,
-      "number": "10"
+      "number": "4"
     }
   },
   {
@@ -1244,7 +1244,7 @@
     "pk": 156,
     "fields": {
       "station": 9,
-      "number": "29"
+      "number": "6"
     }
   },
   {
@@ -1252,7 +1252,7 @@
     "pk": 157,
     "fields": {
       "station": 9,
-      "number": "30"
+      "number": "8"
     }
   },
   {
@@ -1260,7 +1260,7 @@
     "pk": 158,
     "fields": {
       "station": 9,
-      "number": "31"
+      "number": "01"
     }
   },
   {
@@ -1268,7 +1268,7 @@
     "pk": 159,
     "fields": {
       "station": 9,
-      "number": "32"
+      "number": "02"
     }
   },
   {
@@ -1276,7 +1276,7 @@
     "pk": 160,
     "fields": {
       "station": 9,
-      "number": "33"
+      "number": "10"
     }
   },
   {
@@ -1284,7 +1284,7 @@
     "pk": 161,
     "fields": {
       "station": 9,
-      "number": "35"
+      "number": "29"
     }
   },
   {
@@ -1292,7 +1292,7 @@
     "pk": 162,
     "fields": {
       "station": 9,
-      "number": "37"
+      "number": "30"
     }
   },
   {
@@ -1300,7 +1300,7 @@
     "pk": 163,
     "fields": {
       "station": 9,
-      "number": "39"
+      "number": "31"
     }
   },
   {
@@ -1308,7 +1308,7 @@
     "pk": 164,
     "fields": {
       "station": 9,
-      "number": "41"
+      "number": "32"
     }
   },
   {
@@ -1316,7 +1316,7 @@
     "pk": 165,
     "fields": {
       "station": 9,
-      "number": "42"
+      "number": "33"
     }
   },
   {
@@ -1324,7 +1324,7 @@
     "pk": 166,
     "fields": {
       "station": 9,
-      "number": "43"
+      "number": "35"
     }
   },
   {
@@ -1332,7 +1332,7 @@
     "pk": 167,
     "fields": {
       "station": 9,
-      "number": "44"
+      "number": "37"
     }
   },
   {
@@ -1340,7 +1340,7 @@
     "pk": 168,
     "fields": {
       "station": 9,
-      "number": "45"
+      "number": "39"
     }
   },
   {
@@ -1348,7 +1348,7 @@
     "pk": 169,
     "fields": {
       "station": 9,
-      "number": "46"
+      "number": "41"
     }
   },
   {
@@ -1356,7 +1356,7 @@
     "pk": 170,
     "fields": {
       "station": 9,
-      "number": "47"
+      "number": "42"
     }
   },
   {
@@ -1364,7 +1364,7 @@
     "pk": 171,
     "fields": {
       "station": 9,
-      "number": "48"
+      "number": "43"
     }
   },
   {
@@ -1372,7 +1372,7 @@
     "pk": 172,
     "fields": {
       "station": 9,
-      "number": "49"
+      "number": "44"
     }
   },
   {
@@ -1380,7 +1380,7 @@
     "pk": 173,
     "fields": {
       "station": 9,
-      "number": "50"
+      "number": "45"
     }
   },
   {
@@ -1388,7 +1388,7 @@
     "pk": 174,
     "fields": {
       "station": 9,
-      "number": "51"
+      "number": "46"
     }
   },
   {
@@ -1396,7 +1396,7 @@
     "pk": 175,
     "fields": {
       "station": 9,
-      "number": "53"
+      "number": "47"
     }
   },
   {
@@ -1404,7 +1404,7 @@
     "pk": 176,
     "fields": {
       "station": 9,
-      "number": "\u041f\u0412"
+      "number": "48"
     }
   },
   {
@@ -1412,7 +1412,7 @@
     "pk": 177,
     "fields": {
       "station": 9,
-      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+      "number": "49"
     }
   },
   {
@@ -1420,7 +1420,7 @@
     "pk": 178,
     "fields": {
       "station": 9,
-      "number": "\u041f\u0412-"
+      "number": "50"
     }
   },
   {
@@ -1428,7 +1428,7 @@
     "pk": 179,
     "fields": {
       "station": 9,
-      "number": "\u041f\u0412\u042d"
+      "number": "51"
     }
   },
   {
@@ -1436,7 +1436,7 @@
     "pk": 180,
     "fields": {
       "station": 9,
-      "number": "\u041f\u04141"
+      "number": "53"
     }
   },
   {
@@ -1444,63 +1444,63 @@
     "pk": 181,
     "fields": {
       "station": 9,
-      "number": "\u0421\u0442p"
+      "number": "ПВ"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 182,
     "fields": {
-      "station": 10,
-      "number": "\u041f\u0412"
+      "station": 9,
+      "number": "тоннель"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 183,
     "fields": {
-      "station": 10,
-      "number": "101"
+      "station": 9,
+      "number": "запас"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 184,
     "fields": {
-      "station": 10,
-      "number": "102"
+      "station": 9,
+      "number": "КТСМ"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 185,
     "fields": {
-      "station": 10,
-      "number": "103"
+      "station": 9,
+      "number": "ПВ-"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 186,
     "fields": {
-      "station": 10,
-      "number": "104"
+      "station": 9,
+      "number": "ПВЭ"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 187,
     "fields": {
-      "station": 10,
-      "number": "105"
+      "station": 9,
+      "number": "ПД1"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 188,
     "fields": {
-      "station": 10,
-      "number": "111"
+      "station": 9,
+      "number": "Стp"
     }
   },
   {
@@ -1508,7 +1508,7 @@
     "pk": 189,
     "fields": {
       "station": 10,
-      "number": "112"
+      "number": "ПВ"
     }
   },
   {
@@ -1516,7 +1516,7 @@
     "pk": 190,
     "fields": {
       "station": 10,
-      "number": "113"
+      "number": "101"
     }
   },
   {
@@ -1524,7 +1524,7 @@
     "pk": 191,
     "fields": {
       "station": 10,
-      "number": "114"
+      "number": "102"
     }
   },
   {
@@ -1532,7 +1532,7 @@
     "pk": 192,
     "fields": {
       "station": 10,
-      "number": "115"
+      "number": "103"
     }
   },
   {
@@ -1540,7 +1540,7 @@
     "pk": 193,
     "fields": {
       "station": 10,
-      "number": "121"
+      "number": "104"
     }
   },
   {
@@ -1548,7 +1548,7 @@
     "pk": 194,
     "fields": {
       "station": 10,
-      "number": "122"
+      "number": "105"
     }
   },
   {
@@ -1556,7 +1556,7 @@
     "pk": 195,
     "fields": {
       "station": 10,
-      "number": "123"
+      "number": "111"
     }
   },
   {
@@ -1564,7 +1564,7 @@
     "pk": 196,
     "fields": {
       "station": 10,
-      "number": "124"
+      "number": "112"
     }
   },
   {
@@ -1572,7 +1572,7 @@
     "pk": 197,
     "fields": {
       "station": 10,
-      "number": "125"
+      "number": "113"
     }
   },
   {
@@ -1580,7 +1580,7 @@
     "pk": 198,
     "fields": {
       "station": 10,
-      "number": "131"
+      "number": "114"
     }
   },
   {
@@ -1588,7 +1588,7 @@
     "pk": 199,
     "fields": {
       "station": 10,
-      "number": "132"
+      "number": "115"
     }
   },
   {
@@ -1596,7 +1596,7 @@
     "pk": 200,
     "fields": {
       "station": 10,
-      "number": "133"
+      "number": "121"
     }
   },
   {
@@ -1604,7 +1604,7 @@
     "pk": 201,
     "fields": {
       "station": 10,
-      "number": "134"
+      "number": "122"
     }
   },
   {
@@ -1612,7 +1612,7 @@
     "pk": 202,
     "fields": {
       "station": 10,
-      "number": "135"
+      "number": "123"
     }
   },
   {
@@ -1620,7 +1620,7 @@
     "pk": 203,
     "fields": {
       "station": 10,
-      "number": "141"
+      "number": "124"
     }
   },
   {
@@ -1628,7 +1628,7 @@
     "pk": 204,
     "fields": {
       "station": 10,
-      "number": "142"
+      "number": "125"
     }
   },
   {
@@ -1636,7 +1636,7 @@
     "pk": 205,
     "fields": {
       "station": 10,
-      "number": "143"
+      "number": "131"
     }
   },
   {
@@ -1644,7 +1644,7 @@
     "pk": 206,
     "fields": {
       "station": 10,
-      "number": "144"
+      "number": "132"
     }
   },
   {
@@ -1652,7 +1652,7 @@
     "pk": 207,
     "fields": {
       "station": 10,
-      "number": "145"
+      "number": "133"
     }
   },
   {
@@ -1660,7 +1660,7 @@
     "pk": 208,
     "fields": {
       "station": 10,
-      "number": "\u043f\u043e\u043b\u0435"
+      "number": "134"
     }
   },
   {
@@ -1668,7 +1668,7 @@
     "pk": 209,
     "fields": {
       "station": 10,
-      "number": "\u041f\u0420\u0411"
+      "number": "135"
     }
   },
   {
@@ -1676,143 +1676,143 @@
     "pk": 210,
     "fields": {
       "station": 10,
-      "number": "\u041f\u0420\u041f"
+      "number": "141"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 211,
     "fields": {
-      "station": 6,
-      "number": "1"
+      "station": 10,
+      "number": "142"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 212,
     "fields": {
-      "station": 6,
-      "number": "2"
+      "station": 10,
+      "number": "143"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 213,
     "fields": {
-      "station": 6,
-      "number": "3"
+      "station": 10,
+      "number": "144"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 214,
     "fields": {
-      "station": 6,
-      "number": "4"
+      "station": 10,
+      "number": "145"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 215,
     "fields": {
-      "station": 6,
-      "number": "6"
+      "station": 10,
+      "number": "поле"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 216,
     "fields": {
-      "station": 6,
-      "number": "8"
+      "station": 10,
+      "number": "ПРБ"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 217,
     "fields": {
-      "station": 6,
-      "number": "01"
+      "station": 10,
+      "number": "ПРП"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 218,
     "fields": {
-      "station": 6,
-      "number": "02"
+      "station": 10,
+      "number": "Св.М"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 219,
     "fields": {
-      "station": 6,
-      "number": "30"
+      "station": 10,
+      "number": "Св.М10"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 220,
     "fields": {
-      "station": 6,
-      "number": "31"
+      "station": 10,
+      "number": "Св.М11"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 221,
     "fields": {
-      "station": 6,
-      "number": "32"
+      "station": 10,
+      "number": "Св.М19"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 222,
     "fields": {
-      "station": 6,
-      "number": "33"
+      "station": 10,
+      "number": "Св.М24"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 223,
     "fields": {
-      "station": 6,
-      "number": "41"
+      "station": 10,
+      "number": "Св.М26"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 224,
     "fields": {
-      "station": 6,
-      "number": "42"
+      "station": 10,
+      "number": "Св.М6"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 225,
     "fields": {
-      "station": 6,
-      "number": "44"
+      "station": 10,
+      "number": "Св.М8"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 226,
     "fields": {
-      "station": 6,
-      "number": "51"
+      "station": 10,
+      "number": "Св.М9"
     }
   },
   {
     "model": "ARM.Rack",
     "pk": 227,
     "fields": {
-      "station": 6,
-      "number": "\u0442\u043e\u043d\u043d\u0435\u043b\u044c"
+      "station": 10,
+      "number": "Светофор"
     }
   },
   {
@@ -1820,7 +1820,7 @@
     "pk": 228,
     "fields": {
       "station": 6,
-      "number": "\u041f\u04121"
+      "number": "1"
     }
   },
   {
@@ -1828,7 +1828,143 @@
     "pk": 229,
     "fields": {
       "station": 6,
-      "number": "\u041f\u0414\u0426"
+      "number": "2"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 230,
+    "fields": {
+      "station": 6,
+      "number": "3"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 231,
+    "fields": {
+      "station": 6,
+      "number": "4"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 232,
+    "fields": {
+      "station": 6,
+      "number": "6"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 233,
+    "fields": {
+      "station": 6,
+      "number": "8"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 234,
+    "fields": {
+      "station": 6,
+      "number": "01"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 235,
+    "fields": {
+      "station": 6,
+      "number": "02"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 236,
+    "fields": {
+      "station": 6,
+      "number": "30"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 237,
+    "fields": {
+      "station": 6,
+      "number": "31"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 238,
+    "fields": {
+      "station": 6,
+      "number": "32"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 239,
+    "fields": {
+      "station": 6,
+      "number": "33"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 240,
+    "fields": {
+      "station": 6,
+      "number": "41"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 241,
+    "fields": {
+      "station": 6,
+      "number": "42"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 242,
+    "fields": {
+      "station": 6,
+      "number": "44"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 243,
+    "fields": {
+      "station": 6,
+      "number": "51"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 244,
+    "fields": {
+      "station": 6,
+      "number": "тоннель"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 245,
+    "fields": {
+      "station": 6,
+      "number": "ПВ1"
+    }
+  },
+  {
+    "model": "ARM.Rack",
+    "pk": 246,
+    "fields": {
+      "station": 6,
+      "number": "ПДЦ"
     }
   }
 ]

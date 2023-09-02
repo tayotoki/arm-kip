@@ -1,7 +1,26 @@
 import re
 
+from pathlib import Path
+import sys
+import os
+
 import pymysql
 import json
+
+import django
+
+MAIN_MODULE_PATH = Path(__file__).resolve().parent.parent
+
+
+sys.path.append(str(MAIN_MODULE_PATH))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'ARM_SHN.settings'
+
+# if not settings.configured:
+#     settings.configure()
+
+django.setup()
+
+from ARM_SHN.settings import BASE_DIR
 
 
 station_id_decode = {
@@ -35,15 +54,16 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
     """)
     data = cursor.fetchall()
     for type_, type_id in data:
-        print(type_)
+        print(type_, type_id)
         if type_ != 'null':
             tipes_fixture.append({
-                "model": "admin.Tipe",
+                "model": "ARM.Tipe",
                 "pk": type_id,
                 "fields": {
                     "name": f"{type_}"
                 }
             })
+            print(f"****{type_}-----{type_id}****")
 
     for _id in station_id_decode.keys():
         cursor.execute(f"""
@@ -52,7 +72,9 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
             GROUP BY Stativ;
         """)
         data = cursor.fetchall()
+
         print(data)
+        
         for station_id, rack_number in data:
             station = station_id_decode.get(station_id)
             rack_number = rack_number.strip()
@@ -76,7 +98,7 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
                         continue
                     racks_fixture.append(
                         {
-                            "model": "admin.Rack",
+                            "model": "ARM.Rack",
                             "pk": counter,
                             "fields": {
                                 "station": station,
@@ -90,7 +112,7 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
                         continue
                     racks_fixture.append(
                         {
-                            "model": "admin.Rack",
+                            "model": "ARM.Rack",
                             "pk": counter,
                             "fields": {
                                 "station": station,
@@ -102,7 +124,7 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
             else:
                 racks_fixture.append(
                     {
-                        "model": "admin.Rack",
+                        "model": "ARM.Rack",
                         "pk": counter,
                         "fields": {
                             "station": station,
@@ -115,8 +137,8 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
     else:
         counter = 1
 
-with open("./fixtures/types.json", "w", encoding='utf-8') as types:
-    json.dump(tipes_fixture, types)
+with open(BASE_DIR / "ARM" / "fixtures" / "types.json", "w", encoding='utf-8') as types:
+    json.dump(tipes_fixture, types, indent=2, ensure_ascii=False)
 
-with open("./fixtures/racks.json", "w", encoding="utf-8") as racks:
-    json.dump(racks_fixture, racks)
+with open(BASE_DIR / "ARM" / "fixtures" / "racks.json", "w", encoding="utf-8") as racks:
+    json.dump(racks_fixture, racks, indent=2, ensure_ascii=False)

@@ -2,13 +2,24 @@ import re
 
 import pymysql
 
+from pathlib import Path
+
 import sys
 import os
 
 import django
 
-sys.path.append('~/ARM/ARM_SHN')
+from django.conf import settings
+
+MAIN_MODULE_PATH = Path(__file__).resolve().parent.parent
+
+
+sys.path.append(str(MAIN_MODULE_PATH))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'ARM_SHN.settings'
+
+# if not settings.configured:
+#     settings.configure()
+
 django.setup()
 
 from django.db.models import Q
@@ -16,17 +27,17 @@ from django.core.exceptions import ObjectDoesNotExist
 from ARM.models import Device, Stock, Station, Place, Tipe, Rack, AVZ
 
 station_id_decode = {
-    1: 1,
-    2: 2,
-    4: 3,
-    5: 4,
-    6: 5,
-    8: 7,
-    9: 8,
-    10: 9,
-    11: 10,
-    12: 6,
-    21: 11,
+    1: 1,  # Ботаническая
+    2: 2,  # Чкаловская
+    4: 3,  # Геологическая
+    5: 4,  # Площадь 1905
+    6: 5,  # Динамо
+    8: 7,  # Машиностроителей
+    9: 8,  # Уралмаш
+    10: 9,  # Пр. Космонавтов
+    11: 10,  # Депо Калиновское
+    12: 6,  # Уральская
+    21: 11,  # Инж. Корпус
 }
 
 place_objects = []
@@ -43,16 +54,16 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
     cursor = db.cursor()
 
     cursor.execute(f"""
-        SELECT 
-            Stan_Id, 
-            Stativ, 
-            Mesto, 
-            Nazn, 
-            Zn, 
-            Dw, 
-            Du, 
-            Per, 
-            Dat_Sp, 
+        SELECT
+            Stan_Id,
+            Stativ,
+            Mesto,
+            Nazn,
+            Zn,
+            Dw,
+            Du,
+            Per,
+            Dat_Sp,
             Tipe_Id,
             Reg,
             Prow
@@ -62,7 +73,7 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
     data = cursor.fetchall()
     for station_id, rack_number, place, *other_data in data:
         device_fields = {
-            "name": other_data[0],
+            "name": other_data[0],  # if other_data[6] != 300 else None,
             "inventory_number": other_data[1],
             "manufacture_date": other_data[2],
             "current_check_date": other_data[3],
@@ -85,7 +96,7 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
                 "stock_id": 1
             }
 
-        if rack_number.strip() in ("АВЗ", "зап", "запас"):
+        if rack_number.strip() in ("АВЗ", "зап", "запас", "авз", "Запас"):
             continue
         print(station_id, rack_number, place)
 
@@ -116,8 +127,15 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
             **device_fields,
         )
 
+        try:
+            print(device)
+        except Tipe.DoesNotExist:
+            unknown_type = Tipe.objects.get(pk=300)
+            device.device_type = unknown_type
+
         print(
-            "Serialazed: ", rack.station.name if rack else "Stock", rack.number if rack else "",
+            "Serialazed: ", rack.station.name if rack else "Stock",
+            rack.number if rack else "No rack",
             obj.number if obj else None
         )
 
@@ -125,6 +143,11 @@ with pymysql.connect(host='localhost', port='', user='test_user', passwd='1234',
             place_objects.append(obj)
         device_objects.append(device)
 
+# for part in list(zip(*[iter(place_objects)] * 1000)):
+#     Place.objects.bulk_create(part)
+
+# for part in list(zip(*[iter(device_objects)] * 1000)):
+#     Device.objects.bulk_create(part)
 
 Place.objects.bulk_create(place_objects)
 Device.objects.bulk_create(device_objects)
