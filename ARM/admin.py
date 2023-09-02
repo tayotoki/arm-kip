@@ -493,7 +493,7 @@ class DeviceKipReportForm(forms.ModelForm):
             self.cleaned_data.get("device"),
             self.cleaned_data.get("mounting_address"),
             self.cleaned_data.get("station"),
-        )):
+        )) and self.has_changed:
             raise ValidationError("Не все обязательные поля заполнены")
         
         other_places = Place.objects.filter(
