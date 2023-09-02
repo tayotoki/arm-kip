@@ -1,5 +1,5 @@
 env/
-__pychache__/
+__pycache__/*
 *.pyc
 .idea/
 .vscode/
@@ -7,3 +7,4 @@ bin/
 lib/
 lib64
 pyvenv.cfg
+*.sqlite
